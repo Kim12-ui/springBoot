@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="UTF-8">
+		<title>회원정보 수정</title>
+	</head>
+	<body>
+		<form th:action="@{update}" method="post">
+			<table>
+				<tr>
+					<th>ID</th>
+					<td></td>
+				</tr>
+			</table>
+		</form>
+	</body>
+</html>

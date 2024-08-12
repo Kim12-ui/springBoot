@@ -8,4 +8,8 @@ public interface MemberService {
 
 	void join(MemberDTO member);
 
+	MemberDTO select(String username);
+
+	void updateData(MemberDTO member);
+
 }

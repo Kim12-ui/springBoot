@@ -7,6 +7,7 @@ import com.dsa.web5.dto.MemberDTO;
 import com.dsa.web5.entity.MemberEntity;
 import com.dsa.web5.repository.MemberRepository;
 
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -52,5 +53,52 @@ public class MemberServiceImpl implements MemberService {
 				.build();
 		mr.save(m);
 	}
+
+	/**
+	 * 회원정보 조회
+	 * @return memberDTO
+	 */
+	@Override
+	public MemberDTO select(String id) {
+		MemberEntity member = mr.findById(id).orElse(null);
+		if(member==null) return null;
 		
+		log.debug("[service-find] memberEntity : {}",member);
+		
+		// MemberDTO
+		MemberDTO memberDTO = MemberDTO.builder()
+							.memberId(member.getMemberId())
+							.memberName(member.getMemberName())
+							.phone(member.getPhone())
+							.address(member.getAddress())
+							.email(member.getEmail())
+							.build();
+		return memberDTO;
+	}
+	
+	/**
+	 * 회원정보 수정
+	 */
+	@Override
+	public void updateData(MemberDTO member) {
+		try {
+			// DB정보를 조회
+			MemberEntity entity = mr.findById(member.getMemberId())
+					.orElseThrow(() -> new EntityNotFoundException("없는 ID"));
+			
+			// MemberDTO의 수정할 정보를 entity에 세팅
+			entity.setMemberPassword(passwordEncoder.encode(member.getMemberPassword()));
+			entity.setMemberName(member.getMemberName());
+			entity.setAddress(member.getAddress());
+			entity.setEmail(member.getEmail());
+			entity.setPhone(member.getPhone());
+			
+			// entity 저장
+			mr.save(entity);
+		} catch (EntityNotFoundException e) {
+			e.printStackTrace();
+			return;
+		}
+	}
+	
 }

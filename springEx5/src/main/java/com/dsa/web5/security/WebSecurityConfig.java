@@ -22,7 +22,7 @@ public class WebSecurityConfig {
     //로그인 없이 접근 가능 경로
     private static final String[] PUBLIC_URLS = {
     		"/"                     //root
-    		, "/thymeleaf"
+    		, "/thymeleaf"			//thymeleaf.html
             , "/images/**"          //이미지 경로
             , "/css/**"             //CSS파일들
             , "/js/**"              //JavaSCript 파일들

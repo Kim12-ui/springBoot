@@ -12,11 +12,20 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class HomeController {
 
+	/**
+	 * 홈페이지 이동
+	 * @return home.html
+	 */
 	@GetMapping({"","/"})
 	public String home() {
 		return "home";
 	}
 	
+	/**
+	 * 타임리프 페이지로 이동
+	 * @param user
+	 * @return thymeleaf.html
+	 */
 	@GetMapping("thymeleaf")
 	public String thymeleaf(@AuthenticationPrincipal AuthenticatedUser user) {
 		if(user != null) {
