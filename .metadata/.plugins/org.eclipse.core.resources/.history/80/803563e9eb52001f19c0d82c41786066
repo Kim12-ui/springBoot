@@ -1,5 +1,0 @@
-package com.dsa.web4.dto;
-
-public class GuestBookDTO {
-	
-}

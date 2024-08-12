@@ -1,9 +1,0 @@
-package com.dsa.web4.service;
-
-import com.dsa.web4.dto.GuestBookDTO;
-
-public interface GuestService {
-
-	void writeData(GuestBookDTO guest);
-
-}

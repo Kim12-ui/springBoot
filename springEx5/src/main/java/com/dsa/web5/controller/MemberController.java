@@ -103,13 +103,15 @@ public class MemberController {
 	}
 	
 	/**
-	 * 
+	 * 회원정보 수정
 	 * @param MemberDTO member
+	 * @param user 인증정보
 	 * @return home.html
 	 */
-	@PostMapping("update")
-	public String update(@ModelAttribute MemberDTO member) {
-		log.debug("{}",member);
+	@PostMapping("info")
+	public String update(
+			@ModelAttribute MemberDTO member
+			) {
 		ms.updateData(member);
 		return "redirect:/";
 	}

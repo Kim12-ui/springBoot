@@ -39,6 +39,16 @@
 						</td>
 					</tr>
 					<tr>
+						<td class="white"></td>
+						<td class="white">
+							<!-- 경로 ?error=true -->
+							<div class="errorMsg" th:if="${param.error}">ID 또는 비밀번호가 틀립니다.</div>
+							<div class="errorMsg" th:if="${param.error}">
+								<script>alert('ID 또는 비밀번호가 틀립니다.')</script>
+							</div>
+						</td>
+					</tr>
+					<tr>
 						<td colspan="2" class="center white">
 							<input type="submit" value="login">
 						</td>
