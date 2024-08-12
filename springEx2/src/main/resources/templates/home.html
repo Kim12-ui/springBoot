@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Insert title here</title>
+	</head>
+	<body>
+		<h1>HOME</h1>
+		<ol>
+			<li><a href="html">html</a></li>
+			<li><a href="css">css</a></li>
+			<li><a href="js">js</a></li>
+			<br>
+			
+			<!-- lombok -->
+			<li>lombok</li>
+			<ul>
+				<li><a href="lombok/lombok1">lombok</a></li>
+				<li><a href="lombok/lombok2">logger</a></li>
+			</ul>
+			<br>
+			
+			<!-- parameter -->
+			<li>parameter</li>
+			<ul>
+				<li><a href="param/view1">Get 방식으로 parameter 전달</a></li>
+				<li><a href="param/view2">Post 방식으로 parameter 전달</a></li>
+				<li><a href="param/view3">Post 방식으로 parameter 전달(객체)</a></li>
+				<li><a href="param/param4?name=abc&age=30&phone=111">
+						Get 방식으로 parameter 전달(쿼리스트링)
+					</a>
+				</li>
+				<li>
+					<a href="param/param5">
+						Get 방식으로 parameter 전달 (아무것도 안보낼 경우)
+					</a>
+				</li>
+				<li>
+					<a href="param/model">Model 객체로 parameter 출력</a>
+				</li>
+			</ul>
+			<br>
+			
+			<!-- 
+				session
+				- server와 client 간의 반 영구적 상호작용하는 정보 교환
+				- server 측에서 요청(request)하는 client를 구별하기 위해 'server에 저장되는 정보'
+				- session 정보는 server가 종료되거나 유효기간이 만료되거나 client가 연결헤제 시 삭제
+				- server resource를 사용하므로 server에 부담이 갈 수 있다.
+			 -->
+			<li>session</li>
+			<ul>
+				<li><a href="session/session1">session 저장</a></li>
+				<li><a href="session/session2">session 삭제</a></li>
+				<li><a href="session/session3">session 읽기</a></li>
+				<li>[[${session.name}]]님이 접속중</li>
+				<br>
+				<li><a href="session/login">로그인</a></li>
+				<li><a href="session/logout">로그아웃</a></li>
+				<li><a href="session/loginTest">로그인 해야 볼 수 있는 페이지</a></li>
+			</ul>
+			<br>
+			
+			<!-- 
+				cookie
+					- cookie는 client PC, 로컬 디스크에 저장
+					- 사용자의 PC에 데이터를 저장하므로 보안에 취약하며 보안과 무관한 경우 사용
+					- 제한된 용량을 가진 파일형식으로 저장
+			 -->
+			<li>cookie</li>
+			<ul>
+				<li><a href="cookie/cookie1">cookie 저장</a></li>
+				<li><a href="cookie/cookie2">cookie 삭제</a></li>
+				<li><a href="cookie/cookie3">cookie 읽기</a></li>
+			</ul>
+			<br>
+			
+			<!-- 실습 예제 -->
+			<li>실습 예제</li>
+			<ul>
+				<li><a href="ex/info">개인정보 입출력</a></li>
+				<li><a href="ex/count">방문횟수 카운트</a></li>
+			</ul>
+			<br>
+			
+			<!-- LocalStorage와 SessionStorage 사용 -->
+			<li>LocalStorage와 SessionStorage 사용</li>
+			<ul>
+				<li><a href="local/save">저장하기</a></li>
+				<li><a href="local/read">사용하기</a></li>
+				<li><a href="local/delete">삭제하기</a></li>
+			</ul>
+			<br>
+			
+			<!-- thymeleaf -->
+			<li>thymeleaf</li>
+			<ul>
+				<li><a href="th/thymeleaf1">타임리프 문법1</a></li>
+				<li><a href="th/thymeleaf2">타임리프 문법2</a></li>
+			</ul>
+		</ol>
+	</body>
+</html>

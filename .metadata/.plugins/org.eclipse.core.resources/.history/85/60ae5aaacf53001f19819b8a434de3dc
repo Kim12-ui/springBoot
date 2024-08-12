@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="thymeleaf.org">
+	<head>
+		<meta charset="UTF-8">
+		<title>글쓰기</title>
+	<link rel="stylesheet" th:href="@{/css/forWriteForm.css}">
+	<script th:src="@{/js/forWriteForm.js}"></script>
+	<!-- <script src="/web4/js/forWriteForm.js"></script> -->
+	</head>
+	<body>
+		<form th:action="@{write}" method="post" onsubmit="return formCheck()">
+			<table>
+				<caption>글쓰기</caption>
+				<tr>
+					<th>작성자</th>
+				</tr>
+				<tr>
+				<td><input type="text" placeholder="2~10자 사이" name="name" id="name" autocomplete="name"></td>
+				</tr>
+				<tr>
+					<th>비밀번호</th>
+				</tr>
+				<tr>
+					<td><input type="password" placeholder="2~10자 사이" name="password" id="pw" autocomplete="current-password"></td>
+				</tr>
+				<tr>
+					<th>작성글</th>
+				</tr>
+				<tr>
+					<td><textarea rows="15" cols="60" name="message" placeholder="내용을 입력하세요"></textarea></td>
+				</tr>
+			</table>
+			<input type="submit" value="저장" class="submit-button">
+		</form>
+	</body>
+</html>

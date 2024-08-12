@@ -1,0 +1,99 @@
+@charset "UTF-8";
+
+/* forWriteForm.css */
+
+@charset "UTF-8";
+
+/* 페이지 전체 스타일 */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+    background-color: #f4f4f9;
+}
+
+img {
+    height: 24px; /* 아이콘의 높이 설정 */
+    position: absolute;
+    right: 0;
+    margin-top: 0px;
+    margin-right: 30px;
+    cursor: pointer;
+}
+
+#home {
+	height: 3px; /* 아이콘의 높이 설정 */
+    position: absolute;
+    right: 0;
+    margin-top: 0px;
+    margin-right: 40px;
+    cursor: pointer;
+}
+
+/* 폼 스타일 */
+form {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #fff;
+    text-align: center;
+}
+
+/* 테이블 스타일 */
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+caption {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+}
+
+th, td {
+    padding: 10px;
+    text-align: left;
+}
+
+th {
+    background-color: #f4f4f4;
+}
+
+/* 입력 필드 스타일 */
+input[type="text"],
+input[type="password"],
+textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 1em;
+}
+
+textarea {
+    resize: vertical; /* 수직 방향으로 크기 조절 가능 */
+}
+
+/* 제출 버튼 스타일 */
+.submit-button {
+    background-color: #4CAF50; /* 버튼 배경색 */
+    border: none; /* 테두리 없음 */
+    color: white; /* 글자색 */
+    padding: 15px 20px; /* 패딩 */
+    text-align: center; /* 텍스트 중앙 정렬 */
+    text-decoration: none; /* 텍스트 장식 없음 */
+    display: inline-block; /* 인라인 블록으로 설정 */
+    font-size: 1em; /* 글자 크기 */
+    margin: 20px auto; /* 상하 마진 */
+    cursor: pointer; /* 커서 모양 */
+    border-radius: 4px; /* 둥근 모서리 */
+    transition: background-color 0.3s; /* 배경색 전환 효과 */
+    width: 600px;
+}
+
+.submit-button:hover {
+    background-color: #45a049; /* 호버 시 배경색 변경 */
+}

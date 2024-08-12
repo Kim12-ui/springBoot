@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+	<head>
+		<meta charset="UTF-8">
+		<title>회원가입</title>
+		<style>
+		/*table, th, td {
+			border: 1px black solid;
+			border-collapse:collapse;
+		}*/
+		th {
+			text-align: left;
+		}
+		td {
+			text-align: right;
+		}
+		</style>
+		<script>
+			function formCheck() {
+				// 객체 생성
+				const id = document.querySelector("#id");
+				const pw = document.querySelector("#pw");
+				const name = document.querySelector("#name");
+				
+				// id값은 3~10자
+				if(id.value.length<3||id.value.length>10) {
+					alert('ID는 3~10자입니다');
+					return false;
+				}
+				
+				// pw값은 3~10자
+				if(pw.value.length<3||pw.value.length>10) {
+					alert('PW는 3~10자입니다');
+					return false;
+				}
+				
+				// name값은 null값이면 안된다
+				if(name.value=='') {
+					alert("NAME값을 입력하세요.");
+					return false;
+				}
+				
+				// 조건에 다 만족하지 않는다면...
+				return true;
+			}
+		
+		</script>
+	</head>
+	<body>
+		<h2>회원가입</h2>
+		<form th:action="@{join}" method="post" onsubmit="return formCheck()">
+		
+		<table>
+			<tr>
+				<th>ID</th>
+				<td><input type="text" placeholder="3~10자 사이" id="id" name="id"></td>
+			</tr>
+			<tr>
+				<th>PW</th>
+				<td><input type="password" placeholder="3~10자 사이" id="pw" name="pw"></td>
+			</tr>
+			<tr>
+				<th>NAME</th>
+				<td><input type="text" placeholder="null안됨" id="name" name="name"></td>
+			</tr>
+			<tr>
+				<th>PHONE</th>
+				<td><input type="text" id="phone" name="phone"></td>
+			</tr>
+			<tr>
+				<th>ADDRESS</th>
+				<td><input type="text" id="address" name="address"></td>
+			</tr>
+		</table>
+		<input type="submit" value="가입">
+		</form>
+	</body>
+</html>

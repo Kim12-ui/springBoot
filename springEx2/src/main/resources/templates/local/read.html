@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Insert title here</title>
+		<script>
+			window.onload = function() {
+				let code1=localStorage.getItem('code');
+				let code2=sessionStorage.getItem('code');
+				
+				let div1=document.querySelector('#div1');
+				let div2=document.querySelector('#div2');
+				
+				div1.innerHTML = code1;
+				div2.innerHTML = code2;
+			}
+		</script>
+	</head>
+	<body>
+	<!-- F12 -> 애플리케이션 들어가면 localStorage & SessionStorage 확인 가능 -->
+		<div id="div1"></div>
+		<div id="div2"></div>
+	</body>
+</html>

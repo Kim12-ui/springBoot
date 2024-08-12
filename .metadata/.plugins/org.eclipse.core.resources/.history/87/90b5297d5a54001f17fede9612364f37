@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="UTF-8">
+		<title>방명록</title>
+		<link rel="stylesheet" th:href="@{/css/guestList.css}">
+		<script th:src="@{/js/guestList.js}"></script>
+	</head>
+	<body>
+		<h2>방명록</h2>
+		<div class="guest-list-container">
+			<div class="guest-entry" th:each="guest, iterStat:${guestList}">
+				<div>
+					<p><span th:text="${guest.num}"></span>번글</p>
+				</div>
+				<div>
+					<p>작성자 이름: <span th:text="${guest.name}"></span></p>
+				</div>
+				<div>
+					<p>작성시간: <span th:text="${guest.inputdate}"></span></p>
+				</div>
+				<div class="message" th:text="${guest.message}">
+				</div>
+				<input type="password" th:id="${guest.num}" placeholder="비밀번호를 입력하세요" >
+				<div class="forButton">
+					<input type="button" value="삭제"
+							th:tnum="${guest.num}"
+							th:onclick="deleteFunc(this.getAttribute('tnum'))">
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

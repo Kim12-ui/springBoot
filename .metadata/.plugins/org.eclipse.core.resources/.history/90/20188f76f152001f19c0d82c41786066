@@ -1,0 +1,14 @@
+[web4]
+
+로그인하지 않고 간단한 글을 쓰고 읽는 게시판
+글 작성시 비밀번호를 입력받아 테이블에 같이 저장하고
+삭제시 비밀번호 확인
+
+-- Table
+create table guestbook13 {
+	num			integer		auto_increment		primary key,
+	name		varchar(100)					not null,
+	password 	varchar(100)					not null,
+	message		text							not null,
+	inputdate 	timestamp						default current_timestamp
+}

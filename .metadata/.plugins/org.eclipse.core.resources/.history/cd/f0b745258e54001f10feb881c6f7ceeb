@@ -1,0 +1,96 @@
+/* guestList.css */
+
+@charset "UTF-8";
+
+/* 페이지 전체 스타일 */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+    background-color: #f4f4f9;
+}
+
+/* 헤더 스타일 */
+h2 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+div {
+	margin: 0px;
+    color: #333;
+}
+
+/* 방명록 리스트 컨테이너 스타일 */
+.guest-list-container {
+    text-align: center; /* 자식 요소를 가운데 정렬 */
+}
+
+/* 방명록 항목 스타일 */
+.guest-entry {
+    display: inline-block; /* 인라인 블록 요소로 설정 */
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: left; /* 텍스트를 왼쪽 정렬 */
+    width: 300px; /* 항목의 너비를 설정 */
+}
+
+/* 메세지 입력칸 */
+.message {
+	width: 90%;
+	height: 100px;
+	text-align: left;
+	padding: 10px;
+	box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* 각 항목의 텍스트 스타일 */
+p {
+    margin: 10px 0;
+    color: #333;
+}
+span {
+	margin: 0px;
+    color: #333;
+}
+
+/* 비밀번호 입력 필드 스타일 */
+input[type="password"] {
+    width: calc(100% - 22px);
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    margin: 10px 0;
+    font-size: 1em;
+}
+
+/* 삭제 버튼 가운데 정렬 */
+.forButton {
+	text-align:center;
+}
+
+/* 삭제 버튼 스타일 */
+input[type="button"] {
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 1em;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+    margin: 0 auto;
+}
+
+input[type="button"]:hover {
+    background-color: #45a049;
+}

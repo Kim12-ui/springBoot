@@ -1,0 +1,38 @@
+package com.dsa.web4.entity;
+
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EntityListeners;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Entity
+@Table(name="guestbook13")
+@Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@EntityListeners(AuditingEntityListener.class)
+public class GuestBookEntity {
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name="num")
+	private Integer num;
+	
+	@Column(name="name",nullable=false,length=100)
+	String name;
+	
+	@Column(name="password", nullable=false, length=100)
+	String password;
+	
+	@Column(name="message",nullable=false,columnDefinition="text")
+	String message;
+}

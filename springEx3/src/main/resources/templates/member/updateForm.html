@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+	<head>
+		<meta charset="UTF-8">
+		<title>회원정보수정</title>
+		<style>
+		/*table, th, td {
+			border: 1px black solid;
+			border-collapse:collapse;
+		}*/
+		th {
+			text-align: left;
+		}
+		td {
+			text-align: right;
+		}
+		</style>
+	</head>
+	<body>
+		<h2>회원정보수정</h2>
+		<form th:action="@{update}" method="post">
+		<table>
+			<tr>
+				<th>ID</th>
+				<td><input type="text" th:value="${member.id}" id="id" name="id" readOnly></td>
+			</tr>
+			<tr>
+				<th>PW</th>
+				<td><input type="password" th:value="${member.pw}" id="pw" name="pw"></td>
+			</tr>
+			<tr>
+				<th>NAME</th>
+				<td><input type="text" th:value="${member.name}" id="name" name="name"></td>
+			</tr>
+			<tr>
+				<th>PHONE</th>
+				<td><input type="text" th:value="${member.phone}" id="phone" name="phone"></td>
+			</tr>
+			<tr>
+				<th>ADDRESS</th>
+				<td><input type="text" th:value="${member.address}" id="address" name="address"></td>
+			</tr>
+		</table>
+		<input type="submit" value="수정">
+		</form>
+	</body>
+</html>

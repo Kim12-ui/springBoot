@@ -1,0 +1,14 @@
+package com.dsa.web4.entity;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+import lombok.Builder;
+import lombok.Data;
+
+@Entity
+@Table(name="guestbook13")
+@Data
+@Builder
+public class GuestBookEntity {
+
+}

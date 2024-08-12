@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+	<head>
+		<meta charset="UTF-8">
+		<title>Insert title here</title>
+	</head>
+	<body>
+		<h1>HOME</h1>
+		
+		<h3>JPA를 활용한 DB연동</h3>
+		<ul>
+			<li><a th:href="@{basic/insertData}">데이터 저장</a></li>
+			<li><a th:href="@{basic/selectData}">데이터 조회</a></li>
+			<li><a th:href="@{basic/updateData}">데이터 수정</a></li>
+			<li><a th:href="@{basic/deleteData}">데이터 삭제</a></li>
+			<li><a th:href="@{basic/selectAllData}">전체 조회</a></li>
+		</ul>
+		
+		<ul>
+			<!-- 
+				thymeleaf문법을 이용해 
+				만약 로그인 x시 => 로그인만 표시되게
+				만약 로그인 o시 => 로그아웃만 표시되게
+			-->
+			<li th:if="${session.loginId==null}">
+				<a th:href="@{member/login}">로그인</a>
+			</li>
+			<li th:if="${session.loginId!=null}">
+				<a th:href="@{member/logout}">로그아웃</a>
+			</li>
+			<li><a th:href="@{member/join}">회원가입</a></li>
+			<li th:if="${session.loginId != null}">
+				<a th:href="@{member/update}">회원정보수정</a>
+			</li>
+			<li th:if="${session.loginId != null}">
+				<a th:href="@{member/select}">회원정보조회</a>
+			</li>
+			<li><a th:href="@{member/list}">회원목록조회</a></li>
+		</ul>
+	</body>
+</html>

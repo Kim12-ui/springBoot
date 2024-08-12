@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="thymeleaf.org">
+	<head>
+		<meta charset="UTF-8">
+		<title>홈화면</title>
+	</head>
+	<body>
+		<h2>[ 홈화면 ]</h2>
+		
+		<ul>
+			<li>
+				<a th:href="@{/guest/write}" th:text="글쓰기"></a>
+			</li>
+			<li>
+				<a th:href="@{/guest/guestList}" th:text="방명록"></a>
+			</li>
+		</ul>
+	</body>
+</html>

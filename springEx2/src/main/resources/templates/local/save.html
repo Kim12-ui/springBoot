@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Insert title here</title>
+		<script>
+		/*
+			웹 스토리지(Web Storage)
+			  - 클라이언트 측에서 데이터를 저장할 수 있게 해주는 웹 API
+			  - window 객체로부터 가져오는 속성
+			  - 두 스토리지 모두 사용자의 브라우저에 데이터를 저장
+			* 차이점
+			  localStorage : 데이터를 명시적으로 삭제하지 않는 한,
+			  	브라우저를 닫아도 영구적으로 저장
+			  sessionStorage : 세션 기반으로 데이터를 저장.
+			  	세션이 끝나면(브라우저 탭이 종료되거나 서버가 닫히면) 데이터 삭제.
+		*/
+			function save() {
+				let codeLocalValue = 
+					document.querySelector('#codeLocal').value;
+				let codeSessionValue = 
+					document.querySelector('#codeSession').value;
+				console.log(codeLocalValue,codeSessionValue);
+				
+				localStorage.setItem('code',codeLocalValue);
+				sessionStorage.setItem('code',codeSessionValue);
+				
+				location.href='/web2';
+			}
+		</script>
+	</head>
+	<body>
+		<p>localStorage와 sessionStorage에 저장</p>
+		<div>
+			<p>localStorage<input type="text" id="codeLocal"></p>
+			<p>sessionStorage<input type="text" id="codeSession"></p>
+			<p><input type="button" onclick="save()" value="저장"></p>
+		</div>
+	</body>
+</html>

@@ -1,0 +1,6 @@
+package com.dsa.web4.repository;
+
+
+public interface GuestRepository extends JpaRepository<GuestBookEntity,Integer> {
+
+}

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<!-- 타임리프를 사용하기 위한 네임스페이스 -->
+<html xmlns:th="http://thymeleaf.org">
+	<head>
+		<meta charset="UTF-8">
+		<title>Insert title here</title>
+	</head>
+	<body>
+		<h1>타임리프 문법1</h1>
+		
+		<h4>* 값 출력</h4>
+		<p>[[${str}]]</p>
+		<p>[[${num}]]</p>
+		<p>[[${person}]]</p>
+		<p>[[${person.name}]]</p>
+		<p>[[${tag}]]</p>
+		<p>[[${url}]]</p>
+
+		<p th:text="${str}">테스트 문자열</p>
+		<p><input type="text" th:value="${str}"></p>
+		<p><span th:text="${num}">0000</span>원</p>
+		
+		<br>
+		
+		<h4>* 태그 출력</h4>
+		<!-- <marquee>태그: text를 움직이게 하는 태그 -->
+		<!-- th:text => tag를 텍스트로서 출력 -->
+		<!-- th:utext => 태그를 실제로 실행시킴 ㄷㄷ -->
+		<p th:text="${tag}"></p>
+		<p th:utext="${tag}"></p>
+		
+		<br>
+		<h4>* 주석</h4>
+		<!-- HTML 주석 -->
+		<script>
+			// 자바스크립트 주석
+			/* 자바스크립트 주석 */
+		</script>
+		<!-- /* 타임리프의 주석 */ -->
+		<!-- /* <p th:text="${str}"></p> */ -->
+		
+		<br>
+		<h4>* 연산자</h4>
+		<p>[[${num gt 0}]]</p>
+		<p th:text="${num}"></p>
+		<!-- 산술연산자: +-*/% -->
+		<p th:text="${num+1}"></p>
+		<!-- 비교연산자: < > <= >= == != : lt gt le ge eq ne -->
+		<p th:text="${num>100}"></p>
+		<p th:text="${num gt 100}"></p>
+		<!-- 논리연산자: and or not -->
+		<p th:text="${num ge 1 and num le 100}"></p>
+		
+		<br>
+		<h4>* 경로 생성과 하이퍼링크</h4>
+		<!-- ${url} 경로가 네이버 하이퍼링크보다 우선시 되어짐 -->
+		<p><a href="https://naver.com" th:href="${url}">경로 이동</a></p>
+		<p>절대 경로 생성:[[@{/param/view1}]]</p>
+		<p><a th:href="@{/param/view1}">페이지 이동</a></p>
+		
+		<br>
+		<h4>* 이미지 출력</h4>
+		<p><img th:src="@{/image/5.jpg}" alt="불러온 이미지"></p>
+		
+		<br>
+		<h4>* 객체 출력</h4>
+		<ul th:object="${person}">
+			<!-- *{name} => person.name -->
+			<li th:text="*{name}"></li>
+			<li th:text="${person.phone}"></li>
+		</ul>
+		
+		<br>
+		<h4>* 변수 출력</h4>
+		<p th:text="${inum}"></p>
+		<p th:text="${dnum}"></p>
+		<p th:text="${dnum2}"></p>
+		<p th:text="${date}"></p>
+		
+		<br>
+		<h4>* 숫자 포매팅</h4>
+		<p th:text="${#numbers.formatInteger(inum,10)}"></p>
+		<p th:text="${#numbers.formatInteger(inum,3,'COMMA')}"></p>
+		<p th:text="${#numbers.formatDecimal(inum,3,'COMMA',2,'POINT')}"></p>
+		<p th:text="${#numbers.formatPercent(dnum2,0,2)}"></p>
+		<p th:text="${#numbers.formatPercent(100000.555,10,1)}"></p>
+		<!--
+			* 출력결과 * 
+			0001000000
+			1,000,000
+			1,000,000.00
+			50.00%
+			0,010,000,055.5%
+		 -->
+		 
+		 <br>
+		 <h4>* 문자열</h4>
+		 <p th:text="${str+'abcd'}"></p>
+		 <p th:text="|${str} abcde fghijk|"></p>
+		 
+		 <br>
+		 <h4>* 조건문</h4>
+		 <div th:if="${str.equals('문자열')}">true인 경우 보이는 부분</div>
+		 <div th:if="${not str.equals('문자열')}">false인 경우 보이는 부분</div>
+		 <div th:if="${str=='문자열'}">true인 경우 보이는 부분2</div>
+		 <div th:unless="${str=='문자열'}">false인 경우 보이는 부분2</div>
+		 
+		 <br>
+		 <h4>* 선택문</h4>
+		 <div th:switch="${num}">
+		 	<p th:case="100">num은 100입니다.</p>
+		 	<p th:case="200">num은 100입니다.</p>
+		 	<p th:case="*">num은 그 밖의 숫자입니다.</p>
+		 </div>
+	</body>
+</html>

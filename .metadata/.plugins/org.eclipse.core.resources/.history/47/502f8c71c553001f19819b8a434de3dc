@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="thymeleaf.org">
+	<head>
+		<meta charset="UTF-8">
+		<title>글쓰기</title>
+	<script>
+		function formCheck() {
+			const name = document.querySelector("#name");
+			const pw = document.querySelector("#pw");
+	
+			// name과 pw 필드 길이 검증
+			if(name.value.length < 2 || name.value.length > 10) {
+			    alert('작성자 이름은 2~10자 사이입니다');
+			    return false;
+			}
+			if(pw.value.length < 2 || pw.value.length > 10) {
+			    alert('비밀번호는 2~10자 사이입니다');
+			    return false;
+			}
+			return true;
+		}
+	</script>
+	</head>
+	<body>
+		<h2>글쓰기</h2>
+		<form th:action="@{write}" method="post" onsubmit="return formCheck()">
+			<table>
+				<tr>
+					<th>작성자</th>
+					<td><input type="text" placeholder="2~10자 사이" name="name" id="name"></td>
+				</tr>
+				<tr>
+					<th>비밀번호</th>
+					<td><input type="password" placeholder="2~10자 사이" name="password" id="pw"></td>
+				</tr>
+				<tr>
+					<th>작성글</th>
+					<td><textarea rows="8" cols="30" name="message" placeholder="내용을 입력하세요"></textarea></td>
+				</tr>
+			</table>
+			<input type="submit" value="저장">
+		</form>
+	</body>
+</html>

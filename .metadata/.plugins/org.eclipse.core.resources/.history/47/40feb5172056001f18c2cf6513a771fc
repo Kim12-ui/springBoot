@@ -1,0 +1,45 @@
+package com.dsa.web5.service;
+
+import org.springframework.stereotype.Service;
+
+import com.dsa.web5.dto.MemberDTO;
+import com.dsa.web5.entity.MemberEntity;
+import com.dsa.web5.repository.MemberRepository;
+
+import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
+@Service
+@RequiredArgsConstructor
+@Slf4j
+@Transactional
+public class MemberServiceImpl implements MemberService {
+
+	private final MemberRepository mr;
+
+	/**
+	 * 가입시 아이디 중복 확인 처리
+	 * @param searchId
+	 * @return 해당 아이디로 가입 가능 여부 true / false
+	 */
+	@Override
+	public boolean idCheck(String searchId) {
+		return !mr.existsById(searchId);
+	}
+
+	@Override
+	public void joinData(MemberDTO member) {
+		MemberEntity m = MemberEntity.builder()
+				.memberId(member.getMemberId())
+				.memberPassword(member.getMemberPassword())
+				.memberName(member.getMemberName())
+				.phone(member.getPhone())
+				.email(member.getEmail())
+				.address(member.getAddress())
+				.build();
+		mr.save(m);
+	}
+	
+	
+}

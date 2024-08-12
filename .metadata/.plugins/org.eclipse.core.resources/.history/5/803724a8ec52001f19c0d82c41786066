@@ -1,0 +1,5 @@
+package com.dsa.web4.entity;
+
+public class GuestBookEntity {
+
+}

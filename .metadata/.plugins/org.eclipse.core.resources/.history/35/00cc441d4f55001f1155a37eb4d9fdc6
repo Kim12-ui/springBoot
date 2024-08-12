@@ -1,0 +1,12 @@
+package com.dsa.web5.entity;
+
+import jakarta.persistence.Entity;
+
+/**
+ * 회원 정보 Entity
+ * Service <-> Repository = JPA 매핑
+ */
+@Entity
+public class MemberEntity {
+
+}

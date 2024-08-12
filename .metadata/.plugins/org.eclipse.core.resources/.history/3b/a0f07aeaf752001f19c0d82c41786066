@@ -1,0 +1,32 @@
+package com.dsa.web4.service;
+
+import org.springframework.stereotype.Service;
+
+import com.dsa.web4.dto.GuestBookDTO;
+import com.dsa.web4.entity.GuestBookEntity;
+import com.dsa.web4.repository.GuestRepository;
+
+import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
+@Service
+@RequiredArgsConstructor
+@Slf4j
+@Transactional
+public class GuestServiceImpl implements GuestService {
+	private final GuestRepository gr;
+
+	/**
+	 * 글작성 처리
+	 */
+	@Override
+	public void writeData(GuestBookDTO guest) {
+		// builder
+		GuestBookEntity g = GuestBookEntity.builder()
+							.name(guest.getName())
+							.password(guest.getPassword())
+							.message(guest.getMessage())
+							.build();
+	}
+}
