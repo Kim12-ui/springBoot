@@ -1,0 +1,12 @@
+package com.dsa.web5.dto;
+
+/**
+ * 리플 정보 DTO
+ */
+@Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+public class ReplyDTO {
+
+}

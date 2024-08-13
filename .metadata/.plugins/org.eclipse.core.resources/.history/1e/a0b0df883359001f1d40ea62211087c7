@@ -1,0 +1,21 @@
+package com.dsa.web5.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import lombok.RequiredArgsConstructor;
+import lombok.Value;
+import lombok.extern.slf4j.Slf4j;
+
+@Controller
+@Slf4j
+@RequiredArgsConstructor
+@RequestMapping("board")
+public class BoardController {
+
+	private final BoardService boardService;
+	
+	// application.properties 파일의 게시판 관련 설정값
+	@Value("${board/uploadPath")
+	String uploadPath;
+}

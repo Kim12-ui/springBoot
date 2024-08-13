@@ -1,0 +1,25 @@
+package com.dsa.web5.service;
+
+import org.springframework.stereotype.Service;
+
+import com.dsa.web5.repository.BoardRepository;
+import com.dsa.web5.repository.MemberRepository;
+import com.dsa.web5.repository.ReplyRepository;
+
+import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
+/**
+ * 게시판 관련 서비스
+ */
+@Slf4j
+@RequiredArgsConstructor
+@Service
+@Transactional
+public class BoardServiceImpl implements BoardService {
+
+	private final BoardRepository boardRepository;
+	private final MemberRepository memberRepository;
+	private final ReplyRepository replyRepository;
+}

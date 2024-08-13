@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+	<head>
+		<meta charset="UTF-8">
+		<title>게시판(전체목록)</title>
+		<link rel="stylesheet" th:href="@{/css/main.css}">
+		<script th:src="@{/js/jquery-3.7.1.min.js}"></script>
+	</head>
+	<body>
+		<header>
+			<h1>[ 게시판 - 전체 목록 ]</h1>
+		</header>
+		
+		<header>
+			<p th:if=></p>
+			<table>
+				<tr>
+					<th>번호</th>
+					<th>제목</th>
+					<th>작성자</th>
+					<th>조회수</th>
+					<th>작성일</th>
+				</tr>
+				<tr th:each="board:${boardList}">
+					<td th:text="${board.boardNum}"></td>
+					<td th:text="${board.title}"></td>
+					<td th:text="${board.memberId}"></td>
+					<td th:text="${board.viewCount}"></td>
+					<td th:text="${board.createDate}"></td>
+				</tr>
+			</table>
+		</header>
+	</body>
+</html>

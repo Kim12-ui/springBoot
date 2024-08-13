@@ -1,0 +1,29 @@
+package com.dsa.web5.controller;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.dsa.web5.service.BoardService;
+
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
+@Controller
+@Slf4j
+@RequiredArgsConstructor
+@RequestMapping("board")
+public class BoardController {
+
+	private final BoardService boardService;
+	
+	// application.properties 파일의 게시판 관련 설정값
+	// import org.springframework.beans.factory.annotation.Value; 실행
+	@Value("${board/uploadPath}")
+	String uploadPath;
+	
+	/**
+	 * 글쓰기 폼으로 이동
+	 * @return writeForm.html
+	 */
+}

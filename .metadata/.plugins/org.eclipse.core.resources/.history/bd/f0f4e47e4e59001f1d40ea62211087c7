@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="UTF-8">
+		<title>게시판(전체목록)</title>
+		<link rel="stylesheet" th:href="">
+	</head>
+	<body>
+		<header>
+			<h1>[ 게시판 - 전체 목록 ]</h1>
+		</header>
+		
+		<header>
+			<table>
+				<tr>
+					
+				</tr>
+			</table>
+		</header>
+	</body>
+</html>
