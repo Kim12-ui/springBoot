@@ -1,8 +1,0 @@
-package com.dsa.web5.entity;
-
-import jakarta.persistence.Entity;
-
-@Entity
-public class MemberEntity {
-
-}

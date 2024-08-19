@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+	<head>
+		<meta charset="UTF-8">
+		<title>게시판 읽기</title>
+		<link rel="stylesheet" th:href="@{/css/main.css}">
+	</head>
+	<body>
+		<header>
+			<h1>[ 게시글 읽기 ]</h1>
+		</header>
+		
+		<section>
+			<table>
+				<tr>
+					<th>작성자</th>
+					<td>
+							<span th:text="${board.memberId}"></span>
+							(이름:
+							<span th:text="${board.memberName}"></span>
+							)
+					</td>
+				</tr>
+				<tr>
+					<th>작성일</th>
+					<td th:text="${#temporals.format(board.createDate, 'yyyy년 MM월 dd일 HH시 mm분 ss초')}">
+					</td>
+				</tr>
+				<tr>
+				
+				</tr>
+			</table>
+		</section>
+	</body>
+</html>

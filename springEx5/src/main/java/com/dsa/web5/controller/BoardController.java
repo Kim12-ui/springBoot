@@ -62,7 +62,7 @@ public class BoardController {
 		
 		try {
 			boardService.write(boardDTO, uploadPath, upload);
-			return "redirect:/";
+			return "redirect:/board/listAll";
 		} catch(Exception e) {
 			e.printStackTrace();
 			return "board/writeForm";
@@ -70,7 +70,7 @@ public class BoardController {
 	}
 	
 	/**
-	 * 게시판 전체 목록 조회
+	 * 게시판 전체 목록 조회. 페이징X
 	 * @param boardList 게시판
 	 * @param model
 	 * @return
@@ -80,5 +80,23 @@ public class BoardController {
 		List<BoardDTO> boardList = boardService.selectAllList();
 		model.addAttribute("boardList",boardList);
 		return "board/listAll";
+	}
+	
+	/**
+	 * 게시글 상세보기
+	 * @param Model
+	 * @param boardNum 조회할 글 번호
+	 * @return read.html
+	 */
+	@GetMapping("read")
+	public String read(
+			Model model,
+			@RequestParam(name = "boardNum", defaultValue = "0") int boardNum
+			) {
+		log.debug("boardNum: {}", boardNum);
+		BoardDTO boardDTO = boardService.getBoard(boardNum);
+		model.addAttribute("board",boardDTO);
+		
+		return "board/read";
 	}
 }

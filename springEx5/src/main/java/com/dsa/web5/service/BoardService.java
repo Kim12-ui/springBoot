@@ -13,4 +13,6 @@ public interface BoardService {
 
 	List<BoardDTO> selectAllList();
 
+	BoardDTO getBoard(int boardNum);
+
 }
