@@ -18,6 +18,21 @@
 				width: 600px;
 			}
 		</style>
+		<script>
+			$(document).ready(function() {
+				// 글 추천
+				$('#likeButton').click(function() {
+					let boardNum = $(this).data('num');
+					location.href = 'like?boardNum=' + boardNum;
+				});
+				
+				// 글 수정
+				$('#updateButton').click(function() {
+					let boardNum = $(this).data('num');
+					location.href = "update?boardNum=" + boardNum;
+				});
+			});
+		</script>
 	</head>
 	<body>
 		<header>
@@ -59,15 +74,15 @@
 				<tr>
 					<th>파일첨부</th>
 					<td>
-						<a th:href="@{board/download(boardNum=${board.boardNum})}"
+						<a th:href="@{/board/download(boardNum=${board.boardNum})}"
 						   th:text="${board.originalName}"></a>
 					</td>
 				</tr>
 			</table>
 			<div th:if="${#authentication.name == board.memberId}">
-				<button id="likeButton" th:data-name="${board.boardNum}">추천</button>
-				<button id="updateButton" th:data-name="${board.boardNum}">수정</button>
-				<button id="deleteButton" th:data-name="${board.boardNum}">삭제</button>
+				<button id="likeButton" th:data-num="${board.boardNum}">추천</button>
+				<button id="updateButton" th:data-num="${board.boardNum}">수정</button>
+				<button id="deleteButton" th:data-num="${board.boardNum}">삭제</button>
 			</div>
 		</section>
 	</body>

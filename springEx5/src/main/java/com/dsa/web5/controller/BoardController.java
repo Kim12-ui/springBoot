@@ -17,6 +17,7 @@ import com.dsa.web5.dto.BoardDTO;
 import com.dsa.web5.security.AuthenticatedUser;
 import com.dsa.web5.service.BoardService;
 
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -55,7 +56,6 @@ public class BoardController {
 			@RequestParam(name = "upload", required = false) MultipartFile upload,
 			@AuthenticationPrincipal AuthenticatedUser user
 			) {
-		
 		boardDTO.setMemberId(user.getUsername());
 		log.debug("저장할 첨부파일 정보: {}", upload.getOriginalFilename());
 		log.debug("저장할 글 정보: {}", boardDTO);
@@ -99,4 +99,62 @@ public class BoardController {
 		
 		return "board/read";
 	}
+	
+	/**
+	 * 첨부파일 다운로드
+	 * @param boardNum		글번호
+	 * @return response		응답정보
+	 */
+	@GetMapping("download")
+	public void download(
+			@RequestParam("boardNum") Integer boardNum
+			, HttpServletResponse response
+			) {
+		log.debug("download 실행");
+		boardService.download(boardNum, response, uploadPath);
+	}
+	
+	/**
+	 * 추천 수 증가
+	 * @param boardNum
+	 * @return read.html
+	 */
+	@GetMapping("like")
+	public String like(
+			@RequestParam("boardNum") Integer boardNum
+			) {
+		try {
+			boardService.setLike(boardNum);
+			return "redirect:read?boardNum="+boardNum;
+		} catch (Exception e) {
+			return "redirect:listAll";
+		}
+	}
+	
+	/**
+	 * 게시글 수정 폼으로 이동
+	 * @param boardNum	수정할 글 정보
+	 * @param user		로그인한 사용자 정보
+	 * @param model
+	 * @return updateForm.html
+	 */
+	@GetMapping("update")
+	public String update(
+			@RequestParam("boardNum") int boardNum,
+			@AuthenticationPrincipal AuthenticatedUser user,
+			Model model
+			) {
+		try {
+			BoardDTO boardDTO = boardService.getBoardInfo(boardNum);
+			if(!user.getUsername().equals(boardDTO.getMemberId())) {
+				throw new RuntimeException("수정 권한이 없습니다");
+			}
+			model.addAttribute("board",boardDTO);
+			return "board/updateForm";			
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "redirect:listAll";
+		}
+	}
+	
 }
