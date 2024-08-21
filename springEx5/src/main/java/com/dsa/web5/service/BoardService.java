@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.dsa.web5.dto.BoardDTO;
+import com.dsa.web5.dto.ReplyDTO;
 
 import jakarta.servlet.http.HttpServletResponse;
 
@@ -22,5 +23,11 @@ public interface BoardService {
 	void setLike(Integer boardNum);
 
 	BoardDTO getBoardInfo(int boardNum);
+
+	void update(BoardDTO boardDTO, String username, String uploadPath, MultipartFile upload) throws Exception;
+
+	void delete(int boardNum, String username, String uploadPath) throws Exception;
+
+	void replyWrite(ReplyDTO replyDTO);
 
 }

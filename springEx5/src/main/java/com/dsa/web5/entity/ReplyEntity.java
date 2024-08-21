@@ -49,8 +49,8 @@ public class ReplyEntity {
 	private String contents;
 	
 	@CreatedDate
-	@Column(name = "created_date", columnDefinition = "timestamp default current_timestamp")
-	private LocalDateTime createdDate;
+	@Column(name = "create_date", columnDefinition = "timestamp default current_timestamp")
+	private LocalDateTime createDate;
 	
 	// 다대일 관계, 여러 댓글이 하나의 게시글에 속함
 	@ManyToOne(fetch = FetchType.LAZY)

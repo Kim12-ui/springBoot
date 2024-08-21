@@ -31,6 +31,20 @@
 					let boardNum = $(this).data('num');
 					location.href = "update?boardNum=" + boardNum;
 				});
+				
+				// 글 삭제
+				$('#deleteButton').click(function() {
+					let boardNum = $(this).data('num');
+					
+					// 삭제 확인 메시지
+				    if (confirm("삭제하시겠습니까?")) {
+				        // 사용자가 '확인'을 누른 경우
+				        location.href = "delete?boardNum=" + boardNum;
+				    } else {
+				        // 사용자가 '취소'를 누른 경우
+				        alert("삭제가 취소되었습니다.");
+				    }
+				});
 			});
 		</script>
 	</head>
@@ -84,6 +98,33 @@
 				<button id="updateButton" th:data-num="${board.boardNum}">수정</button>
 				<button id="deleteButton" th:data-num="${board.boardNum}">삭제</button>
 			</div>
+			
+			<br>
+			<!-- 리플 작성폼 -->
+			<div sec:authorize="isAuthenticated()">
+				<form th:action="@{/board/replyWrite}" method="post">
+					<input type="hidden" name="boardNum" th:value="${board.boardNum}">
+					<input type="text" name="contents" id="replyContents"
+						   style="width:500px;">
+					<input type="submit" value="작성">
+				</form>
+			</div>
+			
+			<!-- 리플 목록 출력 -->
+			<table class="reply">
+				<tr th:each="reply : ${board.replyList}">
+					<td class="replyid" th:text="${reply.memberId}"></td>
+					<td class="replytext" th:text="${reply.contents}"></td>
+					<td class="replydate" th:text="${#temporals.format(reply.createDate, 'yy.MM.dd.HH.mm')}"></td>
+					<td class="white" style="width : 80px;">
+						<span th:if="${#authentication.name == reply.memberId}">
+							<a th:href="@{replyDelete(replyNum=${reply.replyNum}, boardNum=${reply.boardNum})}">
+								<img th:src="@{/images/icon_delete.png}" alt="삭제">
+							</a>
+						</span>
+					</td>
+				</tr>
+			</table>
 		</section>
 	</body>
 </html>

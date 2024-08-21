@@ -13,8 +13,10 @@ import org.springframework.util.FileCopyUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.dsa.web5.dto.BoardDTO;
+import com.dsa.web5.dto.ReplyDTO;
 import com.dsa.web5.entity.BoardEntity;
 import com.dsa.web5.entity.MemberEntity;
+import com.dsa.web5.entity.ReplyEntity;
 import com.dsa.web5.repository.BoardRepository;
 import com.dsa.web5.repository.MemberRepository;
 import com.dsa.web5.repository.ReplyRepository;
@@ -104,6 +106,15 @@ public class BoardServiceImpl implements BoardService {
 		
 		// 존재한다면 entity의 정보를 dto에 옮겨담기
 		BoardDTO dto = convertDTO(entity);
+		
+		// 리플 정보 가져오기
+		List<ReplyDTO> replyDTOList = new ArrayList<ReplyDTO>();
+		for (ReplyEntity replyEntity : entity.getReplyList()) {
+			ReplyDTO replyDTO = convertToReplyDTO(replyEntity);
+			replyDTOList.add(replyDTO);
+		}
+		dto.setReplyList(replyDTOList);
+		
 		// dto 리턴
 		return dto;
 	}
@@ -190,8 +201,90 @@ public class BoardServiceImpl implements BoardService {
 				
 				// 존재한다면 entity의 정보를 dto에 옮겨담기
 				BoardDTO dto = convertDTO(entity);
+				
 				// dto 리턴
 				return dto;
+	}
+
+	/**
+	 * 게시글 수정처리
+	 * @param boardDTO
+	 * @param username		로그인한 유저 ID
+	 * @param uploadPath 	첨부파일 저장할 경로
+	 * @param upload		첨부파일
+	 */
+	@Override
+	public void update(BoardDTO boardDTO, String username, String uploadPath, MultipartFile upload) throws Exception {
+		BoardEntity boardEntity = boardRepository.findById(boardDTO.getBoardNum())
+				.orElseThrow(() -> new EntityNotFoundException("게시글이 없습니다."));
+		if (!boardEntity.getMember().getMemberId().equals(username)) {
+			throw new RuntimeException("수정 권한이 없습니다.");
+		}
+		
+		// 전달된 정보 수정
+		boardEntity.setTitle(boardDTO.getTitle());
+		boardEntity.setContents(boardDTO.getContents());
+		
+		// 업로드된 파일이 있으면 기존 파일 삭제하고 새로 저장
+		if (upload != null && !upload.isEmpty()) {
+			if (boardEntity.getFileName() != null) {
+				fileManager.deleteFile(uploadPath, boardEntity.getFileName());
+			}
+			String fileName = fileManager.saveFile(uploadPath, upload);
+			boardEntity.setOriginalName(upload.getOriginalFilename());
+			boardEntity.setFileName(fileName);
+		} else {
+			if (boardEntity.getFileName() != null) {
+				fileManager.deleteFile(uploadPath, boardEntity.getFileName());
+			}
+			boardEntity.setOriginalName(null);
+			boardEntity.setFileName(null);
+		}
+	}
+	
+	/**
+	 * 게시글 삭제
+	 * @param boardNum		삭제할 글번호
+	 * @param userName		로그인 중인 아이디
+	 * @param uploadPath	첨부파일이 존재하는 디렉토리 경로
+	 */
+	@Override
+	public void delete(int boardNum, String username, String uploadPath) throws Exception {
+		BoardEntity boardEntity = boardRepository.findById(boardNum)
+				.orElseThrow(() -> new EntityNotFoundException("게시글이 없습니다."));
+		
+		if (!boardEntity.getMember().getMemberId().equals(username)) {
+			throw new RuntimeException("삭제 권한이 없습니다");
+		}
+		if (boardEntity.getFileName() != null) {
+			fileManager.deleteFile(uploadPath, boardEntity.getFileName());
+		}
+		boardRepository.delete(boardEntity);
+	}
+	
+	/**
+	 * @param replyDTO 작성한 리플 정보
+	 * @throws EntityNotFoundException
+	 */
+	@Override
+	public void replyWrite(ReplyDTO replyDTO) {
+		// 회원정보를 DB로부터 조회 및 가져오기
+		MemberEntity memberEntity = memberRepository.findById(replyDTO.getMemberId())
+				.orElseThrow(() -> new EntityNotFoundException("해당 아이디가 없습니다."));
+		
+		// 글정보를 DB로부터 조회 및 가져오기
+		BoardEntity boardEntity = boardRepository.findById(replyDTO.getBoardNum())
+				.orElseThrow(() -> new EntityNotFoundException("해당 아이디가 없습니다."));
+		
+		// ReplyEntity에 위의 데이터 집어넣기
+		ReplyEntity replyEntity = ReplyEntity.builder()
+								  .board(boardEntity)
+								  .member(memberEntity)
+								  .contents(replyDTO.getContents())
+								  .build();
+		
+		// Jpa 메서드를 통해 DB에 저장하기
+		replyRepository.save(replyEntity);
 	}
 	
 	/**
@@ -217,4 +310,19 @@ public class BoardServiceImpl implements BoardService {
 			   .build();
 	}
 	
+	/**
+	 * ReplyEntity 객체를 ReplyDTO 객체로 변환
+	 * @param replyEntity	리플정보 Entity 객체
+	 * @return dto			리플정보 DTO 객체
+	 */
+	private ReplyDTO convertToReplyDTO(ReplyEntity replyEntity) {
+		return ReplyDTO.builder()
+				.replyNum(replyEntity.getReplyNum())
+				.boardNum(replyEntity.getBoard().getBoardNum())
+				.memberId(replyEntity.getMember().getMemberId())
+				.memberName(replyEntity.getMember().getMemberName())
+				.contents(replyEntity.getContents())
+				.createDate(replyEntity.getCreateDate())
+				.build();
+	}
 }
