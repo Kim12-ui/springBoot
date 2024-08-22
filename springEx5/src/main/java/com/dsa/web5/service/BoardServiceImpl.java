@@ -7,6 +7,10 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.util.FileCopyUtils;
@@ -42,6 +46,45 @@ public class BoardServiceImpl implements BoardService {
 	private final MemberRepository memberRepository;
 	private final ReplyRepository replyRepository;
 	private final FileManager fileManager;
+	
+	/**
+	 * DB에서 조회한 게시글 정보인 BoardEntity 객체를 BoardDTO 객체로 변환
+	 * @param entity 객체
+	 * @return dto 객체
+	 */
+	private BoardDTO convertDTO(BoardEntity entity) {
+		return BoardDTO.builder()
+			   .boardNum(entity.getBoardNum())
+			   .memberId(entity.getMember() != null
+			   ? entity.getMember().getMemberId() : null)
+			   .memberName(entity.getMember() != null
+			   ? entity.getMember().getMemberName() : null)
+			   .title(entity.getTitle())
+			   .contents(entity.getContents())
+			   .viewCount(entity.getViewCount())
+			   .likeCount(entity.getLikeCount())
+			   .originalName(entity.getOriginalName())
+			   .fileName(entity.getFileName())
+			   .createDate(entity.getCreateDate())
+			   .updateDate(entity.getUpdateDate())
+			   .build();
+	}
+	
+	/**
+	 * ReplyEntity 객체를 ReplyDTO 객체로 변환
+	 * @param replyEntity	리플정보 Entity 객체
+	 * @return dto			리플정보 DTO 객체
+	 */
+	private ReplyDTO convertToReplyDTO(ReplyEntity replyEntity) {
+		return ReplyDTO.builder()
+				.replyNum(replyEntity.getReplyNum())
+				.boardNum(replyEntity.getBoard().getBoardNum())
+				.memberId(replyEntity.getMember().getMemberId())
+				.memberName(replyEntity.getMember().getMemberName())
+				.contents(replyEntity.getContents())
+				.createDate(replyEntity.getCreateDate())
+				.build();
+	}
 	
 	/**
 	 * 글 작성
@@ -286,43 +329,101 @@ public class BoardServiceImpl implements BoardService {
 		// Jpa 메서드를 통해 DB에 저장하기
 		replyRepository.save(replyEntity);
 	}
-	
+
 	/**
-	 * DB에서 조회한 게시글 정보인 BoardEntity 객체를 BoardDTO 객체로 변환
-	 * @param entity 객체
-	 * @return dto 객체
+	 * 리플 삭제
+	 * @param replyNum 삭제할 리플 번호
+	 * @param username 로그인한 아이디
 	 */
-	private BoardDTO convertDTO(BoardEntity entity) {
-		return BoardDTO.builder()
-			   .boardNum(entity.getBoardNum())
-			   .memberId(entity.getMember() != null
-			   ? entity.getMember().getMemberId() : null)
-			   .memberName(entity.getMember() != null
-			   ? entity.getMember().getMemberName() : null)
-			   .title(entity.getTitle())
-			   .contents(entity.getContents())
-			   .viewCount(entity.getViewCount())
-			   .likeCount(entity.getLikeCount())
-			   .originalName(entity.getOriginalName())
-			   .fileName(entity.getFileName())
-			   .createDate(entity.getCreateDate())
-			   .updateDate(entity.getUpdateDate())
-			   .build();
+	@Override
+	public void replyDelete(Integer replyNum, String username) {
+		ReplyEntity replyEntity = replyRepository.findById(replyNum)
+				.orElseThrow(() -> new EntityNotFoundException());
+		
+		if (!replyEntity.getMember().getMemberId().equals(username)) {
+			throw new RuntimeException("삭제 권한이 없습니다.");
+		}
+		
+		replyRepository.delete(replyEntity);
+	}
+
+	/**
+	 * (검색 후 지정한 페이지 분량의) 글 목록 조회
+	 * @param page			// 현재 페이지
+	 * @param pageSize		// 한 페이지당 글 수
+	 * @param searchType	// 검색 대상, 기준
+	 * @param searchWord	// 검색어
+	 * @return 한 페이지의 글 목록
+	 */
+	@Override
+	public Page<BoardDTO> getList(int page, int pageSize, 
+			String searchType, String searchWord) {
+		//index는 0부터이므로
+		page--;
+		
+		/*
+			import org.springframework.data.domain.Page;
+			import org.springframework.data.domain.PageRequest;
+			import org.springframework.data.domain.Pageable;
+		 */
+		/*
+			Pageable : 페이징과 정렬을 위한 페이지 조회 조건을 정의하는 인터페이스
+					   페이징 쿼리시 몇 번째 페이지를 조회할 것인지,
+					   한 페이지에 몇 개의 항목을 포함할 것인지,
+					   어떤 필드 기준으로 정렬할 것인지를 명시.
+					   PageRequest.of()를 통해 Pageable 객체를 생성
+			PageRequest : Pageable 인터페이스의 일반적인 구현체.
+						  페이지 번호, 페이지 크기, 정렬 정보를 받아 페이징 처리
+		 */
+		// 페이지 조회 조건 (현재 페이지, 페이지당 글수, 정렬 기준 컬럼 및 정렬 순서
+		Pageable pageable = PageRequest.of(
+				page, pageSize, Sort.by("boardNum").descending());
+		
+		Page<BoardEntity> entityPage = null;
+		
+		switch (searchType) {
+			case "title" :
+				// JPA 메서드 네이밍 방식
+				entityPage = boardRepository
+							 .findByTitleContaining(searchWord, pageable);
+				
+//				// JPQL 방식
+//				entityPage = boardRepository.selectMemberId(searchWord, pageable);
+				break;
+			case "contents" :
+				entityPage = boardRepository
+							 .findByContentsContaining(searchWord, pageable);
+				break;
+			case "id" :
+				entityPage = boardRepository
+							 .findByMember_MemberId(searchWord, pageable);
+				break;
+			case "all" :
+				entityPage = boardRepository
+							 .findByTitleContainingOrContentsContainingOrMemberMemberIdContaining(
+							 searchWord, searchWord, searchWord, pageable
+							 );
+				break;
+			default :
+				entityPage = boardRepository.findAll(pageable);
+				break;
+		}
+		
+		List<BoardDTO> boardDTOList = new ArrayList<>();
+		for (BoardEntity entity : entityPage) {
+			// BoardEntity를 BoardDTO로 변환
+			BoardDTO dto = convertDTO(entity);
+			boardDTOList.add(dto);
+		}
+		
+		// PageImpl 클래스는 Page 인터페이스의 구현체.
+		// 변환된 boardDTOList와 Pageable, 총 요소 수를 사용하여
+		// 새로운 Page<BoardDTO> 객체를 생성
+		Page<BoardDTO> boardDTOPage = new PageImpl<>(
+				boardDTOList, entityPage.getPageable(), 
+				entityPage.getTotalElements());
+		
+		return boardDTOPage;
 	}
 	
-	/**
-	 * ReplyEntity 객체를 ReplyDTO 객체로 변환
-	 * @param replyEntity	리플정보 Entity 객체
-	 * @return dto			리플정보 DTO 객체
-	 */
-	private ReplyDTO convertToReplyDTO(ReplyEntity replyEntity) {
-		return ReplyDTO.builder()
-				.replyNum(replyEntity.getReplyNum())
-				.boardNum(replyEntity.getBoard().getBoardNum())
-				.memberId(replyEntity.getMember().getMemberId())
-				.memberName(replyEntity.getMember().getMemberName())
-				.contents(replyEntity.getContents())
-				.createDate(replyEntity.getCreateDate())
-				.build();
-	}
 }

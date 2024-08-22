@@ -3,6 +3,7 @@ package com.dsa.web5.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -33,7 +34,13 @@ public class BoardController {
 	// application.properties 파일의 게시판 관련 설정값
 	// import org.springframework.beans.factory.annotation.Value; 실행
 	@Value("${board.uploadPath}")
-	String uploadPath;
+	String uploadPath;	// 첨부파일 저장 경로
+	
+	@Value("${board.pageSize}")
+	int pageSize;		// 페이지당 글 수
+	
+	@Value("${board.linkSize}")
+	int linkSize;		// 페이지 이동 링크 수, 페이지 번호 링크의 개수
 	
 	/**
 	 * 글쓰기 폼으로 이동
@@ -71,10 +78,54 @@ public class BoardController {
 	}
 	
 	/**
+	 * 게시판 전체 글 목록. 페이징O
+	 * @param model
+	 * @param page			현재 페이지(default: 0)
+	 * @param searchType	검색 대상(default: "")
+	 * @param searchWord	검색어(default: "")
+	 */
+	@GetMapping("list")
+	public String list(
+			Model model,
+			@RequestParam(name = "page", defaultValue="1") int page,
+			@RequestParam(name = "searchType", defaultValue="") String searchType,
+			@RequestParam(name = "searchWord", defaultValue="") String searchWord
+			) {
+		
+		log.debug("properties값 : pageSize={}, linkSize={}, uploadPath"
+				, pageSize, linkSize, uploadPath);
+		log.debug("요청 파라미터 : page={}, searchType={}, searchWord={}"
+				, page, searchType, searchWord);
+		
+		// import org.springframework.data.domain.Page; 실행
+		// Page, Pageable : Spring Data JPA에서 페이징과 관련된 작업을
+		// 					간편하게 처리하기 위한 클래스 및 인터페이스
+		// 현재페이지, 페이지당 글수, 검색대상, 검색어
+		Page<BoardDTO> boardPage = boardService.getList(
+				page, pageSize, searchType, searchWord);
+		
+		log.debug("목록 정보 getContent(): {}", boardPage.getContent());
+		log.debug("현재페이지 getNumber(): {}", boardPage.getNumber());
+		log.debug("전체 개수 getTotalElements(): {}", boardPage.getTotalElements());
+		log.debug("전체 페이지수 getTotalPages(): {}", boardPage.getTotalPages());
+		log.debug("한페이지당 글 수 getSize(): {}", boardPage.getSize());
+		log.debug("이전페이지 존재 여부 hasPrevious(): {}", boardPage.hasPrevious());
+		log.debug("다음페이지 존재 여부 hasNext(): {}", boardPage.hasNext());
+		
+		model.addAttribute("boardPage",boardPage); 		// 출력할 글정보
+		model.addAttribute("page",page);				// 현재 페이지
+		model.addAttribute("linkSize", linkSize);		// 페이지 이동 링크 수
+		model.addAttribute("SearchType", searchType);	// 검색 기준
+		model.addAttribute("searchWord", searchWord);	// 검색어
+		
+		return "board/list";
+	}
+	
+	/**
 	 * 게시판 전체 목록 조회. 페이징X
 	 * @param boardList 게시판
 	 * @param model
-	 * @return
+	 * @return listAll.html
 	 */
 	@GetMapping("listAll")
 	public String listAll(Model model) {
@@ -217,6 +268,25 @@ public class BoardController {
 		replyDTO.setMemberId(user.getUsername()); // 리플 작성자 정보 추가
 		boardService.replyWrite(replyDTO);
 		
+		return "redirect:read?boardNum="+replyDTO.getBoardNum();
+	}
+	
+	/**
+	 * 리플 삭제
+	 * @param replyDTO 삭제할 리플번호와 본문 글번호
+	 * @param user 로그인한 사용자 정보
+	 * @return read.html
+	 */
+	@GetMapping("replyDelete")
+	public String replyDelete(
+			@ModelAttribute ReplyDTO replyDTO,
+			@AuthenticationPrincipal AuthenticatedUser user
+			) {
+		try {
+			boardService.replyDelete(replyDTO.getReplyNum(), user.getUsername());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return "redirect:read?boardNum="+replyDTO.getBoardNum();
 	}
 }
