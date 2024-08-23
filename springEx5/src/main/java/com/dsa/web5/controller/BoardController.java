@@ -101,8 +101,7 @@ public class BoardController {
 		// Page, Pageable : Spring Data JPA에서 페이징과 관련된 작업을
 		// 					간편하게 처리하기 위한 클래스 및 인터페이스
 		// 현재페이지, 페이지당 글수, 검색대상, 검색어
-		Page<BoardDTO> boardPage = boardService.getList(
-				page, pageSize, searchType, searchWord);
+		Page<BoardDTO> boardPage = boardService.getList(page, pageSize, searchType, searchWord);
 		
 		log.debug("목록 정보 getContent(): {}", boardPage.getContent());
 		log.debug("현재페이지 getNumber(): {}", boardPage.getNumber());

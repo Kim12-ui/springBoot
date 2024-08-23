@@ -24,12 +24,19 @@ public interface BoardRepository extends JpaRepository<BoardEntity, Integer> {
 	Page<BoardEntity> findByMember_MemberId
 	(String searchWord, Pageable pageable);
 
+	// JPQL을 통해 아이디에서 검색 후 페이지 분량 리턴
+	@Query("SELECT b FROM BoardEntity b WHERE b.member.memberId LIKE %:searchWord% ")
+	Page<BoardEntity> selectMemberId(@Param("searchWord") String searchWord, Pageable pageable);
+	
 	// 전체 검색으로 1페이지 분량 리턴
 	Page<BoardEntity> findByTitleContainingOrContentsContainingOrMemberMemberIdContaining
 	(String searchWord, String searchWord2, String searchWord3, Pageable pageable);
 
-//	// JPQL을 통해 아이디에서 검색 후 페이지 분량 리턴
-//	@Query("SELECT b FROM BoardEntity b WHERE b.member.memberId LIKE %:searchWord% ")
-//	Page<BoardEntity> selectMemberId(@Param("searchWord") String searchWord, Pageable pageable);
-
+	// JPQL을 통해 all 카테고리를 선택
+	@Query("SELECT board FROM BoardEntity board "
+			+ "WHERE board.title LIKE %:searchWord% "
+			+ "OR board.contents LIKE %:searchWord% "
+			+ "OR board.member.memberId LIKE %:searchWord% "
+			+ "ORDER BY board.boardNum DESC")
+	Page<BoardEntity> searchAll(@Param("searchWord") String searchWord, Pageable pageable);
 }

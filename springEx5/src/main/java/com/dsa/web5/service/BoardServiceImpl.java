@@ -387,22 +387,26 @@ public class BoardServiceImpl implements BoardService {
 				entityPage = boardRepository
 							 .findByTitleContaining(searchWord, pageable);
 				
-//				// JPQL 방식
-//				entityPage = boardRepository.selectMemberId(searchWord, pageable);
 				break;
 			case "contents" :
 				entityPage = boardRepository
 							 .findByContentsContaining(searchWord, pageable);
 				break;
 			case "id" :
-				entityPage = boardRepository
-							 .findByMember_MemberId(searchWord, pageable);
+//				entityPage = boardRepository
+//							 .findByMember_MemberId(searchWord, pageable);
+				
+				// JPQL 방식
+				entityPage = boardRepository.selectMemberId(searchWord, pageable);
 				break;
 			case "all" :
-				entityPage = boardRepository
-							 .findByTitleContainingOrContentsContainingOrMemberMemberIdContaining(
-							 searchWord, searchWord, searchWord, pageable
-							 );
+//				entityPage = boardRepository
+//							 .findByTitleContainingOrContentsContainingOrMemberMemberIdContaining(
+//							 searchWord, searchWord, searchWord, pageable
+//							 );
+				
+				// JPQL 방식
+				entityPage = boardRepository.searchAll(searchWord,pageable);
 				break;
 			default :
 				entityPage = boardRepository.findAll(pageable);

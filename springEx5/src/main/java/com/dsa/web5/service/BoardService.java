@@ -8,7 +8,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.dsa.web5.dto.BoardDTO;
 import com.dsa.web5.dto.ReplyDTO;
-import com.dsa.web5.security.AuthenticatedUser;
 
 import jakarta.servlet.http.HttpServletResponse;
 
