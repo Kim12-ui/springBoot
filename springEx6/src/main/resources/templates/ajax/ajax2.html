@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>Ajax2</title>
+	<script th:src="@{/js/jquery-3.7.1.min.js}"></script>
+	<script>
+		$(document).ready(function() {
+			
+			$('#formButton1').click(function() {
+				// 폼의 데이터들 읽어오기
+				let n = $('#name1').val();
+				let a = $('#age1').val();
+				let p = $('#phone1').val();
+				
+				// 유효성 검사
+				if (n=='') {
+					alert('이름을 입력하세요');
+					return;
+				}
+				if (a==''||isNaN(a)) {
+					alert('나이를 숫자로 입력하세요.');
+					return;
+				}
+				
+				// 사용자가 입력한 내용을 서버로 전송
+				$.ajax({
+					url : 'insert1',
+					type : 'post',
+					data: {name : n, age : a, phone : p},
+					success : function() {
+						alert('저장되었습니다.');
+						$('#name1').val('');
+						$('#age1').val('0');
+						$('#phone1').val('');
+					},
+					error : function(e) {
+						alert('저장 실패');
+					}
+				});
+			});
+			
+			$('#formButton2').click(function() {
+				let n = $('#name2').val();
+				let a = $('#age2').val();
+				let p = $('#phone2').val();
+				
+				let ob = {name : n, age : a, phone : p};
+				
+				$.ajax({
+					url : 'insert2',
+					type : 'post',
+					data : ob,
+					success : function() {
+						alert('저장되었습니다.');
+						$('#name2').val('');
+						$('#age2').val(0);
+						$('#phone2').val('');
+					},
+					error : function() {
+						alert('저장 실패');
+					}
+				});
+			});
+			
+			$('#formButton3').click(function() {
+				let n = $('#name3').val();
+				let a = $('#age3').val();
+				let p = $('#phone3').val();
+				
+				let ob = {name : n, age : a, phone : p};
+				
+				$.ajax({
+					url : 'insert3',
+					type : 'post',
+					// 폼 데이터를 URL 인코딩된 문자열로 직렬화
+					// ex. 경로?name=john&age=30&phone=1234
+					data : $('#writeForm3').serialize(),
+					success : function() {
+						alert('저장되었습니다.');
+						$('#name3').val('');
+						$('#age3').val(0);
+						$('#phone3').val('');
+					},
+					error : function() {
+						alert('저장 실패');
+					}
+				});
+			});
+			
+			// 버튼 이벤트 등록 (서버에서 객체 받기 요청)
+			$('#bt1').on('click',getObject1);
+			$('#bt2').on('click',getObject2);
+		});
+		
+		// 서버에서 객체 받기 요청 (String으로 받기)
+		function getObject1() {
+			$.ajax({
+				url : 'getObject',
+				type : 'get',
+				dataType : 'text',
+				success : function(ob) {
+					$('#outputDiv1').html(ob);
+				},
+				error : function(e) {
+					alert(JSON.stringify(e));
+				}
+			});
+		}
+		
+		// 서버에서 객체 받기 요청 (JSON으로 받기)
+		function getObject2() {
+			$.ajax({
+				url : 'getObject',
+				type : 'get',
+				dataType : 'json',
+				success : function(ob) {
+					let str = ` 받은 객체 : ${ob}<br>
+								이름 : ${ob.name}<br>
+								나이 : ${ob.age}<br>
+								전화 : ${ob.phone}
+							  `;
+					$('#outputDiv2').html(str);
+				},
+				error : function(e) {
+					alert(JSON.stringify(e));
+				}
+			});
+		}
+	</script>
+</head>
+<body>
+	<h1>[ Ajax 테스트2 객체 보내기/받기 ]</h1>
+	
+	<p>1. 서버로 각각의 Parameter 전달</p>
+	<form>
+		이름 <input type="text" id="name1"><br>
+		나이 <input type="number" id="age1"><br>
+		전화 <input type="text" id="phone1"><br>
+		<input type="button" id="formButton1" value="저장">
+	</form>
+	
+	<p>2. 서버로 DTO객체 전달 1</p>
+	<form>
+		이름 <input type="text" id="name2"><br>
+		나이 <input type="number" id="age2"><br>
+		전화 <input type="text" id="phone2"><br>
+		<input type="button" id="formButton2" value="저장">
+	</form>
+	
+	<p>3. 서버로 DTO객체 전달 2</p>
+	<form id="writeForm3">
+		이름 <input type="text" id="name3" name="name"><br>
+		나이 <input type="number" id="age3" name="age"><br>
+		전화 <input type="text" id="phone3" name="phone"><br>
+		<input type="button" id="formButton3" value="저장">
+	</form>
+	
+	<p>4. 서버로부터 DTO객체의 값을 String으로 받기</p>
+	<p><input type="button" id="bt1" value="서버에서 객체 받기"></p>
+	<div id="outputDiv1"></div>
+	
+	<p>5. 서버로부터 DTO객체의 값을 JSON으로 받기</p>
+	<p><input type="button" id="bt2" value="서버에서 객체 받기"></p>
+	<div id="outputDiv2"></div>
+</body>
+</html>

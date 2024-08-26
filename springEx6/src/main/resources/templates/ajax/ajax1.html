@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>Ajax1</title>
+	<script th:src="@{/js/jquery-3.7.1.min.js}"></script>
+	<script>
+		$(document).ready(function() {
+			$('#equalsButton').click(test6);
+		});
+	
+		function test1() {
+			alert('test1() 함수 실행');
+			
+			$.ajax({
+				url: 'ajaxTest1',		// 서버의 요청경로
+				type: 'get',			// 요청 메서드
+				success: function() {	// 요청이 성공적으로 완료되었을때
+					alert('실행 성공');	// 호출되는 콜백함수
+				},
+				error: function(e) {		// 요청이 실패했을때
+					alert('실행 실패');		// 호출되는 콜백함수
+					alert(JSON.stringify(e));
+				}
+			});
+		}
+		
+		function test2() {
+			$.ajax({
+				url: 'ajaxTest2',
+				type: 'post',
+				data: {str: '클라이언트에서 보낸 메세지'}, // 서버에 전송할 데이터 지정
+				success: function() {
+					alert('실행 성공');
+				},
+				error: function(e) {
+					alert('실행 실패');
+				}
+			});
+		}
+		
+		function test3() {
+			$.ajax({
+				url: 'ajaxTest3',
+				type: 'get',
+				dataType: 'text', // 서버로부터 반환되는 데이터 형식을 지정
+								  // 받을 데이터타입 text, json
+								  // (가능한 값 : json, xml, html, text...)
+				success: function(msg)  {
+					alert(msg);
+				},
+				error: function(e) {
+					alert('실행 실패');
+				}
+			});
+		}
+		
+		function test4() {
+			let numData = {num1: $('#num1').val(), num2: $('#num2').val()};
+			
+			$.ajax({
+				url: 'ajaxTest4',
+				type: 'post',
+				data: numData,
+				dataType: 'text',
+				success: function(msg) {
+					$('#num3').val(msg);
+				},
+				error: function(e) {
+					alert('계산 실패');
+				}
+			});
+		}
+		
+		function test5() {
+			let numData = {num4: $('#num4').val(), num5: $('#num5').val()};
+			
+			$.ajax({
+				url: 'ajaxTest5',
+				type: 'post',
+				data: numData,
+				dataType: 'text',
+				success: function(msg) {
+					$('#num6').val(msg);
+				},
+				error: function(e) {
+					alert(e.responseText);
+				}
+			});
+		}
+		
+		function test6() {
+			let numData = {
+				num7 : $('#num7').val(), 
+				num8 : $('#num8').val(),
+				op : $('#op').val()
+			};
+			
+			$.ajax({
+				url : 'ajaxTest6',
+				type : 'post',
+				data : numData,
+				success : function(msg) {	// 요청 성공시
+					$('#num9').val(msg);
+				},
+				error : function(e) {		// 요청 실패시
+					alert(e.responseText);
+				},
+				complete : function() {		// 요청 완료시
+					alert('요청 완료');	
+				}
+			});
+		}
+	</script>
+</head>
+<body>
+	<!-- 
+		AJAX(Asynchronous JavaScript and XML) :
+			웹페이지에서 동적으로 데이터를 주고받을 수 있게 해주는 기능
+			- 비동기 통신 (Asynchronous Communication)
+				: 웹 페이지가 서버에 요청을 보내고 응답을 받을 때,
+				  페이지 전체를 새로고침하지 않고도 필요한 데이터만을 받아와
+				  페이지 일부를 업데이트
+			- 요청과 결과의 처리가 동시에 이루어지지 않고, 요청을 보낸 뒤 결과가
+			  준비되면 나중에 그 결과를 처리하는 방식
+	 -->
+	<h1>[ Ajax 테스트1 ]</h1>
+	
+	<p><a href="javascript:test1()">서버로 Ajax 요청 보내기</a></p>
+	<p><a href="javascript:test2()">서버로 문자열 보내기</a></p>
+	<p><a href="javascript:test3()">서버에서 문자열 받기</a></p>
+	<p><a href="javascript:test4()">값 전달하여 계산하기1</a></p>
+	<p>
+		<input type="text" id="num1">
+		+
+		<input type="text" id="num2">
+		=
+		<input type="text" id="num3">
+	</p>
+	<br>
+	
+	<p><a href="javascript:test5()">값 전달하여 계산하기2</a></p>
+	<p>
+		<input type="text" id="num4">
+		/
+		<input type="text" id="num5">
+		=
+		<input type="text" id="num6">
+	</p>
+	<br>
+	
+	<p>값 전달하여 계산하기3</p>
+	<p>
+		<input type="text" id="num7">
+		<select id="op">
+			<option value="">연산자 선택</option>
+			<option value="+">+</option>
+			<option value="-">-</option>
+			<option value="*">*</option>
+			<option value="/">/</option>
+		</select>
+		<input type="text" id="num8">
+		<button id="equalsButton">=</button>
+		<input type="text" id="num9">
+	</p>
+	<br>
+</body>
+</html>
