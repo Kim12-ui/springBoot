@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>아이디 중복확인</title>
+	<script th:src="@{/js/jquery-3.7.1.min.js}"></script>
+	<script>
+	$(document).ready(function() {
+		$('#id').keyup(function() {
+			let idValue = $('#id').val();
+			
+			if (idValue.length < 3 || idValue.length > 10) {
+				$('#result').html("id는 3~10자입니다.");
+				return;
+			} else {
+				$('#result').html('');
+			}
+			
+			$.ajax({
+				url : 'idCheck',
+				type : 'post',
+				data : {idValue : idValue},
+				success : function(result) {
+					if (!result) {	
+						$('#result').html("사용 불가능한 아이디입니다.");
+					} else {
+						$('#result').html("사용 가능한 아이디입니다.");
+					}
+				},
+				error: function() {
+					alert('실행 실패');
+				}
+			});
+		});
+	});
+	</script>
+</head>
+<body>
+	<h1>[ ID 중복 확인 ]</h1>
+	
+	ID<input type="text" id="id"><div id="result"></div><br>
+	이름<input type="text" id="name"><br>
+</body>
+</html>

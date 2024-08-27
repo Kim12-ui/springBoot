@@ -88,9 +88,12 @@
 				});
 			});
 			
-			// 버튼 이벤트 등록 (서버에서 객체 받기 요청)
+			// 버튼 이벤트 등록
 			$('#bt1').on('click',getObject1);
 			$('#bt2').on('click',getObject2);
+			$('#bt3').on('click',getList);
+			$('#bt4').on('click',sendArray);
+			$('#bt5').on('click',sendObjectArray);
 		});
 		
 		// 서버에서 객체 받기 요청 (String으로 받기)
@@ -124,6 +127,88 @@
 				},
 				error : function(e) {
 					alert(JSON.stringify(e));
+				}
+			});
+		}
+		
+		// 서버에서 리스트 받기 요청
+		function getList() {
+			$.ajax({
+				url : 'getList',
+				type : 'get',
+				dataType : 'json',
+				success : function(list) {
+					let str = `<table>`;
+					
+					$(list).each(function(idx, ob) {
+						str += `<tr>
+								<td>${idx}</td>
+								<td>${ob.name}</td>
+								<td>${ob.age}</td>
+								<td>${ob.phone}</td>
+								</tr>`;
+					});
+					
+					str += '</table>';
+					
+					$('#outputDiv3').html(str);
+				},
+				error: function(e) {
+					alert('실패');
+				}
+			});
+		}
+		
+		// 서버로 배열 보내기
+		function sendArray() {
+			let ar = ['aaa','bbb','ccc'];
+			
+			$.ajax({
+				url : 'sendArray',
+				type : 'post',
+				/*
+					traditional : true >
+						배열을 ar=aaa&ar=bbb&ar=ccc로 변환
+					traditional : false >
+						배열을 ar[]=aaa&ar[]=bbb&ar[]=ccc로 변환
+				*/
+				traditional : true,
+				data : {ar : ar},
+				success : function() {
+					alert('저장 성공');
+				},
+				error : function() {
+					alert('저장 실패');
+				}
+			});
+		}
+		
+		// 클라이언트 - 서버 JSON 주고 받기
+		function sendObjectArray() {
+			let ar = [
+				{name : 'aaa', age : 11, phone : '1111'},
+				{name : 'bbb', age : 22, phone : '2222'}
+			];
+			
+			$.ajax({
+				url : 'sendObjectArray',
+				type : 'post',
+				data : {ar: JSON.stringify(ar)},
+				success : function(str) {
+					alert('저장 성공');
+					let plist = JSON.parse(str);
+					
+					let result = '<table>';
+					$(plist).each(function(idx,person) {
+						result += `<tr>
+									<td>${idx}</td>
+									<td>${person.name}</td>
+									<td>${person.age}</td>
+									<td>${person.phone}</td>
+									</tr>`;
+					});
+					result += '</table>';
+					$('#outputDiv4').html(result);
 				}
 			});
 		}
@@ -163,5 +248,16 @@
 	<p>5. 서버로부터 DTO객체의 값을 JSON으로 받기</p>
 	<p><input type="button" id="bt2" value="서버에서 객체 받기"></p>
 	<div id="outputDiv2"></div>
+	
+	<p>6. 서버로부터 리스트 받기</p>
+	<p><input type="button" id="bt3" value="서버에서 리스트 받기"></p>
+	<div id="outputDiv3"></div>
+	
+	<p>7. 서버로 배열 보내기</p>
+	<p><input type="button" id="bt4" value="서버로 배열 보내기"></p>
+	
+	<p>8. 서버로 객체 배열 보내기</p>
+	<p><input type="button" id="bt5" value="서버로 객체배열 보내기"></p>
+	<div id="outputDiv4"></div>
 </body>
 </html>
