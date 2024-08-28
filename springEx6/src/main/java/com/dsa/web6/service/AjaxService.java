@@ -16,7 +16,7 @@ public class AjaxService {
 	@Autowired
 	MemberRepository mr;
 
-	public boolean idCheck(String idValue) {
-		return !mr.existsById(idValue);
+	public Boolean idDuplicate(String id) {
+		return mr.existsById(id);
 	}
 }
