@@ -19,7 +19,7 @@ import lombok.extern.slf4j.Slf4j;
 
 // RequiredArgsConstructor: final로 선언된 모든 멤버변수 및 @NonNull이 붙는 멤버변수를
 // 초기화 하는 생성자를 자동으로 생성
-@RequiredArgsConstructor
+@RequiredArgsConstructor 
 public class BasicTestController {
 
 	// 1. 필드주입

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<meta charset="UTF-8">
+<title>회원가입</title>
+<script th:src="@{/js/jquery-3.7.1.min.js}"></script>
+<script>
+	$(document).ready(
+			function() {
+
+				//가입폼의 submit 버튼을 클릭하면 실행됨
+				$('#joinForm').submit(
+						function() {
+							//아이디는 3 ~ 10자로 입력해야 한다.
+							if ($('#memberId').val().length < 3
+									|| $('#memberId').val().length > 10) {
+								alert('ID는 3 ~ 10자로 입력하세요.');
+								return false;
+							}
+							if ($('#memberPw').val().length < 3
+									|| $('#memberPw').val().length > 10) {
+								alert('비밀번호는 3 ~ 10자로 입력하세요.');
+								return false;
+							}
+							if ($('#memberName').val() == '') {
+								alert('이름을 입력하세요.');
+								return false;
+							}
+							//서버로 폼을 전송
+							return true;
+						});
+			});
+</script>
+</head>
+<body>
+	<h1>[ 회원가입 ]</h1>
+
+	<form id="join" th:action="@{/member/join}" method="post">
+		<table>
+			<tr>
+				<th>ID</th>
+				<td><input type="text" name="memberId" id="memberId"></td>
+			</tr>
+			<tr>
+				<th>Password</th>
+				<td><input type="password" name="memberPw" id="memberPw"></td>
+			</tr>
+			<tr>
+				<th>이름</th>
+				<td><input type="text" name="memberName" id="memberName"></td>
+			</tr>
+			<tr>
+				<th>닉네임</th>
+				<td><input type="text" name="memberNickName"
+					id="memberNickName"></td>
+			</tr>
+			<tr>
+				<th></th>
+				<td><input type="submit" value="가입"></td>
+			</tr>
+		</table>
+	</form>
+
+</body>
+</html>

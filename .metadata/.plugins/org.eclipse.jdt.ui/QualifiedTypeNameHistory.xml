@@ -24,4 +24,5 @@
     <fullyQualifiedTypeName name="jakarta.persistence.Id"/>
     <fullyQualifiedTypeName name="jakarta.transaction.Transactional"/>
     <fullyQualifiedTypeName name="java.util.List"/>
+    <fullyQualifiedTypeName name="net.datasa.test.domain.entity.MemberEntity"/>
 </qualifiedTypeNameHistroy>

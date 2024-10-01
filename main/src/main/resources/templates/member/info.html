@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<meta charset="UTF-8">
+<title>내 정보보기</title>
+<script th:src="@{/js/jquery-3.7.1.min.js}"></script>
+<script>
+	function loadFile(event) {
+		var image = document.getElementById('profile-image');
+		image.src = URL.createObjectURL(event.target.files[0]);
+	}
+
+	function resetForm() {
+		document.getElementById('password').value = '';
+		document.getElementById('confirm-password').value = '';
+		document.getElementById('name').value = '';
+		document.getElementById('nickname').value = '';
+	}
+
+	const isLoggedIn = true;
+
+	function checkLogin(event, redirectUrl) {
+		if (!isLoggedIn) {
+			event.preventDefault();
+			window.location.href = '/member/login';
+		} else {
+			window.location.href = redirectUrl;
+		}
+	}
+</script>
+
+<style>
+body {
+	font-family: Arial, sans-serif; /* 기본 글꼴 설정 */
+	margin: 0; /* 기본 마진 제거 */
+}
+
+.navbar {
+	display: flex; /* Flexbox를 사용하여 가로 정렬 */
+	justify-content: flex-start; /* 왼쪽 정렬 */
+	align-items: center; /* 세로 중앙 정렬 */
+	background-color: #ffffff; /* 배경색 */
+	padding: 0 20px; /* 좌우 패딩 */
+	height: 60px; /* 네비게이션 바 높이 */
+	border-bottom: 2px solid #3fc3ed; /* 아래쪽 선 추가 및 색상 설정 */
+}
+
+.navbar img {
+	height: 60px; /* 로고 높이 */
+	width: auto; /* 비율 유지 */
+	object-fit: contain; /* 비율 유지 */
+	margin-right: 20px; /* 오른쪽 여백 */
+}
+
+.navbar a {
+	color: #3fc3ed; /* 링크 색상 */
+	text-decoration: none; /* 밑줄 제거 */
+	padding: 14px 20px; /* 내부 여백 */
+	margin: 0 60px; /* 링크 간격 */
+	font-size: 25px; /* 글씨 크기 */
+}
+
+.dropdown {
+	display: none; /* 기본적으로 드롭다운을 숨김 */
+	position: absolute; /* 드롭다운 위치 설정 */
+	top: 100%; /* 네비게이션 바 바로 아래에 표시 */
+	left: 0; /* 왼쪽 정렬 */
+	background-color: white; /* 드롭다운 배경색 설정 */
+	min-width: 200px; /* 드롭다운의 최소 너비 설정 */
+	border: 1px solid #ccc; /* 드롭다운 테두리 설정 */
+	z-index: 1; /* 드롭다운이 다른 요소 위에 표시되도록 설정 */
+}
+
+.dropdown a {
+	color: #3fc3ed; /* 드롭다운 링크의 글자 색상 설정 */
+	padding: 12px 16px; /* 드롭다운 링크 내부 여백 설정 */
+	margin: 0;
+	text-decoration: none; /* 드롭다운 링크의 밑줄 제거 */
+	display: block; /* 드롭다운 링크를 블록 요소로 설정 */
+	white-space: nowrap; /* 항목이 한 줄로 표시되도록 설정 */
+}
+
+.dropdown a:hover {
+	background-color: #ddd; /* 드롭다운 링크에 마우스 오버 시 배경색 변경 */
+}
+
+.info-button:hover .dropdown {
+	display: block; /* "내 정보보기" 버튼에 마우스 오버 시 드롭다운 표시 */
+}
+
+.divider {
+	border: none; /* 기본 테두리 없애기 */
+	border-top: 2px solid #b0eba6; /* 선 색상과 두께 설정 */
+	margin: 20px 0; /* 위아래 여백 추가 */
+	width: 70%; /* 원하는 길이 설정 */
+}
+
+.profile-container {
+	display: flex;
+	margin: 20px 40px 20px; /* h1 위치를 위해 여백 조정 */
+}
+
+.profile-image {
+	width: 250px; /* 원의 너비 증가 */
+	height: 250px; /* 원의 높이 증가 */
+	border-radius: 50%;
+	overflow: hidden;
+	margin-left: 250px;
+	margin-right: 200px;
+	background-color: #ffffff;
+	cursor: pointer; /* 클릭 가능한 커서 스타일 */
+	display: flex; /* Flexbox를 사용해 중앙 정렬 */
+	justify-content: center; /* 가로 중앙 정렬 */
+	align-items: center; /* 세로 중앙 정렬 */
+	flex-direction: column; /* 자식 요소 세로 정렬 */
+	border: 5px solid #b0eba6; /* 선 두께와 색상 설정 */
+}
+
+.profile-image img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.profile-info {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+
+.profile-image-label {
+	text-align: center; /* 텍스트 중앙 정렬 */
+	margin-top: 5px; /* 여백을 조정하여 원 아래에 위치 */
+	font-size: 20px;
+	color: #b0eba6;
+	margin-left: 40px; /* 왼쪽 여백을 0으로 설정 */
+	margin-top: 10px; /* 위쪽 여백 추가 */
+}
+
+.profile-info input {
+	padding: 10px;
+	border: 2px solid #b0eba6; /* 선 색상 설정 */
+	border-radius: 20px; /* 둥글게 만들기 */
+	width: 300px; /* 입력창 너비 */
+}
+
+.button-group {
+	display: flex; /* 버튼들을 가로로 배치 */
+	gap: 10px; /* 버튼 간 간격 */
+}
+
+.profile-info button {
+	padding: 10px;
+	background-color: #b0eba6;
+	color: black;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+	border: 1px solid #000000;
+	width: 230px; /* 너비 조정 */
+}
+
+.profile-info button:hover {
+	background-color: #32a3c6;
+}
+
+.input-group {
+	display: flex;
+	align-items: center; /* 수직 정렬 */
+	margin-bottom: 40px; /* 각 그룹 간 여백을 늘림 */
+}
+
+.input-group label {
+	flex: 0 0 80px; /* 레이블 너비를 줄임 */
+	text-align: right; /* 오른쪽 정렬 */
+	margin-right: 20px; /* 레이블과 입력창 간 여백 */
+	margin-left: 10px; /* 왼쪽 여백 추가 */
+}
+</style>
+</head>
+<body>
+	<div class="navbar">
+		<a href="/home"> <img
+			src="/images/KakaoTalk_20240911_153147637_01.png" alt="로고"></a>
+		<div style="display: flex; align-items: center;">
+			<a href="#">인기패키지</a> <a href="#">여행 팁</a> <a href="#">커뮤니티</a>
+			<div class="info-button" style="position: relative;">
+				<a href="#">내 정보보기</a>
+				<div class="dropdown">
+					<a href="#" onclick="checkLogin(event, '/member/info')">내 정보 수정하기</a>
+					<a href="#" onclick="checkLogin(event, '/board/mylist')">나의 일정
+						공유방 리스트</a> <a href="#" onclick="checkLogin(event, '/community')">커뮤니티</a>
+					<a href="#" onclick="checkLogin(event, '/custom-route')">우리가 만든
+						동선</a>
+				</div>
+			</div>
+
+			<form action="/member/logout" method="post"
+				style="margin-left: 20px;">
+				<button type="submit"
+					style="background: none; border: none; color: #3fc3ed; font-size: 25px; cursor: pointer;">로그아웃</button>
+			</form>
+		</div>
+	</div>
+
+	<br>
+	<h1 th:text="${member.memberNickName} + '님의 개인정보수정'"
+		style="margin-top: 10px; margin-left: 100px">이름님의 개인정보수정</h1>
+
+	<hr class="divider">
+	<div class="profile-container"
+		style="display: flex; align-items: center;">
+		<div
+			style="display: flex; flex-direction: column; align-items: center;">
+			<div class="profile-image"
+				onclick="document.getElementById('file-input').click();">
+				<img id="profile-image"
+					th:src="${member.profileImage != null ? member.profileImage : '/path/to/default-image.jpg'}">
+			</div>
+			<input type="file" id="file-input" name="file" style="display: none;"
+				onchange="loadFile(event)">
+			<div class="profile-image-label">프로필 사진 바꾸기</div>
+		</div>
+		<div class="profile-info" style="margin-left: 20px;">
+			<form action="/member/info" method="post"
+				enctype="multipart/form-data">
+				<div class="input-group">
+					<label for="username">아이디:</label> <input type="text" id="username"
+						name="memberId" placeholder="아이디 입력" th:value="${member.memberId}"
+						readonly>
+				</div>
+				<div class="input-group">
+					<label for="password">비밀번호:</label> <input type="password"
+						id="password" name="memberPw" placeholder="비밀번호 입력">
+				</div>
+				<div class="input-group">
+					<label for="confirm-password">비밀번호 확인:</label> <input
+						type="password" id="confirm-password" name="confirmPw"
+						placeholder="비밀번호 확인 입력">
+				</div>
+				<div class="input-group">
+					<label for="name">이름:</label> <input type="text" id="name"
+						name="memberName" placeholder="이름 입력"
+						th:value="${member.memberName}">
+				</div>
+				<div class="input-group">
+					<label for="nickname">닉네임:</label> <input type="text" id="nickname"
+						name="memberNickName" placeholder="닉네임 입력"
+						th:value="${member.memberNickName}">
+				</div>
+				<div class="button-group">
+					<button type="submit">수정하기</button>
+					<button type="button" onclick="resetForm()">다시 쓰기</button>
+				</div>
+			</form>
+		</div>
+	</div>
+
+
+</body>
+</html>

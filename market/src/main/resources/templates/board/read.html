@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ko"
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+	<meta charset="UTF-8">
+	<title>게시판</title>
+	<style>
+		th {
+			text-align: left;
+			padding: 8px;
+			width: 80px;
+		}
+		pre {
+			width: 300px;
+			word-wrap: break-word;
+			white-space: break-spaces;
+		}
+	</style>
+	<script th:src="@{/js/jquery-3.7.1.min.js}"></script>
+	<script>
+		$(document).ready(function() {
+			// 구매 버튼
+			$('#buyButton').click(function() {
+				if (confirm('구매하시겠습니까?')) {
+					let boardNum = $('#boardNum').text();
+					location.href='buy?boardNum='+boardNum;
+				}
+			});
+			
+			// 삭제 버튼
+			$('#deleteButton').click(function() {
+				if(confirm('판매글을 삭제하시겠습니까?')) {
+					let boardNum = $('#boardNum').text();
+					location.href = 'delete?boardNum='+boardNum;
+				}
+			});
+		});
+	</script>
+</head>
+<body>
+<h1>[ 판매상품 상세보기 ]</h1>
+
+<table>
+	<tr>
+		<th>번호</th>
+		<td id="boardNum" th:text="${board.boardNum}"></td>
+	</tr>
+	<tr>
+		<th>판매자</th>
+		<td th:text="${board.memberId}"></td>
+	</tr>
+	<tr>
+		<th>카테고리</th>
+		<td th:text="${board.category}"></td>
+	</tr>
+	<tr>
+		<th>제목</th>
+		<td th:text="${board.title}"></td>
+	</tr>
+	<tr>
+		<th>내용</th>
+		<td>
+			<pre th:text="${board.contents}"></pre>
+		</td>
+	</tr>
+	<tr>
+		<th>판매가격</th>
+		<td th:text="${board.price}"></td>
+	</tr>
+	<tr>
+		<th>상태</th>
+		<td th:text="${board.soldout ? '판매완료' : '판매중'}"></td>
+	</tr>
+	<tr>
+		<th>구매자</th>
+		<td th:text="${board.buyerId != null ? board.buyerId : ''}"></td>
+	</tr>
+	<tr>
+		<th></th>
+		<td>
+			<button type="button" th:if="${!board.soldout and #authentication.name != board.memberId}" id="buyButton">구매하기</button>
+			<button type="button" th:if="${#authentication.name == board.memberId}" id="deleteButton">삭제하기</button>
+		</td>
+	</tr>
+</table>
+</body>
+</html>

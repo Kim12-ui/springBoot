@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ko"
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+	<meta charset="UTF-8">
+	<title>게시판</title>
+	<style>
+		th {
+			text-align: left;
+			padding: 8px;
+			width: 80px;
+		}
+		input[type="text"], select {
+			width: 250px;
+		}
+		textarea {
+			width: 250px;
+			height: 100px;
+			resize: none;
+		}
+	</style>
+	<script th:src="@{/js/jquery-3.7.1.min.js}"></script>
+	<script>
+		$(document).ready(function() {
+			$('#writeForm').submit(function() {
+				if ($('#category').val()=='') {
+					alert('카테고리를 선택하세요.');
+					return false;
+				}
+				if ($('#title').val()=='') {
+					alert('제목을 입력하세요.');
+					return false;
+				}
+				if ($('#contents').val()=='') {
+					alert('글내용을 입력하세요.');
+					return false;
+				}
+				let price = $('#price').val();
+				if (price==''||isNaN(price)) {
+					alert('가격을 숫자로 입력하세요.');
+					return false;
+				}
+				return true;
+			});
+
+		});
+	</script>
+</head>
+<body>
+	<h1>[ 판매상품 등록 ]</h1>
+
+	<form id="writeForm" th:action="@{/board/write}" method="post">
+		<table>
+			<tr>
+				<th>카테고리</th>
+				<td>
+					<select name="category" id="category">
+						<option value="">카테고리를 선택하세요.</option>
+						<option value="컴퓨터">컴퓨터</option>
+						<option value="카메라">카메라</option>
+						<option value="자동차">자동차</option>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<th>제목</th>
+				<td>
+					<input type="text" name="title" id="title">
+				</td>
+			</tr>
+			<tr>
+				<th>내용</th>
+				<td>
+					<textarea name="contents" id="contents"></textarea>
+				</td>
+			</tr>
+			<tr>
+				<th>판매가격</th>
+				<td>
+					<input type="text" name="price" id="price">
+				</td>
+			</tr>
+			<tr>
+				<th></th>
+				<td><button type="submit">저장</button></td>
+			</tr>
+		</table>
+	</form>
+</body>
+</html>
