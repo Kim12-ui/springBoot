@@ -1,0 +1,191 @@
+@charset "UTF-8";
+
+body {
+	font-family: Arial, sans-serif; /* 기본 글꼴 설정 */
+	margin: 0; /* 기본 마진 제거 */
+}
+
+.navbar {
+	display: flex; /* Flexbox를 사용하여 가로 정렬 */
+	justify-content: flex-start; /* 왼쪽 정렬 */
+	align-items: center; /* 세로 중앙 정렬 */
+	background-color: #ffffff; /* 배경색 */
+	padding: 0 20px; /* 좌우 패딩 */
+	height: 60px; /* 네비게이션 바 높이 */
+	border-bottom: 2px solid #3fc3ed; /* 아래쪽 선 추가 및 색상 설정 */
+}
+
+.navbar img {
+	height: 60px; /* 로고 높이 */
+	width: auto; /* 비율 유지 */
+	object-fit: contain; /* 비율 유지 */
+	margin-right: 20px; /* 오른쪽 여백 */
+}
+
+.navbar a {
+	color: #3fc3ed; /* 링크 색상 */
+	text-decoration: none; /* 밑줄 제거 */
+	padding: 14px 20px; /* 내부 여백 */
+	margin: 0 60px; /* 링크 간격 */
+	font-size: 25px; /* 글씨 크기 */
+}
+
+.dropdown {
+	display: none; /* 기본적으로 드롭다운을 숨김 */
+	position: absolute; /* 드롭다운 위치 설정 */
+	top: 100%; /* 네비게이션 바 바로 아래에 표시 */
+	left: 0; /* 왼쪽 정렬 */
+	background-color: white; /* 드롭다운 배경색 설정 */
+	min-width: 200px; /* 드롭다운의 최소 너비 설정 */
+	border: 1px solid #ccc; /* 드롭다운 테두리 설정 */
+	z-index: 1; /* 드롭다운이 다른 요소 위에 표시되도록 설정 */
+}
+
+.dropdown a {
+	color: #3fc3ed; /* 드롭다운 링크의 글자 색상 설정 */
+	padding: 12px 16px; /* 드롭다운 링크 내부 여백 설정 */
+	margin: 0;
+	text-decoration: none; /* 드롭다운 링크의 밑줄 제거 */
+	display: block; /* 드롭다운 링크를 블록 요소로 설정 */
+	white-space: nowrap; /* 항목이 한 줄로 표시되도록 설정 */
+}
+
+.dropdown a:hover {
+	background-color: #ddd; /* 드롭다운 링크에 마우스 오버 시 배경색 변경 */
+}
+
+.info-button:hover .dropdown {
+	display: block; /* "내 정보보기" 버튼에 마우스 오버 시 드롭다운 표시 */
+}
+
+.background-image {
+	/* background-image:
+		url('/images/20456699-베니스-이탈리아-배경에-마돈나-델ella-경례-교회와-아카데미아-다리의-상단에서-그랜드.jpg'); */
+	/* 이미지 파일 이름으로 변경 */
+	background-size: cover; /* 배경 이미지 크기 조절 */
+	background-position: center; /* 배경 이미지 위치 설정 */
+	height: 650px; /* 배경 이미지 높이 설정 */
+	position: relative; /* 자식 요소 위치를 위한 상대적 위치 설정 */
+}
+
+.button {
+	position: absolute; /* 절대 위치 설정 */
+	left: 120px; /* 왼쪽 위치 */
+	top: 50%; /* 세로 중앙 */
+	transform: translateY(-50%); /* 세로 중앙 정렬 */
+	padding: 50px 10px; /* 버튼 내부 여백 설정 */
+	background-color: #ffde59; /* 버튼 배경색 */
+	color: white; /* 버튼 글자 색상 */
+	border: none; /* 버튼 테두리 제거 */
+	border-radius: 5px; /* 버튼 모서리 둥글게 */
+	font-size: 60px; /* 버튼 글자 크기 */
+	cursor: pointer; /* 마우스 커서 변경 */
+	display: flex; /* 플렉스박스를 사용하여 내용 정렬 */
+	align-items: center; /* 수직 중앙 정렬 */
+}
+
+.button img {
+	height: 200px; /* 이미지 높이 설정 */
+	margin-right: 10px; /* 이미지와 텍스트 간의 간격 설정 */
+}
+
+.search-wrapper {
+	position: relative;
+	display: flex;
+	justify-content: center;
+	margin-top: 20px;
+}
+
+.search-input {
+	width: 750px;
+	padding: 15px 20px;
+	font-size: 18px;
+	border: 1px solid #ccc;
+	border-radius: 25px;
+}
+
+.search-button {
+	background-color: #3fc3ed;
+	color: white;
+	border: none;
+	border-radius: 25px;
+	width: 50px;
+	height: 50px;
+	cursor: pointer;
+	margin-left: -50px; /* 검색창과 겹치도록 조정 */
+	display: flex; /* 아이콘 중앙 정렬 */
+	align-items: center;
+	justify-content: center;
+}
+
+.select-container {
+	display: flex;
+	justify-content: center; /* 가운데 정렬 */
+	margin-top: 20px; /* 여백 조정 */
+}
+
+.select-box {
+	padding: 10px;
+	font-size: 16px;
+	border: 1px solid #ccc;
+	border-radius: 25px; /* 둥글게 설정 */
+	width: 30%; /* 원하는 너비 */
+	margin-right: 10px;
+}
+
+.select-box:last-child {
+	margin-right: 0; /* 마지막 셀렉트 간격 제거 */
+}
+
+.select-search-button {
+	background-color: #3fc3ed;
+	color: white;
+	border: none;
+	border-radius: 5px; /* 꼭지점만 둥글게 설정 */
+	width: 150px; /* 원하는 너비 */
+	height: 50px; /* 고정 높이 유지 */
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.search-button-container {
+	display: flex;
+	justify-content: center; /* 가운데 정렬 */
+	margin-top: 20px; /* 여백 추가 */
+	width: 100%; /* 전체 너비 사용 */
+}
+
+.colored-background {
+	background-color: #a9f5f2; /* 배경색 설정 */
+	padding: 20px; /* 여백 설정 */
+	margin-top: 20px; /* 상단 여백 */
+	text-align: center; /* 텍스트 중앙 정렬 */
+	border-radius: 10px; /* 모서리 둥글게 */
+	height: 800px;
+}
+
+.info-title {
+	text-align: left;
+	font-size: 40px; /* 제목 크기 조정 */
+	margin-left: 200px;
+}
+
+.info-subtitle {
+	text-align: left;
+	margin-top: 80px;
+	margin-left: 280px; /* 오른쪽으로 이동 */
+	font-size: 30px; /* 공항에서 글씨 크기 조정 */
+}
+
+.info-details {
+	text-align: left; /* 내용 가운데 정렬 */
+	font-size: 25px; /* 내용 크기 조정 */
+	margin-left: 600px;
+}
+
+.info-details span a {
+	margin-bottom: 10px; /* 아래쪽 여백 추가 */
+	display: inline-block; /* 블록 요소로 설정하여 여백 적용 */
+}

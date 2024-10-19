@@ -1,0 +1,87 @@
+@charset "UTF-8";
+
+/* 1. write 고유 css */
+ body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+h1 {
+    text-align: center;
+    margin: 20px 0;
+}
+
+/* 상단 네비게이션 메뉴 */
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background-color: white;
+}
+
+nav a {
+    text-decoration: none;
+    color: #1e90ff; /* 글자 색상은 진한 파란색 */
+    padding: 0 20px; /* 메뉴 간의 간격을 좀 더 넓게 */
+}
+
+nav img {
+    height: 50px; /* 로고 이미지 크기 조정 */
+}
+
+/* 글쓰기 폼 스타일 */
+.form-container {
+    width: 80%;
+    margin: 0 auto;
+}
+
+.form-container label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.form-container input[type="text"], .form-container textarea, .form-container input[type="file"] {
+    width: 100%;
+    padding: 10px;
+    border: 2px solid #ffeb3b; /* 밝은 노란색 테두리 */
+    border-radius: 10px;
+    margin-bottom: 20px;
+    box-sizing: border-box;
+}
+
+.form-container input[type="radio"] {
+    accent-color: #ffeb3b; /* 라디오 버튼 색상 */
+}
+
+.form-container .radio-group label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.form-container button {
+    background-color: #ffeb3b; /* 밝은 노란색 배경 */
+    border: none;
+    padding: 10px 20px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: bold;
+    color: black; /* 버튼 텍스트 색상 검정색 */
+}
+
+.form-container button:hover {
+    background-color: #fdd835; /* 밝은 노란색보다 조금 더 밝은 색으로 호버 상태 표시 */
+}
+
+.submit-button {
+    background-color: #ffeb3b; /* 밝은 노란색 배경 */
+    border: none;
+    padding: 10px 20px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: bold;
+    color: black; /* 버튼 텍스트 색상 검정색 */
+}

@@ -1,0 +1,63 @@
+/* 카테고리 선택 스타일 */
+.select-container {
+    display: flex; /* 일렬로 배치 */
+    flex-direction: column; /* 세로 배치 */
+    justify-content: center; /* 수평 중앙 정렬 */
+    margin-top: 20px; /* 검색창과 선택창 사이 간격 */
+    align-items: center; /* 모든 요소를 중앙 정렬 */
+}
+
+
+.big_button{
+    background-color: var(--yellow);
+    margin-top: 20px; /* 검색 버튼과 선택 상자 간 간격 */
+    align-self: center; /* 버튼 중앙 정렬 */
+}
+
+.big_button:hover {
+    background-color: yellow; /* 마우스 오버 시 배경색 변경 */
+}
+
+.mid_button{
+    background-color: var(--yellow);
+    margin-left: 80%;
+    margin-top: 30px;
+    margin-bottom: 50px;
+}
+
+.mid_button:hover {
+    background-color: yellow; /* 마우스 오버 시 배경색 변경 */
+}
+
+.search_input {    
+    border: 5px solid var(--yellow); /* 테두리 색상 및 두께 조정 */
+}
+
+.search_input:focus {
+border-color: #FFFD12; /* 포커스 시 테두리 색상 */
+outline: none; /* 포커스 시 기본 외곽선 제거 */
+}
+
+.search-button {
+
+color: var(--yellow); /* 아이콘 색상 */
+}
+
+.form-select {
+        border: 5px solid var(--yellow); /* 테두리 색상 및 두께 */
+        transition: border-color 0.3s ease; /* 테두리 색상 변화 애니메이션 */
+        outline: none; /* 기본 외곽선 제거 */
+    }
+
+.form-select:focus {
+        border-color: #FFFD12; /* 포커스 시 테두리 색상 */
+    }
+
+/*페이지 이름 + 구분선*/
+.pageName2{
+    margin-top: 50px;
+    margin-left: 100px;
+}
+h2{
+    font-size: 30px;
+}

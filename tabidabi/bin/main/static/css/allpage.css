@@ -1,0 +1,53 @@
+/* 외부 CSS는 @import 한다. */
+/* 폰트링크와 기본 CSS */
+
+@import "reset.css"; /*웹페이지에 기본으로 주어진 margin 삭제 */
+@import "variables.css"; /*우리사이트 주요 색상과 자주 사용하는 CSS설정 */
+
+/* 요소들 ex. 메뉴 css, 입력창 css등 */
+/* components폴더 위치 */
+@import "components/nav-bar.css";
+@import "components/search.css";
+@import "components/button.css";
+@import "components/page_list.css";
+
+
+
+
+
+
+body{ 
+/* 웹페이지의 기본 텍스트 색상 */
+  color:#2e363e;
+/* 웹페이지의 기본 글꼴 목록  */
+  /* font-family: */
+  /* 모든 HTML의 기본 폰트 크기를 18px로 설정 */
+
+}
+html {
+  font-size: 18px;
+}
+
+h2{
+  font-size: 40px;  /* 원하는 크기로 설정 */
+    font-weight: 900;  /* 가장 두꺼운 글자 */
+}
+
+
+h3 {
+
+  display: block;
+
+  font-size: 1.70em;
+
+  margin-top: 0.7em;
+
+  margin-bottom: 1em;
+
+  margin-left: 0;
+
+  margin-right: 0;
+
+  font-weight: bold;
+
+}

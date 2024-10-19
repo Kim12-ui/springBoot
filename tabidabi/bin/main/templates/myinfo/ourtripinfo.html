@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<meta charset="UTF-8">
+<title>우리의 여행 일지 자세히</title>
+<script th:src="@{/js/jquery-3.7.1.min.js}"></script>
+<script th:src="@{/js/myinfo/ourtripinfo.js}"></script>
+<link rel="stylesheet"
+	th:href="@{/css/myinfo/ourtripinfo.css}">
+</head>
+<body>
+	<div class="navbar">
+		<a th:href="@{/}"> 
+			<img th:src="@{/images/로고.png}" alt="로고">
+		</a>
+		<div style="display: flex; align-items: center;">
+			<a href="#search-container">인기패키지</a> 
+			<a href="#colored-background">여행 팁</a> 
+			<a th:href="@{/community/list}">커뮤니티</a>
+			<th:block sec:authorize="not isAuthenticated()">
+				<a th:href="@{/member/login}">로그인</a>
+			</th:block>
+			<th:block sec:authorize="isAuthenticated()">
+				<div class="info-button" style="position: relative;">
+					<a th:href="@{/#}" onclick="return false;">내 정보보기</a>
+					<div class="dropdown">
+						<a th:href="@{/myinfo/myinfo}">내 정보 수정하기</a>
+						<a th:href="@{/myinfo/sharingroom_list}">나의 일정공유방 리스트</a>
+						<a th:href="@{/myinfo/community}">커뮤니티</a>
+						<a th:href="@{/myinfo/ourtrip}">우리가 만든 동선</a>
+						<a th:href="@{/member/logout}" style="color: red;">로그아웃</a>
+					</div>
+				</div>
+			</th:block>
+		</div>
+	</div>
+
+	<br>
+	<h1 style="margin-top: 10px; margin-left: 100px">우리의 여행 일지</h1>
+	<hr class="divider">
+
+	<div class="select-plan1">
+		<select class="select-plan2" id="plan2" onchange="updateCountries()">
+			<option value="plan a">Plan A</option>
+			<option value="plan b">Plan B</option>
+			<option value="plan c">Plan C</option>
+		</select>
+	</div>
+
+	<div id="map"></div>
+	<!-- 지도를 표시할 div 추가 -->
+
+	<div class="title-content">
+		<div class="title-box">
+			<h2>제목 1</h2>
+		</div>
+
+		<div class="content-box">
+			<p>상세일정 : </p>
+		</div>
+	</div>
+
+	<div class="title-content">
+		<div class="title-box">
+			<h2>제목 2</h2>
+		</div>
+
+		<div class="content-box">
+			<p>상세일정 : </p>
+		</div>
+	</div>
+
+	<div class="title-content">
+		<div class="title-box">
+			<h2>제목 3</h2>
+		</div>
+
+		<div class="content-box">
+			<p>상세일정 : </p>
+		</div>
+	</div>
+
+</body>
+</html>

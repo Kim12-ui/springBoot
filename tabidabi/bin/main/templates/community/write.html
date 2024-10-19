@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="ko" 
+xmlns:th="http://www.thymeleaf.org"
+xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>글쓰기</title>
+    
+    <!-- 2. 부트스트랩 실행 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    
+    <!-- 3. summernote 에디터 관련 -->
+    <link rel="stylesheet" th:href="@{/css/community/write/summernote/summernote-lite.css}">
+    
+    <!-- 4. css불러오기 -->
+    <link rel="stylesheet" th:href="@{/css/home/home.css}"><!-- (1) 홈페이지 상단바 -->
+    <link th:href="@{/css/allpage.css}" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/community/write/write.css}"><!-- (2) -->
+    <link rel="stylesheet" th:href="@{/css/community/write/movement1.css}">
+    <link rel="stylesheet" th:href="@{/css/community/write/movement2.css}">
+    <link rel="stylesheet" th:href="@{/css/community/write/comment.css}">
+</head>
+<body>
+      <!--메뉴 nav-->
+        <!-- 상단 네비게이션 메뉴 -->
+        <nav class="main_nav">  <!--nav태그 -->
+            <a th:href="@{/}"><img th:src="@{/images/로고.png}" alt="로고"></a>
+          <div class="nav_container">
+                <a href="#" id="scrollToPackage">인기패키지</a>
+                <a href="#" id="scrollToTip">여행 팁</a>
+                <a th:href="@{/community/list}">커뮤니티</a>
+                <th:block sec:authorize="not isAuthenticated()">
+                	<a th:href="@{/member/login}">로그인</a>
+                </th:block>
+                <th:block sec:authorize="isAuthenticated()">
+                	<div class="dropdown" style="position: relative;">
+                    	<a href="#" class="dropbtn">내 정보보기</a>
+	                    <div class="dropdown-content">
+	                        <a th:href="@{/myinfo/myinfo}">개인정보수정</a>
+	                        <a th:href="@{/myinfo/sharingroom_list}">나의 일정공유방 리스트</a>
+	                        <a th:href="@{/myinfo/community}">커뮤니티 관리</a>
+	                        <a th:href="@{/myinfo/ourtrip}">우리의 여행일지</a>
+	                        <a th:href="@{/member/logout}">로그아웃</a>
+	                    </div>
+                	</div>
+                </th:block>
+            </div>
+        </nav>
+
+    <h1>글쓰기</h1>
+	
+	<div class="container">
+        <!-- 탭 메뉴 -->
+        <div class="tab-menu">
+            <button class="movement" id="movement">동선</button>
+            <button class="comment" id="comment">코멘트</button>
+        </div>
+        <hr>
+		<form th:action="@{/community/write}" id="submitButton" enctype="multipart/form-data" method="post">
+	        <!-- 제목 입력 필드 -->
+	        <input type="text" name="title" class="title-input" placeholder="제목(입력하는 곳)">
+	
+	        <!-- 동선 박스 -->
+	        <div class="movement-box" id="movement-box">
+	        	<div class="inner-movement-box">
+	        		<button type="button" class="upload-button" id="openModal">동선 불러오기</button>
+	        	</div>
+	        	
+        	<!--카테고리 검색 -->
+        	  <div style="margin-top : 20px;">
+	        	  <input type="text" id="inputStorageDeparture" 
+	        	  name="communityDeparture" placeholder="출발일">
+		          <input type="text" id="inputStorageReturn" 
+		          name="communityReturn" placeholder="도착일">
+        	  </div>
+	          <div class="select-container">
+	            <div class="form-select-container">
+	                <select id="continentSelect" name="communityContinent" 
+	                class="form-select" style="border : 6px solid #FFFD12">
+	                    <option value="" selected>대륙</option>
+	                    <option value="asia">아시아</option>
+	                    <option value="europe">유럽</option>
+	                    <option value="northAmerica">북아메리카</option>
+	                    <option value="southAmerica">남아메리카</option>
+	                    <option value="africa">아프리카</option>
+	                    <option value="oceania">오세아니아</option>
+	                </select>
+	                <select id="countrySelect" class="form-select" 
+	                name="communityCountry" style="border : 6px solid #FFFD12">
+	                    <option selected>나라</option>
+	                </select>
+	            </div>
+         	</div> 
+	        	
+	        	<!-- 동선 박스 = 모달 조정 후 -->
+		        <div class="movement-details" id="movement-details">
+		        	<div id="movement-details-list">
+		        	
+		        	</div>
+			         <button id="add-details-btn" class="add-btn">+</button>
+		        </div>	        
+		        <button type="submit" class="submit-button">제출</button> 
+	        </div>
+	        
+	        <!-- 코멘트 박스 -->
+	        <div class="comment-box" id="comment-box">
+	        	<textarea id="summernote" name="communityComments"></textarea>
+	        	<div class="outer-representativeImage">
+	        		<div class="inner-representativeImage">
+		        		<div class="mb-3">
+						    <label for="representativeImage" class="form-label">대표 이미지 선택</label>
+						    <input type="file" accept="image/*" class="form-control" id="representativeImage" name="upload" onchange="previewImage(event)">
+						    <div class="mt-2">
+						        <img id="imagePreview" src="" alt="이미지 미리보기" style="display: none; max-width: 100%; height: auto;">
+						    </div>
+						</div>
+	        		</div>
+	        	</div>
+			    
+	        	<button type="submit" class="submit-button">제출</button>
+	        </div>
+        </form>
+    </div>
+
+    <!-- 모달 창 -->
+    <div id="modal" class="modal">
+	    	<div class="modal-content">
+	            <span class="close">&times;</span>
+	            <h3>동선 불러오기</h3>
+			    <div class="form-check" th:each="storage : ${storagesList}">
+	 			    <input class="form-check-input" type="radio" name="storageId"
+	 			    	   th:value="${storage.storageId}"  
+				           th:id="'flexRadioDefault' + ${storage.storageId}"
+				           onclick="showSelect(this)">
+				    <label th:for="'flexRadioDefault' + ${storage.storageId}" th:text="${storage.roomTitle}"></label>
+				    <select name="planType" class="planTypeSelect" style="display: none;">
+					    <option value="" disabled selected>선택하세요</option>
+					    <th:block th:each="info : ${storageInformationList}">
+					            <option th:value="${info.planType}" 
+					                    th:text="${info.planType}"></option>
+					    </th:block>
+					</select>
+				</div>
+	            <button class="select-button" id="select-button" type="button">
+	            	선택하기
+	            </button>
+	        </div>
+    </div>
+    
+    <!-- 1. jquery 실행하기 -->
+    <script th:src="@{/js/jquery-3.7.1.min.js}"></script>
+    
+    <script th:src="@{/js/community/write/summernote/summernote-lite.js}"></script>
+    <script th:src="@{/js/community/write/summernote/lang/summernote-ko-KR.js}"></script>
+    <script th:src="@{/js/community/write/summernote.js}"></script><!-- summernote에디터 상세 수정  -->
+    
+    <!-- javascript 불러오기 -->
+    <script th:src="@{/js/community/write/convertdisplay.js}"></script>
+    <script th:src="@{/js/community/write/modal.js}"></script>
+    <script th:src="@{/js/community/write/comment.js}"></script>
+    <script th:src="@{/js/community/write/movement.js}"></script>
+    <script th:src="@{/js/community/write/selectmovement.js}"></script>
+    <script th:src="@{/js/home/select.js}"></script>
+    <script th:src="@{/js/community/write/validate.js}"></script>
+    
+</body>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ko"
+xmlns:th="http://www.thymeleaf.org"
+>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>게시글 상세보기</title>
+    <style>
+        .post-detail {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+        .post-detail h2 {
+            margin-bottom: 10px;
+        }
+        .post-detail p {
+            margin: 5px 0;
+        }
+        .stats {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        .stats img {
+            width: 20px;
+            height: 20px;
+        }
+    </style>
+     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+</head>
+<body>
+<!-- 게시글 데이터 렌더링 -->
+<div th:if="${posts != null and posts.size() > 0}" class="post-container">
+    <div th:each="post : ${posts}" class="post-detail">
+        <h2 th:text="${post.title}">제목</h2>
+        <p th:text="'작성일: ' + ${post.createdAt}">날짜</p>
+        <p th:text="'작성자: ' + ${author}">작성자</p>
+        <p th:text="${post.content}">여행 계획 및 일정 상세 내용</p>
+        <div class="stats">
+           <img th:src="@{/images/community/list/like.png}" alt="좋아요">
+            <span th:text="${likes}">0</span>
+            <img th:src="@{/images/community/list/views.png}" alt="조회수">
+            <span th:text="${views}">0</span>    
+        </div>
+    </div>
+</div>
+
+<!-- Error message when no posts are found -->
+<div th:if="${posts.size() == 0}" class="error-message">
+    <p th:text="${error}">해당 게시글을 찾을 수 없습니다.</p>
+</div>
+</body>
+</html>

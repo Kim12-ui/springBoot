@@ -1,0 +1,5 @@
+@charset "UTF-8";
+
+#like-button {
+    cursor: pointer; /* 마우스를 올리면 포인터 모양으로 변경 */
+}
