@@ -1,0 +1,101 @@
+/* 상단 네비게이션 메뉴 */
+.main_nav {
+    display: flex;
+    justify-content: flex-start; /* 메뉴 항목을 화면 너비에 맞게 분산 배치 */
+    align-items: center;
+    padding: 20px;
+    background-color: white; /* 상단바 배경을 흰색으로 변경 */
+    padding: 0 20px; /* 좌우 패딩 */
+    padding-top: 20px;
+    height: 60px; /* 네비게이션 바 높이 */
+}
+
+.nav_container{
+    display: flex;
+    align-items: center;
+}
+
+.main_nav a {
+    margin: 0 60px;
+    text-decoration: none;
+    color: #3fc3ed; /* 글자 색상을 진한 파란색으로 변경 */
+    font-weight: bolder;
+    font-size: 20px;
+    padding: 14px 30px; /* 메뉴 항목 간의 여백 설정 (좌우) */
+    /* flex: 1; 메뉴 항목이 화면 너비를 고르게 채우도록 설정 */
+    /*
+    text-align: center; /* 메뉴 항목의 텍스트를 가운데 정렬 */
+    /*padding: 10px 15px; /* 메뉴 항목 간의 여백 설정 (좌우) */
+    /*box-sizing: border-box; /* padding과 border가 전체 너비에 포함되도록 설정 */
+
+}
+
+.main_nav a:hover{
+    color: var(--blue);
+}
+
+.main_nav img {
+    height: 60px; /* 로고 이미지 크기 조정 */
+    width: auto;
+    object-fit: contain;
+    margin-right: 20px; /* 로고 이미지와 메뉴 사이 간격 */
+    vertical-align: middle; /* 이미지와 텍스트를 중간 정렬 */
+}
+
+
+/* 드롭다운 메뉴 스타일 */
+.dropdown {
+    position: relative; /* 드롭다운 컨텐츠 위치 설정을 위한 상대 위치 */
+    display: inline-block; 
+    border:none;
+}
+
+.dropbtn {
+    text-decoration: none;
+    color:#3fc3ed;
+    /* padding: 10px; */
+    cursor: pointer;
+}
+
+.dropdown-content {
+    display: none; /* 기본적으로 숨김 */
+    position: absolute; /* 드롭다운 아이템의 절대 위치 */
+    top: 100%; /* 부모 요소의 아래에 위치 */
+    left: 0; /* 부모 요소의 왼쪽을 기준으로 정렬 */
+    background-color: white;
+    min-width: 200px;
+    /*width: auto; /*내용에 맞게 너비 자동 조정*/
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2); /* 그림자 효과 */
+    z-index: 1; /* 다른 요소보다 위에 표시 */
+   
+}
+
+
+.dropdown-content a {
+    color: #3fc3ed;
+    padding: 12px 16px;
+    margin: 0;
+    text-decoration: none;
+    display: block;
+    white-space: nowrap; /* 텍스트가 줄 바꿈되지 않도록 설정 */
+    /* overflow: hidden; 텍스트가 넘칠 때 숨기기 */
+    /* text-overflow: ellipsis; 텍스트가 넘칠 때 생략 부호(...) 표시 */
+    /* width: 120px;
+    text-align: center; */
+   
+   /* box-sizing: border-box; /* padding과 border가 전체 너비에 포함되도록 설정 */
+    
+}
+
+.dropdown-content a:hover {
+    background-color: #f1f1f1; /* 마우스 오버 효과 */
+}
+
+/* 드롭다운을 호버할 때 드롭다운 컨텐츠 표시 */
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+/* 내 정보와 이미지 높이를 맞추기 */
+
+

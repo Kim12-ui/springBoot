@@ -1,0 +1,185 @@
+ #map {
+            height: 400px;
+            width: 900px;
+        }
+            .drop{
+                width: 200px;
+            }
+            .select_display{
+                /* display를 flex로 바꿔서 셀렉트를 일렬로 나열 */
+                display: flex;
+              /* gap : select 사이에 10px의 간격주기 */
+                gap : 10px; 
+                
+            }
+            .card-header {
+                margin-top: 5px; /* card-header와 그 위 요소 사이 간격 줄이기 */
+            }
+
+      
+            #locationName{
+                font-size: 30px;
+                font-weight: bold;
+                margin-bottom: 10px;
+            }
+
+            .mid_button{
+                margin-left: 40%;
+            }
+
+            .tripPeriod{
+                width: 100%;
+                height: 40px;
+                padding: 10px;
+                font-size: 20px;
+                margin-bottom: 20px;
+            }
+
+            .big_button{
+                width: 100%;
+                height: 30px;
+                margin: 0;
+                border-radius: 5px;
+                border-color: #ccc;
+            }
+
+            /*채팅/투표/정산 부분*/
+            .sub-func{
+                height: 60%;
+                width: 100%;
+            }
+
+            .search_input_small{
+                width: 100%;
+            }
+
+            #outputText{
+                font-size: 25px;
+                font-weight: bold;
+                margin: 60px;
+                margin-left: 10px;
+            }
+            /*공유방 메뉴 */
+
+            .navbar-brand{
+                margin-left: 100px;
+            }
+            .navbar-brand img {
+                height: 60px; /* 로고 이미지 크기 조정 */
+                width: auto;
+            }
+
+            .roomName{
+                width: 600px; /* 원하는 너비로 조정 */
+                height: 80px; /* 높이 조정 */
+                border:none;
+                padding: 10px 50px 10px ; /* 내부 여백 조정*/
+                font-size: 35px; /* 글자 크기 조정 */
+                font-weight: bolder;
+                margin-left: 0;
+            }
+
+            .nav-part{
+                display: flex; /* Flexbox로 배치 */
+                align-items: center; /* 수직 정렬 */
+                margin-left: 400px;
+            }
+
+            .member-info{
+                position: absolute;
+                display: none;
+                top: 60px;
+                right: 0;
+                z-index: 1000;
+                padding: 10px;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+                background-color: #f8f9fa;
+                box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+                margin-top: 5px;
+            }
+
+            .member-toggle-btn{
+                display: block; /* 항상 표시 */
+                background-color: white;
+                border: none;
+            }
+
+            .member-toggle-btn img{
+                width: 40px; /* 아이콘 크기 조정 */
+                height: auto;
+            }
+            .nav-part a{
+            	color: inherit;
+    			text-decoration: none;
+            }
+
+            .save-button {
+                margin-right: 30px; /* 버튼 간격 조정 */
+            }
+
+            /*멤버정보 내부 css*/
+            .info-row{
+                /*margin: 상하  좌우*/
+                margin: 30px 0;
+            }
+
+            .info-row span{
+                font-size: 20px;
+                margin-right: 15px;
+            }
+
+            .info-row button{
+                margin-left: 10px;
+            }
+
+            .kickButton{
+                background-color: 	#DC143C;
+                color: aliceblue;
+            }
+
+            .kickButton:hover{
+                background-color: #FF4500;
+            }
+
+
+            .outButton{
+                width: 100%;
+                height: 40px;
+                background-color: var(--blue); /* 버튼 배경색 */
+                color: black; /* 버튼 글자색 */
+                border: 2px solid; /* 테두리 제거 */
+                border-radius: 10px; /* 모서리 둥글게 */
+                font-size: 14px; /* 글자 크기 */
+                font-weight: bold;
+                cursor: pointer; /* 마우스 커서 변경 */
+                transition: background-color 0.3s ease; /* 배경색 변화 애니메이션 */
+            }
+
+            .outButton:hover {
+            background-color: #08F8EF; /* 마우스 오버 시 배경색 변경 */
+            }
+
+            /*왼쪽 사이드 기능 버튼*/
+            .f-btn {
+                width: 30%;
+                height: 50px;
+                margin-left: 3px;
+                border-radius: 10px;
+                border-width: 5px;
+                border-color: var(--blue);
+                background-color: whitesmoke;
+                font-weight: bolder;
+            }
+
+            .f-btn.hover-state{
+                border-color: #08F8EF;
+                background-color: white;
+                color: skyblue;
+                
+            }
+
+            .card-header{
+                padding: 9px;
+                margin: 0;
+            }

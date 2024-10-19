@@ -1,0 +1,102 @@
+.search-form {
+    display: flex;
+    justify-content: center; /* 수평 중앙 정렬 */
+    margin-top: 100px;
+}
+
+.search-container {
+    position: relative; /* 아이콘을 입력창에 배치하기 위한 상대적 위치 설정 */
+}
+
+.search_input {
+    width: 800px; /* 원하는 너비로 조정 */
+    height: 80px; /* 높이 조정 */
+    padding: 10px 50px 10px 15px; /* 내부 여백 조정, 아이콘 공간을 고려하여 오른쪽 여백을 늘림 */
+    font-size: 18px; /* 글자 크기 조정 */
+    border-radius: 100px; /* 모서리 둥글게 */
+    border: 5px solid var(--blue); /* 테두리 색상 및 두께 조정 */
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); /* 그림자 효과 */
+    transition: border-color 0.3s ease; /* 테두리 색상 변화 애니메이션 */
+}
+
+
+.search_input:focus {
+    border-color: #08F8EF; /* 포커스 시 테두리 색상 */
+    outline: none; /* 포커스 시 기본 외곽선 제거 */
+}
+
+.search-button {
+    position: absolute;
+    top: 50%;
+    right: 20px; /* 오른쪽 여백 조정 */
+    transform: translateY(-50%); /* 버튼을 수직으로 가운데 정렬 */
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 30px; /* 아이콘 크기 조정 */
+    color: var(--blue); /* 아이콘 색상 */
+}
+
+
+.search-button i {
+    margin: 0;
+}
+
+/*작은 검색창(공유방) */
+.search_input_small {
+    width: 400px; /* 원하는 너비로 조정 */
+    height: 60px; /* 높이 조정 */
+    padding: 10px 50px 10px 15px; /* 내부 여백 조정, 아이콘 공간을 고려하여 오른쪽 여백을 늘림 */
+    font-size: 18px; /* 글자 크기 조정 */
+    border-radius: 100px; /* 모서리 둥글게 */
+    border: 5px solid var(--blue); /* 테두리 색상 및 두께 조정 */
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); /* 그림자 효과 */
+    transition: border-color 0.3s ease; /* 테두리 색상 변화 애니메이션 */
+    margin-bottom: 20px;
+}
+
+.search_input_small:focus {
+    border-color: #08F8EF; /* 포커스 시 테두리 색상 */
+    outline: none; /* 포커스 시 기본 외곽선 제거 */
+}
+
+
+
+
+
+/* 카테고리 선택 스타일 */
+select-container {
+    display: flex; /* 일렬로 배치 */
+    flex-direction: column; /* 세로 배치 */
+    justify-content: center; /* 수평 중앙 정렬 */
+    gap: 20px; /* 선택 상자 사이 간격 */
+    margin-top: 20px; /* 검색창과 선택창 사이 간격 */
+    align-items: center; /* 모든 요소를 중앙 정렬 */
+}
+
+.form-select-container {
+    display: flex;
+    justify-content: center; /* 선택 상자들을 가로로 배치하여 중앙 정렬 */
+    gap: 20px; /* 선택 상자 사이 간격 */
+    margin-top: 20px;
+}
+
+.form-select {
+    width: 390px; /* 검색창과 비슷한 너비 */
+    height: 60px; /* 검색창과 동일한 높이 */
+    padding: 10px 15px; /* 내부 여백 */
+    font-size: 18px; /* 글자 크기 */
+    border-radius: 100px; /* 모서리 둥글게 */
+    border: 5px solid var(--blue); /* 테두리 색상 및 두께 */
+    transition: border-color 0.3s ease; /* 테두리 색상 변화 애니메이션 */
+    outline: none; /* 기본 외곽선 제거 */
+}
+
+.form-select:focus {
+    border-color: #08F8EF; /* 포커스 시 테두리 색상 */
+}
+
+.big_button{
+    margin-top: 20px; /* 검색 버튼과 선택 상자 간 간격 */
+    align-self: center; /* 버튼 중앙 정렬 */
+}

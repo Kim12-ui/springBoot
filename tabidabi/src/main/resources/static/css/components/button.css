@@ -1,0 +1,55 @@
+.big_button{
+        /*큰 버튼 스타일*/
+    width: 200px; /* 버튼 너비 */
+    height: 60px; /* 버튼 높이 */
+    background-color: var(--blue); /* 버튼 배경색 */
+    color: black; /* 버튼 글자색 */
+    border: 2px solid; /* 테두리 제거 */
+    border-radius: 20px; /* 모서리 둥글게 */
+    font-size: 18px; /* 글자 크기 */
+    font-weight: bold;
+    cursor: pointer; /* 마우스 커서 변경 */
+    transition: background-color 0.3s ease; /* 배경색 변화 애니메이션 */
+
+}
+.big_button:hover {
+    background-color: #08F8EF; /* 마우스 오버 시 배경색 변경 */
+}
+
+.mid_button{
+    /* 중간 버튼 스타일*/
+    width: 100px; /* 버튼 너비 */
+    height: 30px; /* 버튼 높이 */
+    background-color: var(--blue); /* 버튼 배경색 */
+    color: black; /* 버튼 글자색 */
+    border: 2px solid; /* 테두리 제거 */
+    border-radius: 20px; /* 모서리 둥글게 */
+    font-size: 14px; /* 글자 크기 */
+    font-weight: bold;
+    cursor: pointer; /* 마우스 커서 변경 */
+    transition: background-color 0.3s ease; /* 배경색 변화 애니메이션 */
+
+}
+
+.mid_button:hover {
+    background-color: #08F8EF; /* 마우스 오버 시 배경색 변경 */
+}
+
+.small_button{
+    /*작은 버튼 스타일*/
+    width: 50px; /* 버튼 너비 */
+    height: 20px; /* 버튼 높이 */
+    background-color: var(--blue); /* 버튼 배경색 */
+    color: black; /* 버튼 글자색 */
+    border: 2px solid; /* 테두리 제거 */
+    border-radius: 20px; /* 모서리 둥글게 */
+    font-size: 14px; /* 글자 크기 */
+    font-weight: bold;
+    cursor: pointer; /* 마우스 커서 변경 */
+    transition: background-color 0.3s ease; /* 배경색 변화 애니메이션 */   
+    border: none;
+}
+
+.small_button:hover {
+    background-color: #08F8EF; /* 마우스 오버 시 배경색 변경 */
+}

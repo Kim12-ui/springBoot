@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="ko"
+xmlns:th="http://www.thymeleaf.org"
+xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>일정공유방</title>
+        
+         <!-- 부트스트랩 실행 -->
+	    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+	    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+         <!--아이콘-->
+    	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+   		 <!--부트스트랩 CSS-->
+    	<link th:href="@{/css/styles.css}" rel="stylesheet">
+        <!-- CSS 모음 -->
+	    <link th:href="@{/css/allpage.css}" rel="stylesheet">
+	    <link th:href="@{/css/screens/sharingroom.css}" rel="stylesheet">
+         <script th:src="@{/js/home/select.js}"></script>  
+        <!--기능관련 JavaScript -->
+        <script th:src="@{/js/home/select.js}"></script>
+        <script defer th:src="@{/js/home/map.js}"></script>
+    <script>
+        (g=>{var h,a,k,p="The Google Maps JavaScript API",c="google",l="importLibrary",q="__ib__",m=document,b=window;b=b[c]||(b[c]={});var d=b.maps||(b.maps={}),r=new Set,e=new URLSearchParams,u=()=>h||(h=new Promise(async(f,n)=>{await (a=m.createElement("script"));e.set("libraries",[...r]+"");for(k in g)e.set(k.replace(/[A-Z]/g,t=>"_"+t[0].toLowerCase()),g[k]);e.set("callback",c+".maps."+q);a.src=`https://maps.${c}apis.com/maps/api/js?`+e;d[q]=f;a.onerror=()=>h=n(Error(p+" could not load."));a.nonce=m.querySelector("script[nonce]")?.nonce||"";m.head.append(a)}));d[l]?console.warn(p+" only loads once. Ignoring:",g):d[l]=(f,...n)=>r.add(f)&&u().then(()=>d[l](f,...n))})({
+          key: "AIzaSyBAt8Sn1X33OcsPGFjdr_TH0bq2i-dlxFw",
+          v: "weekly",
+          // Use the 'v' parameter to indicate the version to use (weekly, beta, alpha, etc.).
+          // Add other bootstrap parameters as needed, using camel case.
+        });
+      </script>
+    </head>
+    <body>
+
+    
+
+        <!-- 상단 네비게이션 바 -->
+        <nav class="navbar navbar-expand-lg navbar-dark\ bg-white">
+           
+                <a class="navbar-brand" href="#!">
+                    <img th:src="@{/images/로고.png}">
+                </a>
+                <input type="text" class="roomName" id="roomName" placeholder="공유방 이름">
+              <div class="nav-part">
+              	 <button id="saveSchedule" class="save-button" type="button">저장하기</button>
+             <!--<a href="#" id="saveSchedule" class="save-button">저장하기</a>  -->   
+                <button class="member-toggle-btn" type="button" id="memberToggleBtn">
+                    <img th:src="@{/images/img/메뉴 아이콘.png}">
+                </button>
+                
+             </div>
+                
+            
+        </nav>
+        
+        <div class="member_container">
+            <div class="member-info" id="memberInfo">
+                <h3>멤버 목록</h3>
+
+                <div class="info-row">
+                    <div class="nickname">
+                        <img src="/img/20456699-베니스-이탈리아-배경에-마돈나-델ella-경례-교회와-아카데미아-다리의-상단에서-그랜드.jpg" alt="프로필 사진" class="profile">
+                        <span>멤버 1</span>
+                        <button class="kickButton small_button">강퇴</button>
+                        <button class="delegateButton small_button">위임</button>
+                    </div>
+                </div>
+
+                <div class="info-row">
+                    <div class="nickname">
+                        <img src="/img/20456699-베니스-이탈리아-배경에-마돈나-델ella-경례-교회와-아카데미아-다리의-상단에서-그랜드.jpg" alt="프로필 사진" class="profile">
+                        <span>멤버 1</span>
+                        <button class="kickButton small_button">강퇴</button>
+                        <button class="delegateButton small_button">위임</button>
+                    </div>
+                </div>
+
+                <div class="info-row">
+                    <div class="nickname">
+                        <img src="/img/20456699-베니스-이탈리아-배경에-마돈나-델ella-경례-교회와-아카데미아-다리의-상단에서-그랜드.jpg" alt="프로필 사진" class="profile">
+                        <span>멤버 2</span>
+                        <button class="kickButton small_button">강퇴</button>
+                        <button class="delegateButton small_button">위임</button>
+                    </div>
+                </div>
+                <!--공유방 나가기 버튼-->
+                <button class="outButton">공유방 나가기</button>
+            </div>
+        </div>
+
+
+        <!-- Page content-->
+        <div class="container mt-5">
+            <div class="row">
+                  <!-- 도구바-->
+                  <div class="col-lg-4">
+                    <!--검색 도구-->
+                    <input type="text" id="searchInput" name="query" placeholder="검색어를 입력하세요" required class="search_input_small">
+                    <!-- 버튼위치-->
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <div id="locationName" style="height: 50px;"></div>
+                            <div id="locationRating" style="height: 50px;"></div>
+                            <div id="locationAddress" style="height: 50px;"></div>
+                            <button id="saveButton" class="mid_button" style="display: none;">담기</button>
+                            <button id="deleteButton" class="mid_button" style="display: none;">삭제</button> 
+                        </div>
+                    </div>
+                    <!-- 채팅 & 투표 & 정산-->
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <!--채팅 버튼-->
+                            <button id="chatButton" class="f-btn">채팅</button>
+                            <!--투표 버튼-->
+                            <button id="voteButton" class="f-btn">투표</button>
+                            <!--정산 버튼-->
+                            <button id="adjustButton" class="f-btn">정산</button>
+                        </div>
+                        <div class="card-body sub-func"></div>
+                    </div>
+                </div>
+                <div class="col-lg-8">
+                    <!-- Post content-->
+                    <article>
+                        
+                        <!-- 구글맵 표시 공간 -->
+                       
+                        <div id="map" class="mb-4"></div>
+                       
+                        <!-- Post header-->
+                        <header class="mb-4">
+                            <!-- 여행기간-->
+                            <input class="tripPeriod tripStart" placeholder="여행 출발일/ 2024-09-23">
+                            <input class="tripPeriod tripEnd" placeholder="여행 복귀일/ 2024-09-23">
+                            <!-- --> 
+                            <div class="text-muted fst-italic mb-2"></div>
+                            <!-- 검색용 카테고리 선택-->
+                            <div class="select_display">
+                            	<select id="continentSelect" class="form-select">
+				                    <option selected>대륙</option>
+				                    <option value="asia">아시아</option>
+				                    <option value="europe">유럽</option>
+				                    <option value="northAmerica">북아메리카</option>
+				                    <option value="southAmerica">남아메리카</option>
+				                    <option value="africa">아프리카</option>
+				                    <option value="oceania">오세아니아</option>
+				                </select>
+				                <select id="countrySelect" class="form-select">
+				                    <option selected>나라</option>
+				                </select>   
+                            </div>
+                        </header>
+                        <!-- 세부일정 입력란-->
+                        <section class="mb-5">
+                            <div class="card mb-4">
+                                <div class="details-card">
+                                    <div class="card-header">
+                                        <input type="text" class="form-control schedule-name" id="formGroupExampleInput2" placeholder="일정 이름(ex.[DAY1] 국립중앙박물관 관람하기!)">      
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="form-floating"> 
+                                            <textarea class="form-control schedule-description"  id="floatingTextarea2" style="height: 100px"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button id="plusBtn" class="big_button">+</button>
+                            </div>
+
+                            <div id="detailsSchedule_plus"></div>
+                        </section>
+                    </article>
+                    
+                </div>
+            </div>
+        </div>
+			<input type="text" id="markerInfo">
+			<p>룸 아이디: <span id="roomId" th:text="${roomId}"></span></p>
+			<p>스토리지 아이디: <span id="storageId" th:text="${storageId}"></span></p>
+
+        <script>
+            document.getElementById('memberToggleBtn').onclick = function(){
+                let memberInfo = document.getElementById('memberInfo');
+                if(memberInfo.style.display === "none" || memberInfo.style.display ==""){
+                    memberInfo.style.display = "block"; //멤버 정보 보이기
+                }else{
+                    memberInfo.style.display = "none"; //멤버 정보 숨김
+                }
+            };
+        </script>
+
+        <script>
+            document.querySelectorAll('.f-btn').forEach(function(button){
+                button.addEventListener('click',function(){
+                    //기존의 .f-btn 버튼의 hover제거
+                    document.querySelectorAll('.f-btn').forEach(function(btn){
+                        btn.classList.remove('hover-state');
+                    });
+                    //클릭된 버튼만 'hover-state'클래스 추가
+                    this.classList.add('hover-state');
+                });
+            });
+                //this : 클릭된 요소
+                //classList : 해당 요소의 클래스 목록
+                /*toggle : 클릭할 때마다 ()안의 클래스를 추가하거나 제거
+                           classLis에 해당 클래스가 있으면 삭제, 없으면 추가.*/
+          
+        </script>
+
+        <!-- +  버튼 누를때마다 세부일정카드 추가 -->
+         <script>
+            document.getElementById('plusBtn').addEventListener('click',function(){
+                //새로운 카드 요소 생성
+                const cardDiv = document.createElement('div');
+                cardDiv.classList.add('details-card');
+
+                //카드의 html설정
+                cardDiv.innerHTML =  `
+            <div class="card-header">
+                <input type="text" class="form-control schedule-name" placeholder="일정 이름(ex.[DAY1] 국립중앙박물관 관람하기!)">      
+            </div>
+            <div class="card-body">
+                <div class="form-floating"> 
+                    <textarea class="form-control schedule-description" style="height: 100px"></textarea>
+                </div>
+            </div>
+        `;
+                //생성한 카드를 detailsSchedule_plus에 추가
+                const cardContainer = document.querySelector('.details-card');
+                cardContainer.insertBefore(cardDiv, document.getElementById('plustBtn'));
+            }); 
+           
+         </script>
+
+         <script th:src="@{/js/sharingroom/adjust.js}"></script>
+         <script th:src="@{/js/sharingroom/chat.js}"></script>
+         <script th:src="@{/js/sharingroom/vote.js}"></script>
+        <script th:src="@{/js/sharingroom/saveSchedule.js}"></script> 
+    </body>
+</html>

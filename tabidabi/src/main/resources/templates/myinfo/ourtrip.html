@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" 
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8"> <!-- 문자 인코딩 설정 -->
+    <title>내 일정 리스트</title> <!-- 페이지 제목 설정 -->
+    
+    <!-- jQuery 라이브러리 포함 -->
+    <script th:src="@{/js/jquery-3.7.1.min.js}"></script>
+    <script th:src="@{/js/myinfo/ourtrip.js}"></script>
+<link rel="stylesheet" th:href="@{/css/myinfo/ourtrip.css}">	
+</head>
+<body>
+
+	<div class="navbar">
+		<a th:href="@{/}"> 
+			<img th:src="@{/images/로고.png}" alt="로고">
+		</a>
+		<div style="display: flex; align-items: center;">
+			<a href="#search-container">인기패키지</a> 
+			<a href="#colored-background">여행 팁</a> 
+			<a th:href="@{/community/list}">커뮤니티</a>
+			<th:block sec:authorize="not isAuthenticated()">
+				<a th:href="@{/member/login}">로그인</a>
+			</th:block>
+			<th:block sec:authorize="isAuthenticated()">
+				<div class="info-button" style="position: relative;">
+					<a th:href="@{/#}" onclick="return false;">내 정보보기</a>
+					<div class="dropdown">
+						<a th:href="@{/myinfo/myinfo}">내 정보 수정하기</a>
+						<a th:href="@{/myinfo/sharingroom_list}">나의 일정공유방 리스트</a>
+						<a th:href="@{/myinfo/community}">커뮤니티</a>
+						<a th:href="@{/myinfo/ourtrip}">우리가 만든 동선</a>
+						<a th:href="@{/member/logout}" style="color: red;">로그아웃</a>
+					</div>
+				</div>
+			</th:block>
+		</div>
+	</div>
+
+
+    <br>
+    <h1 th:text="'우리의 여행 일지'" style="margin-top: 10px; margin-left: 100px"></h1>
+    
+        <a th:href="@{/myinfo/ourtripinfo}">우리의 여행 일지</a>
+    
+    <div class="list">
+        <table>
+            <thead>
+                <tr>
+                    <th>여행기간</th>
+                    <th style="width: 300px;">방이름</th>
+                    <th>여행장소</th>
+                    <th>인원</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- 데이터 행을 여기에 추가 -->
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

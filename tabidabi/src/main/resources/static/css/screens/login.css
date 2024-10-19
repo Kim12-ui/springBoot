@@ -1,0 +1,41 @@
+/* 전체 페이지  */
+.welcome-header{
+    margin: 90px 0px; /*헤더 상하단 90px 여백, 좌우 0px여백*/
+    text-align: center;
+    font-weight: 600; /*텍스트 두께*/
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.welcome-header__title{
+    font-size: 100px;
+    margin-bottom: 20px;
+}
+/* margin: 1px; //상하좌우의 마진을 1px로 설정
+margin: 1px 2px; //상하 마진을 1px, 좌우 마진을 2px로 설정
+margin: 1px 2px 3px; //위 마진을 1px, 아래 마진을 2px, 좌우마진을 3px로 설정
+margin: 1px 2px 3px 4px; //위 1px, 아래 2px, 왼쪽 3px, 오른쪽 4px로 설정 */
+#login-form{ /*로그인폼 CSS*/
+    display: flex;
+    flex-direction: column;
+    margin: 0px 500px;
+}
+
+#login-form input{/*로그인 폼의 input태그 CSS*/
+    padding: 15px 0px; /*상하 내부여백 15px, 좌우 0px*/
+    border-radius: 10px; /*모든 모서리 10px 둥글게*/
+    font-size: 18px;
+    margin-bottom: 25px;
+}
+
+#login-form input:not([type="submit"]){
+    /*로그인 폼의 submit을 제외한 모든 input태그 CSS*/
+    border-bottom: 2px solid rgba(0,0,0,0.2);
+    transition: border-color .3s ease-in-out;
+}
+
+
+
+
+

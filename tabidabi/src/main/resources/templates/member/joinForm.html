@@ -1,0 +1,53 @@
+<!DOCTYPE html> 
+<html lang="ko"
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+	<meta charset="UTF-8">
+	<title>회원가입</title>
+	<script th:src="@{/js/jquery-3.7.1.min.js}"></script>
+	<script th:src="@{/js/member/joinForm.js}"></script>
+	<link rel="stylesheet" th:href="@{/css/member/join.css}">
+</head>
+<body>
+	<div class="container">
+		<h1>타비다비 회원가입</h1>
+		
+		<form id="joinForm" th:action="@{/member/join}" method="post">
+			<table>
+			<tr>
+				<th>아이디</th>
+				<td><input type="text" name="memberId" id="memberId"></td>
+			</tr>
+			<tr>
+				<th></th>
+				<td><span id="msg"></span></td>
+			</tr>
+			<tr>
+				<th>비밀번호</th>
+				<td><input type="password" name="password" id="password"></td>
+			</tr>
+			<tr>
+				<th>비밀번호 확인</th>
+				<td><input type="password" id="password2"></td>
+			</tr>
+			<tr>
+				<th>닉네임</th>
+				<td><input type="text" name="nickname" id="nickname"></td>
+			</tr>
+			<tr>
+				<th>이메일</th>
+				<td><input type="text" name="email" id="email"></td>
+			</tr>
+			<tr>
+				<th></th>
+				<td>
+					<input type="submit" id="submitButton" class="submit-btn" 
+					disabled="disabled" value="회원가입">
+				</td>
+			</tr>
+			</table>
+		</form>
+	</div>
+</body>
+</html>

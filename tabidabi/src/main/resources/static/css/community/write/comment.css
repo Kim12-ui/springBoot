@@ -1,0 +1,15 @@
+@charset "UTF-8";
+
+/* 대표 이미지 칸 */
+.outer-representativeImage {
+	height : 200px;
+	display : flex;
+  	align-items : center;
+}
+.inner-representativeImage {
+  width : 200px;
+  height : 100px;
+}
+#representativeImage {
+	margin-top : 10px;
+}
