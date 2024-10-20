@@ -1,5 +1,8 @@
 @charset "UTF-8";
 
+main {
+	padding-bottom: 60px; /* 푸터의 높이만큼 여백을 추가 */
+}
 /* 상단 배너 */
 .banner {
     background-color: #a2d6f9;
@@ -232,5 +235,13 @@ footer {
 
 /* footer */
 .footer {
-
+    position: fixed; /* 고정 위치 설정 */
+    bottom: 0; /* 화면 하단에 위치 */
+    left: 0; /* 왼쪽 정렬 */
+    right: 0; /* 오른쪽 정렬 */
+    height: 50px; /* 푸터 높이 설정 (필요에 따라 조정) */
+    background-color: #f1f1f1; /* 푸터 배경색 */
+    text-align: center; /* 텍스트 중앙 정렬 */
+    padding: 20px; /* 패딩 추가 (필요에 따라 조정) */
+    box-shadow: 0 -1px 5px rgba(0, 0, 0, 0.1); /* 위쪽 그림자 추가 (선택 사항) */
 }
