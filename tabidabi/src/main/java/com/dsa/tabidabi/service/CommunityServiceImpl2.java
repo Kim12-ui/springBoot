@@ -274,12 +274,6 @@ public class CommunityServiceImpl2 implements CommunityService2 {
 	}
 
 	@Override
-	public Boolean view(Integer communityId, AuthenticatedUser user) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public CommunityEntity findById(Integer communityId) {
 		 return cr.findById(communityId).orElseThrow(() -> new EntityNotFoundException("해당 엔티티는 없습니다."));
 	}

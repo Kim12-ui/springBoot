@@ -20,11 +20,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.dsa.tabidabi.domain.dto.MemberDTO;
 import com.dsa.tabidabi.domain.dto.community.CommunityDTO;
 import com.dsa.tabidabi.domain.dto.community.CommunityInfoDetailsDTO;
 import com.dsa.tabidabi.domain.dto.community.CommunityListDTO;
 import com.dsa.tabidabi.domain.entity.community.CommunityEntity;
+import com.dsa.tabidabi.repository.community.CommunityRepository;
 import com.dsa.tabidabi.security.AuthenticatedUser;
 import com.dsa.tabidabi.service.CommunityService2;
 import com.dsa.tabidabi.service.MemberService;
@@ -47,6 +47,7 @@ public class CommunityController2 {
     private final CommunityService2 communityService2;
     private final MemberService memberService;
     
+    private final CommunityRepository cr;
 
     /**
 	 * 커뮤니티 리스트로 이동
@@ -127,47 +128,23 @@ public class CommunityController2 {
 		return ResponseEntity.ok(likeResult);
 	} 
 	
-	@ResponseBody
-	@PostMapping("view")
-	public ResponseEntity<?> view(
-			@RequestParam(value="communityId") Integer communityId,
-			@AuthenticationPrincipal AuthenticatedUser user
-			) {
-		log.debug("조회한 게시판 번호 : {}", communityId);
-		log.debug("현재 로그인한 유저 : {}", user);
-		
-		Boolean viewResult = communityService2.view(communityId, user);
-		
-		return ResponseEntity.ok(viewResult);
-	} 
-	
 	/**
 	 * 커뮤니티 상세 읽기
+	 * @param communityId 해당 게시물의 아이디
 	 * @return read.html
-	 */
-	/*
-	 * @GetMapping("read") public String read() {
-	 * 
-	 * return "community/read"; }
 	 */
 	@GetMapping("/read")
 	public String read(@RequestParam("communityId") Integer communityId, Model model) {
-		/* CommunityDTO post = communityService2.getPostById(communityId); */
-		
-		/*
-		 * CommunityInfoDetailsDTO post = new CommunityInfoDetailsDTO(1,1, "제주 여행 후기"
-		 * ,"제주도에서의 3박 4일 여행 계획입니다. 첫째 날에는 협재 해수욕장을 방문하고, 둘째 날에는 성산일출봉을 등반했습니다. 셋째 날은 우도 투어, 마지막 날은 오름 트레킹으로 마무리했습니다."
-		 * , LocalDateTime.now(), null);
-		 */
-		
-		System.out.println("communityId:"+communityId);
+		System.out.println("communityId: {}"+communityId);
 		 
 		  List<CommunityInfoDetailsDTO> posts = communityService2.getPostsBycommunityId(communityId);
 		  
 		  CommunityEntity entity = communityService2.findById(communityId);
 		  
-		  MemberDTO memberDto = memberService.findById(entity.getMember().getMemberId());
+		  // 해당 게시판 들어갈때마다 조회수 +1증가
+		  entity.setViewCount(entity.getViewCount()+1);
 		  
+		  cr.save(entity);
 		  
 		  for(CommunityInfoDetailsDTO post:posts) {
 			  System.out.println(post);
@@ -176,14 +153,11 @@ public class CommunityController2 {
 	    if (posts != null) {
 	    	System.out.println("x");
 	        model.addAttribute("posts", posts);
-	        model.addAttribute("author", memberDto.getNickname());
-	        model.addAttribute("likes", entity.getLikeCount());
-	        model.addAttribute("views",entity.getViewCount());
-	    } else {System.out.println("y");
+	        model.addAttribute("entity",entity);
+	        } else {System.out.println("y");
 	        model.addAttribute("error", "해당 게시글을 찾을 수 없습니다.");
 	    }
 	    return "community/read";
 	}
 	
-
 }

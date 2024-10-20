@@ -1,1 +1,148 @@
 @charset "UTF-8";
+
+/* 상단 배너 */
+.banner {
+    background-color: #a2d6f9;
+    text-align: center;
+    padding: 20px;
+    position: relative;
+    margin-top: 10px;
+    height: 200px;
+}
+
+.title-info, .date-range {
+    font-size: 25px;
+    margin: 20px 0;
+}
+
+.room-info {
+    margin-top: 5px;
+    font-size: 14px;
+}
+
+/* 버튼 그룹 */
+.btn-group {
+    position: relative;
+    margin: 0 auto;
+    margin-top: 10px;
+}
+
+.edit-btn, .delete-btn {
+    background-color: #FFFD12;
+    border: none;
+    padding: 10px 20px;
+    margin-left: 10px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.delete-btn {
+    background-color: #FFFD12;
+}
+
+.check-status {
+    right: 100px;
+}
+
+/* 사용자 정보 */
+.user-info {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin-top: 20px;
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+}
+
+.profile img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+
+.user-details {
+    margin-left: 10px;
+}
+
+.user-details p {
+    margin: 0;
+}
+.movement-button {
+	background-color: #FFFD12;
+    border: none;
+    width: 80px;
+    padding: 10px 20px;
+    margin-left: 80px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 10px;
+}
+.comment-button {
+	background-color: #dcdcdc;
+    border: none;
+    width: 100px;
+    padding: 10px 20px;
+    margin-left: 10px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+/* 이미지 박스 */
+.image-box {
+	border:1px solid black;
+	width:80%;
+	height:400px;
+	margin: 25px auto;
+}
+
+/* 일정 목록 테이블 */
+.schedule-table {
+    width: 65%;
+    margin: 0 auto;
+    background-color: #e3e3e3;
+    border-collapse: collapse;
+}
+
+.schedule-table td {
+    padding: 10px;
+    border: 1px solid black;
+}
+
+/* 댓글 섹션 */
+.comment-section {
+    width: 80%;
+    margin: 20px auto;
+    text-align: center;
+}
+
+.comment-btn {
+    background-color: #FFFD12;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+/* 하단 내비게이션 */
+footer {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    background-color: #f0f0f0;
+}
+
+.nav-btn {
+    background-color: #FFFD12;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+}
+.for-div {
+	width: 78%;
+}
+.view-image, .like-image {
+	width: 1em;
+	height: auto;
+}

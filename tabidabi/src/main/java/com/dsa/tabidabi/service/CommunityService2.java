@@ -25,22 +25,8 @@ public interface CommunityService2 {
 	 */
 	List<CommunityDTO> getCommunitiesByMember(String memberId);
 
-	Boolean view(Integer communityId, AuthenticatedUser user);
-
 	CommunityEntity findById(Integer communityId);
 
 	List<CommunityDTO> selectLikedList(String memberId);
 	
-	
-	
-	
-	
-	
-	}
-
-
-
-	
-
-	
-
+}
