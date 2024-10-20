@@ -136,15 +136,33 @@ public class CommunityController2 {
 	 */
 	@GetMapping("/read")
 	public String read(@RequestParam("communityId") Integer communityId, Model model) {
-		System.out.println("communityId: {}"+communityId);
+		  System.out.println("communityId: {}"+communityId);
 		 
 		  List<CommunityInfoDetailsDTO> posts = communityService2.getPostsBycommunityId(communityId);
 		  
 		  CommunityEntity entity = communityService2.findById(communityId);
 		  
-		  // 해당 게시판 들어갈때마다 조회수 +1증가
-		  entity.setViewCount(entity.getViewCount()+1);
+		  // 다음, 이전 게시물 ID 가져오기
+		  Integer nextId = communityService2.findNextCommunityId(communityId);
+		  Integer prevId = communityService2.findPreviousCommunityId(communityId);
 		  
+		  // 로그인 X시 => AuthenticatedUser user == null
+		  // 로그인 O시 => AuthenticatedUser user != null
+		  Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+	      AuthenticatedUser user = (authentication != null 
+	    		&& authentication.isAuthenticated() 
+	    		&& !(authentication instanceof AnonymousAuthenticationToken))
+	            ? (AuthenticatedUser) authentication.getPrincipal()
+	            : null;
+	      Boolean likeResult = false;
+	      if (user != null) {
+	    	  likeResult = communityService2.selectlike(communityId, user);
+	      } else {
+	    	  likeResult = false;
+	      }
+		  
+		  // 해당 게시판 들어갈때마다 조회수 +1증가
+		  entity.setViewCount(entity.getViewCount()+1); 
 		  cr.save(entity);
 		  
 		  for(CommunityInfoDetailsDTO post:posts) {
@@ -155,6 +173,9 @@ public class CommunityController2 {
 	    	System.out.println("x");
 	        model.addAttribute("posts", posts);
 	        model.addAttribute("entity",entity);
+	        model.addAttribute("likeResult",likeResult);
+	        model.addAttribute("prevId",prevId);
+	        model.addAttribute("nextId",nextId);
 	        } else {System.out.println("y");
 	        model.addAttribute("error", "해당 게시글을 찾을 수 없습니다.");
 	    }
@@ -183,13 +204,46 @@ public class CommunityController2 {
 	 * 리플 리스트 불러오기
 	 * @param communiryId 해당 커뮤니티 번호
 	 * @return list 댓글 리스트
+	 * @return memberId 지금 접속한 유저 아이디
 	 */
 	@ResponseBody
 	@GetMapping("replyList")
 	public ResponseEntity<?> getReplyList(
 			@RequestParam("communityId") int communityId
 			) {
-		List<ReplyDTO> replyList = communityService2.getReplyList(communityId);
-		return ResponseEntity.ok(replyList);
+		// 로그인 X시 => AuthenticatedUser user == null
+		// 로그인 O시 => AuthenticatedUser user != null
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+	    AuthenticatedUser user = (authentication != null 
+	    		&& authentication.isAuthenticated() 
+	    		&& !(authentication instanceof AnonymousAuthenticationToken))
+	            ? (AuthenticatedUser) authentication.getPrincipal()
+	            : null;
+	    
+	    String loginId = (user != null) ? user.getId() : null;
+		
+		List<ReplyDTO> list = communityService2.getReplyList(communityId);
+		
+		Map<String, Object> response = new HashMap<>();
+	    response.put("list", list);
+	    response.put("loginId",loginId);
+	    
+		return ResponseEntity.ok(response);
+	}
+	
+	/**
+	 * 리플 글 삭제하기
+	 * @param communityReplyId 해당 댓글 고유번호
+	 * @param communityId 커뮤니티 게시판 번호
+	 * @param user 로그인한 유저
+	 */
+	@ResponseBody
+	@PostMapping("replyDelete")
+	public void replyDelete(
+			@RequestParam("communityReplyId") int communityReplyId,
+			@RequestParam("communityId") int communityId,
+			@AuthenticationPrincipal AuthenticatedUser user
+			) {
+		communityService2.replyDelete(communityReplyId, communityId, user);
 	}
 }

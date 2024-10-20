@@ -68,6 +68,9 @@
 .user-details p {
     margin: 0;
 }
+.movement {
+	margin-bottom : 60px;
+}
 .movement-button {
 	background-color: #FFFD12;
     border: none;
@@ -91,6 +94,7 @@
 .comment {
     margin: 0 auto;
     text-align: center;
+    margin-bottom : 60px;
 }
 
 /* 이미지 박스 */
@@ -153,7 +157,6 @@ footer {
 
 /* 리플 작성 폼의 스타일 */
 .replyWrite {
-    /* background-color: #FFFD12; */
     padding: 10px;
     border-radius: 10px;
     width: 100%;
@@ -196,4 +199,38 @@ footer {
 /* 버튼 hover 스타일 */
 .reply-submit-button:hover {
     background-color: #dcdcdc;
+}
+
+/* 리플 목록 */
+.replyTable {
+	text-align : center;
+	font-size : 20px;
+	margin : 0 auto;
+	margin-bottom : 20px;
+}
+
+.replyTable th, td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 2px solid #FFFD12;
+}
+
+.replyTable th {
+	width : 100px;
+    background-color: #FFFD12;
+    text-align: center;
+}
+
+.replyTable tr:hover {
+    background-color: #f1f1f1;
+}
+.replyDeleteButton {
+	background-color: #FFFD12;
+	border: 1px solid black;
+	font-size : 16px;
+}
+
+/* footer */
+.footer {
+
 }

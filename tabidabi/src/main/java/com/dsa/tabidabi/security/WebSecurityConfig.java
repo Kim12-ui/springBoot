@@ -32,6 +32,7 @@ public class WebSecurityConfig {
             , "/member/info"        //개인정보 수정
             , "/community/list"		//커뮤니티 리스트
             , "/community/read"		//커뮤니티 글 상세읽기
+            , "/community/replyList"
             , "/popularPostSearch"  //홈페이지 인기 게시판
             , "/community/getCommunityList"	//커뮤니티 게시판
     };

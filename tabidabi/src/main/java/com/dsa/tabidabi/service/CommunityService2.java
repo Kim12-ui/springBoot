@@ -33,5 +33,12 @@ public interface CommunityService2 {
 	void replyWrite(int communityId, String replyContent, String memberId);
 
 	List<ReplyDTO> getReplyList(int communityId);
+
+	void replyDelete(int communityReplyId, int communityId, AuthenticatedUser user);
+
+	Boolean selectlike(Integer communityId, AuthenticatedUser user);
 	
+	Integer findNextCommunityId(Integer communityId);
+	
+	Integer findPreviousCommunityId(Integer communityId);
 }

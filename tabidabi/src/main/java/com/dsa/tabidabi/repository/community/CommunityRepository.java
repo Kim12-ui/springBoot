@@ -54,5 +54,10 @@ public interface CommunityRepository extends JpaRepository<CommunityEntity, Inte
 
 	List<CommunityEntity> findByMember_MemberId(String memberId);
 
-	
+	@Query(value = "SELECT community_id FROM communities WHERE community_id > :communityId ORDER BY community_id ASC LIMIT 1", nativeQuery = true)
+    Integer findFirstByCommunityIdGreaterThanOrderByCommunityIdAsc(@Param("communityId") Integer communityId);
+
+    @Query(value = "SELECT community_id FROM communities WHERE community_id < :communityId ORDER BY community_id DESC LIMIT 1", nativeQuery = true)
+    Integer findFirstByCommunityIdLessThanOrderByCommunityIdDesc(@Param("communityId") Integer communityId);
+
 }

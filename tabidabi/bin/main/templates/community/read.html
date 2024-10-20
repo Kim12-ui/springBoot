@@ -70,7 +70,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
         <!-- 작성자==로그인한 유저시 수정, 삭제하는 기능 추가 -->
         <div class="btn-group" sec:authorize="isAuthenticated()">
             <div class="btn-group" th:if="${#authentication.principal.id == entity.member.memberId}">
-	            <button class="edit-btn">수정하기</button>
+	            <!-- <button class="edit-btn">수정하기</button> -->
 	            <button class="delete-btn" id="delete-btn">삭제하기</button>
 	        </div>
         </div>
@@ -103,7 +103,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
     	</div>
     	
     	<!-- 코멘트 -->
-    	<div class="comment" id="comment" style="margin: 0 auto;">
+    	<div class="comment" id="comment">
     		<div th:if="${entity.CommunityCommentsEntity.content != ''}"
     		th:utext="${entity.CommunityCommentsEntity.content}"
     		></div>
@@ -112,9 +112,10 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
     		해당 코멘트 란은 공란입니다.</div>
     	</div>
 
+		<input type="hidden" id="communityId" class="communityId" th:value="${entity.communityId}">
+
         <!-- 리플 작성폼 -->
 		<div sec:authorize="isAuthenticated()" class="replyWrite" id="replyWrite">
-				<input type="hidden" id="communityId" class="communityId" th:value="${entity.communityId}">
 				<textarea name="replyContent" id="replyContent" class="replyContent"
 				placeholder="댓글을 입력해주세요"></textarea>
 				<input type="button" value="댓글 작성" id="reply-submit-button" class="reply-submit-button">
@@ -122,36 +123,48 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
 		
 		<!-- 리플 목록 출력 시작 -->
 		<table class="replyTable" id="replyTable">
-	
+
 		</table>
     </main>
 
     <!-- 하단 내비게이션 -->
-    <footer>
+    <footer class="footer">
     	<p>
     		<img class="view-image" th:src="@{/images/community/list/views.png}">
     		<span th:text="${entity.viewCount}"></span>
     	</p>
     	<p>
-    		<img class="like-image" th:src="@{/images/community/list/like.png}">
-    		<span th:text="${entity.likeCount}"></span>
+    		<img class="like-image" id="like-image" 
+			     th:src="@{/images/community/list/좋아요_클릭후.png}" 
+			     th:if="${likeResult}"
+			     th:attr="data-like-data=${entity.communityId}"/>
+			
+			<img class="like-image" id="like-image" 
+			     th:src="@{/images/community/list/like.png}" 
+			     th:unless="${likeResult}"
+			     th:attr="data-like-data=${entity.communityId}"/>
+    		<span th:text="${entity.likeCount}" class="like-number"></span>
     	</p>
+    	
     	<div class="for-div">
     	
     	</div>
-        <a th:href="@{/community/read(communityId=${entity.communityId - 1})}">
-        	이전
-        </a>
+    	
+        <!-- 이전 게시물 버튼 (prevId가 있을 경우에만 표시) -->
+		<a th:if="${prevId != null}" th:href="@{/community/read(communityId=${prevId})}">
+			이전
+		</a>
         <a th:href="@{/community/list}">
         	&#9776;
         </a>
-        <a th:href="@{/community/read(communityId=${entity.communityId + 1})}">
-        	다음
-        </a>
+        <!-- 다음 게시물 버튼 (nextId가 있을 경우에만 표시) -->
+		<a th:if="${nextId != null}" th:href="@{/community/read(communityId=${nextId})}">
+			다음
+		</a>
     </footer>
     
     <!-- 자바 스크립트 & jquery -->
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>	
     <script th:src="@{/js/community/read/read_replylist.js}"></script>
     <script th:src="@{/js/community/read/read_convertdisplay.js}"></script>
 </body>

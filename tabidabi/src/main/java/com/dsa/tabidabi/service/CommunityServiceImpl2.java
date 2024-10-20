@@ -242,6 +242,30 @@ public class CommunityServiceImpl2 implements CommunityService2 {
 		return communityDTOs;
 	}
 
+	
+	@Override
+	public Boolean selectlike(Integer communityId, AuthenticatedUser user) {
+		// CommunityEntity 인스턴스 생성
+		CommunityEntity communityEntity = cr.findById(communityId)
+				.orElseThrow(() -> new EntityNotFoundException("없는 게시판입니다."));
+		
+		// MemberEntity 인스턴스 생성
+		MemberEntity memberEntity = mr.findById(user.getId())
+				.orElseThrow(() -> new EntityNotFoundException("없는 아이디입니다."));
+		
+		// communityId => int communityId
+		// memberId => AuthenticatedUser user
+		CommunityLikesEntity checkCommunityEntity 
+		= clr.findByCommunityAndMember(communityEntity, memberEntity);
+		
+		if (checkCommunityEntity != null) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	
 	@Override
 	public List<CommunityInfoDetailsDTO> getPostsBycommunityId(Integer communityId) {
 		CommunityEntity communityEntity = cr.findById(communityId)
@@ -313,8 +337,55 @@ public class CommunityServiceImpl2 implements CommunityService2 {
 	 */
 	@Override
 	public List<ReplyDTO> getReplyList(int communityId) {
-		Sort sort = Sort.by(Sort.Direction.ASC, "replyNum");
-		return null;
+		Sort sort = Sort.by(Sort.Direction.ASC, "communityReplyId");
+		List<ReplyEntity> replyEntityList = rr.findByCommunity_CommunityId(communityId,sort);
+		List<ReplyDTO> replyDTOList = new ArrayList<ReplyDTO>();
+		
+		for (ReplyEntity entity : replyEntityList) {
+			ReplyDTO dto = ReplyDTO.builder()
+						.communityReplyId(entity.getCommunityReplyId())
+						.communityId(entity.getCommunity().getCommunityId())
+						.communityMemberId(entity.getCommunityMember().getNickname())
+						.replyMemberNickname(entity.getReplyMember().getNickname())
+						.replyMemberId(entity.getReplyMember().getMemberId())
+						.replyContent(entity.getReplyContent())
+						.createdAt(entity.getCreatedAt())
+						.build();
+			replyDTOList.add(dto);
+		}
+		
+		return replyDTOList;
+	}
+
+	/**
+	 * 댓글 삭제
+	 * @param communityReplyId
+	 * @param communityId
+	 * @param user
+	 * @return 댓글 삭제
+	 */
+	@Override
+	public void replyDelete(int communityReplyId, int communityId, AuthenticatedUser user) {
+		ReplyEntity replyEntity = rr.findById(communityReplyId)
+				.orElseThrow(() -> new EntityNotFoundException("리플 정보가 없습니다."));
+		
+		if (!user.getId().equals(replyEntity.getReplyMember().getMemberId())) {
+			throw new RuntimeException("삭제 권한이 없습니다.");
+		}
+		
+		rr.delete(replyEntity);
+	}
+
+	// 다음 버튼 클릭시 (다음 게시물로 이동)
+	@Override
+	public Integer findNextCommunityId(Integer communityId) {
+		return cr.findFirstByCommunityIdGreaterThanOrderByCommunityIdAsc(communityId);
+	}
+
+	// 이전 버튼 클릭시 (이전 게시물로 이동)
+	@Override
+	public Integer findPreviousCommunityId(Integer communityId) {
+		return cr.findFirstByCommunityIdLessThanOrderByCommunityIdDesc(communityId);
 	}
 	
 }
