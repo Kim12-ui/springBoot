@@ -40,4 +40,6 @@ public interface CommunityService {
 			List<String> plusTitleList, List<String> plusContentList
 			);
 
+	void delete(int communityId, String id);
+
 }

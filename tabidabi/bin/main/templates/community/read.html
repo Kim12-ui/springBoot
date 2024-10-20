@@ -49,7 +49,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
     
     	<!-- 커뮤니티 게시판 정보 -->
         <div class="room-info">
-            <p class="title-info" th:text="${entity.title}"></p>
+            <strong class="title-info" th:text="${entity.title}"></strong>
             <p class="date-range">
             	<span th:text="${entity.CommunityInfoEntity.communityDeparture}"></span>
             	~
@@ -71,7 +71,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
         <div class="btn-group" sec:authorize="isAuthenticated()">
             <div class="btn-group" th:if="${#authentication.principal.id == entity.member.memberId}">
 	            <button class="edit-btn">수정하기</button>
-	            <button class="delete-btn">삭제하기</button>
+	            <button class="delete-btn" id="delete-btn">삭제하기</button>
 	        </div>
         </div>
 
@@ -79,10 +79,13 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
     
     <!-- 메인 콘텐츠 -->
     <main>
+    	<!-- 코멘트 & 동선 버튼 -->
     	<div>
     		<button class="movement-button" id="movement-button">동선</button>
     		<button class="comment-button" id="comment-button">코멘트</button>
     	</div>
+    	
+    	<!-- 동선 -->
     	<div class="movement" id="movement">
 		    <div class="image-box">
 	            <!-- 지도API 부착 -->
@@ -97,18 +100,30 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
 	                <td style="height:150px" th:text="${post.content}"></td>
 	            </tr>
 	        </table>
-	
-	        <!-- 댓글 섹션 -->
-	        <section class="comment-section">
-	            <button class="comment-btn">댓글 남기기</button>
-	        </section>
     	</div>
     	
-    	<div class="comment" id="comment">
-    		<p th:utext="${entity.CommunityCommentsEntity.content}"></p>
-    		<p th:if="${entity.CommunityCommentsEntity.content == null}"
-    		>해당 코멘트 란은 공란입니다.</p>
+    	<!-- 코멘트 -->
+    	<div class="comment" id="comment" style="margin: 0 auto;">
+    		<div th:if="${entity.CommunityCommentsEntity.content != ''}"
+    		th:utext="${entity.CommunityCommentsEntity.content}"
+    		></div>
+    		<div th:if="${entity.CommunityCommentsEntity.content == ''}"
+    		style="margin: 30px;">
+    		해당 코멘트 란은 공란입니다.</div>
     	</div>
+
+        <!-- 리플 작성폼 -->
+		<div sec:authorize="isAuthenticated()" class="replyWrite" id="replyWrite">
+				<input type="hidden" id="communityId" class="communityId" th:value="${entity.communityId}">
+				<textarea name="replyContent" id="replyContent" class="replyContent"
+				placeholder="댓글을 입력해주세요"></textarea>
+				<input type="button" value="댓글 작성" id="reply-submit-button" class="reply-submit-button">
+		</div>
+		
+		<!-- 리플 목록 출력 시작 -->
+		<table class="replyTable" id="replyTable">
+	
+		</table>
     </main>
 
     <!-- 하단 내비게이션 -->
@@ -137,6 +152,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
     
     <!-- 자바 스크립트 & jquery -->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-    <script th:src="@{/js/community/read/read.js}"></script>
+    <script th:src="@{/js/community/read/read_replylist.js}"></script>
+    <script th:src="@{/js/community/read/read_convertdisplay.js}"></script>
 </body>
 </html>

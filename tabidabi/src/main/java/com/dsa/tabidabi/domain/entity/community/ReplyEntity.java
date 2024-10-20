@@ -40,25 +40,20 @@ public class ReplyEntity {
 	@JoinColumn(name="community_id", referencedColumnName = "community_id")
 	private CommunityEntity community;
 	
+	//다대일 관계
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="community_member_id", referencedColumnName = "member_id")
+	private MemberEntity communityMember;
+	
+	//다대일 관계
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="reply_member_id", referencedColumnName = "member_id")
+	private MemberEntity replyMember;
+	
 	@Column(name = "reply_content", columnDefinition = "TEXT")
 	private String replyContent;
 	
 	@CreatedDate
 	@Column(name = "created_at", columnDefinition = "timestamp default current_timestamp")
 	private LocalDateTime createdAt;
-	
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-		
 }

@@ -17,18 +17,21 @@ import com.dsa.tabidabi.domain.dto.community.CommunityDTO;
 import com.dsa.tabidabi.domain.dto.community.CommunityInfoDTO;
 import com.dsa.tabidabi.domain.dto.community.CommunityInfoDetailsDTO;
 import com.dsa.tabidabi.domain.dto.community.CommunityListDTO;
+import com.dsa.tabidabi.domain.dto.community.ReplyDTO;
 import com.dsa.tabidabi.domain.entity.MemberEntity;
 import com.dsa.tabidabi.domain.entity.community.CommunityCommentsEntity;
 import com.dsa.tabidabi.domain.entity.community.CommunityEntity;
 import com.dsa.tabidabi.domain.entity.community.CommunityInfoDetailsEntity;
 import com.dsa.tabidabi.domain.entity.community.CommunityInfoEntity;
 import com.dsa.tabidabi.domain.entity.community.CommunityLikesEntity;
+import com.dsa.tabidabi.domain.entity.community.ReplyEntity;
 import com.dsa.tabidabi.repository.MemberRepository;
 import com.dsa.tabidabi.repository.community.CommunityCommentsRepository;
 import com.dsa.tabidabi.repository.community.CommunityInfoRepository;
 import com.dsa.tabidabi.repository.community.CommunityLikesRepository;
 //import com.dsa.tabidabi.entity.Community;
 import com.dsa.tabidabi.repository.community.CommunityRepository;
+import com.dsa.tabidabi.repository.community.ReplyRepository;
 import com.dsa.tabidabi.security.AuthenticatedUser;
 
 import jakarta.persistence.EntityNotFoundException;
@@ -45,6 +48,7 @@ public class CommunityServiceImpl2 implements CommunityService2 {
  	private final CommunityInfoRepository cir;
  	private final CommunityCommentsRepository ccr;
  	private final CommunityLikesRepository clr;
+ 	private final ReplyRepository rr;
  	
  	private static final Logger log = LoggerFactory.getLogger(CommunityServiceImpl2.class);
     
@@ -276,6 +280,41 @@ public class CommunityServiceImpl2 implements CommunityService2 {
 	@Override
 	public CommunityEntity findById(Integer communityId) {
 		 return cr.findById(communityId).orElseThrow(() -> new EntityNotFoundException("해당 엔티티는 없습니다."));
+	}
+
+	/**
+	 * 댓글 작성
+	 * @param communityId 특정 커뮤니티 게시판
+	 * @param replyContent 댓글 내용
+	 * @param memberId 댓글 작성자
+	 */
+	@Override
+	public void replyWrite(int communityId, String replyContent, String memberId) {
+		CommunityEntity communityEntity = cr.findById(communityId)
+				.orElseThrow(() -> new EntityNotFoundException("해당 게시글이 없습니다."));
+		
+		MemberEntity memberEntity = mr.findById(memberId)
+				.orElseThrow(() -> new EntityNotFoundException("해당 회원이 없습니다."));
+		
+		ReplyEntity replyEntity = ReplyEntity.builder()
+								.community(communityEntity)
+								.communityMember(communityEntity.getMember())
+								.replyMember(memberEntity)
+								.replyContent(replyContent)
+								.build();
+		
+		rr.save(replyEntity);
+	}
+
+	/**
+	 * 댓글 리스트 조회
+	 * @param communityId 커뮤니티 게시판 번호
+	 * @return 리플 목록
+	 */
+	@Override
+	public List<ReplyDTO> getReplyList(int communityId) {
+		Sort sort = Sort.by(Sort.Direction.ASC, "replyNum");
+		return null;
 	}
 	
 }

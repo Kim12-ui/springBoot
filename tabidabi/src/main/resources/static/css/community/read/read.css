@@ -88,6 +88,10 @@
     cursor: pointer;
     margin-top: 10px;
 }
+.comment {
+    margin: 0 auto;
+    text-align: center;
+}
 
 /* 이미지 박스 */
 .image-box {
@@ -145,4 +149,51 @@ footer {
 .view-image, .like-image {
 	width: 1em;
 	height: auto;
+}
+
+/* 리플 작성 폼의 스타일 */
+.replyWrite {
+    /* background-color: #FFFD12; */
+    padding: 10px;
+    border-radius: 10px;
+    width: 100%;
+    max-width: 1000px;
+    margin: 40px auto;
+    text-align: right;
+}
+
+/* 텍스트 에어리어 스타일 */
+.replyContent {
+    width: 100%;
+    height: 100px;
+    padding: 15px;
+    margin-bottom: 15px;
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    font-size: 16px;
+    resize: none; /* 크기 조절 비활성화 */
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: border-color 0.3s ease;
+}
+
+.replyContent:focus {
+    border-color: #333;
+    outline: none;
+}
+
+/* 댓글 제출 버튼 스타일 */
+.reply-submit-button {
+    background-color: #FFFD12;
+    color: black;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    font-size: 16px;
+}
+
+/* 버튼 hover 스타일 */
+.reply-submit-button:hover {
+    background-color: #dcdcdc;
 }

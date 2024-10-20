@@ -318,4 +318,24 @@ public class CommunityServiceImpl implements CommunityService {
 	    
 	}
 
+	/**
+	 * 커뮤니티 게시판 삭제
+	 * @param communityId 해당 커뮤니티 리스트
+	 * @param id 로그인한 유저
+	 */
+	@Override
+	public void delete(int communityId, String id) {
+		MemberEntity memberEntity = mr.findById(id)
+				.orElseThrow(() -> new EntityNotFoundException("사용자 정보가 없습니다."));
+		
+		CommunityEntity communityEntity = cr.findById(communityId)
+				.orElseThrow(() -> new EntityNotFoundException("해당 게시글이 없습니다."));
+		
+		if (!id.equals(memberEntity.getMemberId())) {
+			throw new RuntimeException("삭제 권한이 없습니다.");
+		}
+		
+		cr.delete(communityEntity);
+	}
+
 }

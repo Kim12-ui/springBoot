@@ -162,4 +162,18 @@ public class CommunityController {
 		}
 	}
 	
+	/**
+	 * 커뮤니티 데이터 삭제
+	 * @param communityId 해당 커뮤니티 게시글
+	 * @return list.html
+	 */
+	@GetMapping("delete")
+	public String delete(
+			@RequestParam("communityId") int communityId,
+			@AuthenticationPrincipal AuthenticatedUser user
+			) {
+		cs.delete(communityId, user.getId());
+		return "community/list";
+	}
+	
 }

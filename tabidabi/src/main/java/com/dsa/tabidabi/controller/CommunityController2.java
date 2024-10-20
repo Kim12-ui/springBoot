@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.dsa.tabidabi.domain.dto.community.CommunityDTO;
 import com.dsa.tabidabi.domain.dto.community.CommunityInfoDetailsDTO;
 import com.dsa.tabidabi.domain.dto.community.CommunityListDTO;
+import com.dsa.tabidabi.domain.dto.community.ReplyDTO;
 import com.dsa.tabidabi.domain.entity.community.CommunityEntity;
 import com.dsa.tabidabi.repository.community.CommunityRepository;
 import com.dsa.tabidabi.security.AuthenticatedUser;
@@ -160,4 +161,35 @@ public class CommunityController2 {
 	    return "community/read";
 	}
 	
+	/**
+	 * 리플 목록 추가
+	 * @param communityId 해당 커뮤니티 번호
+	 * @param replyContent 댓글 내용
+	 * @param user 로그인한 유저
+	 * @return 댓글 목록 +1증가
+	 */
+	@ResponseBody
+	@PostMapping("replyWrite")
+	public void replyWrite(
+			@RequestParam("communityId") int communityId,
+			@RequestParam("replyContent") String replyContent,
+			@AuthenticationPrincipal AuthenticatedUser user
+			) {
+		String memberId = user.getId();
+		communityService2.replyWrite(communityId,replyContent,memberId);
+	}
+	
+	/**
+	 * 리플 리스트 불러오기
+	 * @param communiryId 해당 커뮤니티 번호
+	 * @return list 댓글 리스트
+	 */
+	@ResponseBody
+	@GetMapping("replyList")
+	public ResponseEntity<?> getReplyList(
+			@RequestParam("communityId") int communityId
+			) {
+		List<ReplyDTO> replyList = communityService2.getReplyList(communityId);
+		return ResponseEntity.ok(replyList);
+	}
 }

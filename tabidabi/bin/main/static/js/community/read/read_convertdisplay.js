@@ -1,7 +1,8 @@
 /**
- * read관련 자바스크립트
+ * 화면전환
  */
 $(document).ready(function() {
+	// 변수 선언
     const movementBox = $('#movement');
     const commentBox = $('#comment');
     

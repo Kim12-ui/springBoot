@@ -8,6 +8,7 @@ import org.springframework.data.domain.Page;
 import com.dsa.tabidabi.domain.dto.community.CommunityDTO;
 import com.dsa.tabidabi.domain.dto.community.CommunityInfoDetailsDTO;
 import com.dsa.tabidabi.domain.dto.community.CommunityListDTO;
+import com.dsa.tabidabi.domain.dto.community.ReplyDTO;
 import com.dsa.tabidabi.domain.entity.community.CommunityEntity;
 import com.dsa.tabidabi.security.AuthenticatedUser;
 
@@ -28,5 +29,9 @@ public interface CommunityService2 {
 	CommunityEntity findById(Integer communityId);
 
 	List<CommunityDTO> selectLikedList(String memberId);
+
+	void replyWrite(int communityId, String replyContent, String memberId);
+
+	List<ReplyDTO> getReplyList(int communityId);
 	
 }
