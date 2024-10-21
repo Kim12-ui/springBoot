@@ -27,6 +27,7 @@
 
 <link th:href="@{/css/myinfo/sharingroom_list.css}" rel="stylesheet">
 
+<script th:src="@{/js/jquery-3.7.1.min.js}"></script>
 <script th:src="@{/js/myinfo/sharingroom_list.js}"></script>
 </head>
 <body>
@@ -59,7 +60,7 @@
 
 		<!--페이지 이름 + 구분선-->
 		<div class="pageName2">
-			<h2 th:text="${member.nickname} + '님의 일정공유방 리스트'">리스트</h2>
+			<h2 th:text="${user.nickname} + '님의 일정공유방 리스트'">리스트</h2>
 			<hr width="90%">
 		</div>
 
@@ -68,12 +69,8 @@
 			<div class="search-container">
 				<input type="text" id="searchTitle" name="query"
 					placeholder="검색어를 입력하세요" required class="search_input">
-				<button type="submit" class="search-button">
-					<i class="fa fa-search"></i>
-				</button>
 			</div>
 		</form>
-		<!--카테고리 셀렉트 + 검색버튼-->
 		<!--카테고리 검색 -->
 		<div class="select-container">
 			<div class="form-select-container">
@@ -93,28 +90,95 @@
 		</div>
 	</header>
 	<main>
-		<div
-			style="display: flex; justify-content: flex-end; margin-top: 30px; margin-right: 280px;">
-			<div style="margin-right: 630px;">
-				<button id="leader-button" class="button"
-					onclick="selectRole('leader')">방장</button>
-				<button id="participant-button" class="button"
-					onclick="selectRole('participant')">참가자</button>
+		<div class="button-div">
+			<!-- 왼쪽버튼 2개 -->
+			<div>
+				<button id="leader-button" class="leader-button mid_button">방장</button>
+				<button id="participant-button" class="participant-button mid_button">참가자</button>
 			</div>
-			<button class="button">방 만들기</button>
+			<!-- 오른쪽버튼 2개 -->
+			<form th:action="@{/sharingroom/sharingroom}" method="get" >
+				<button class="mid_button" type="submit" 
+				style="background-color : #B5FFAF">방 만들기</button>
+			</form>
 		</div>
-		<div class="list">
+		<div class="leader-list" id="leader-list">
 			<table>
 				<thead>
 					<tr>
 						<th>여행기간</th>
-						<th style="width: 300px;">방이름</th>
+						<th style="width: 500px;">방이름</th>
 						<th>여행장소</th>
 						<th>인원</th>
 					</tr>
 				</thead>
-				<tbody>
-					<!-- 데이터 행을 여기에 추가 -->
+				<tbody class="leader-tbody" id="leader-tbody"
+				th:each="leaderdto : ${leaderDTOList}"
+				th:if="${leaderDTOList != null}">
+					<tr>
+						<td th:each="info : ${leaderdto.sharingroomInfoDTOList}">
+							<span
+							th:if="${info.planType == 'planA'}"
+							th:text="${info.informationDeparture}"
+							>
+							</span>
+							~
+							<span
+							th:if="${info.planType == 'planA'}"
+							th:text="${info.informationReturn}"
+							>
+							</span>
+						</td>
+						<td th:text="${leaderdto.sharingroomDTO.roomTitle}"></td>
+						<td th:each="info : ${leaderdto.sharingroomInfoDTOList}">
+							<span
+							th:if="${info.planType == 'planA'}"
+							th:text="${info.informationCountry}"
+							>
+							</span>
+						</td>
+						<td th:text="${leaderdto.sharingroomParticipantsDTOList.size()}"></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div class="participant-list" id="participant-list">
+			<table>
+				<thead>
+					<tr>
+						<th>여행기간</th>
+						<th style="width: 500px;">방이름</th>
+						<th>여행장소</th>
+						<th>인원</th>
+					</tr>
+				</thead>
+				<tbody class="participant-tbody" id="participant-tbody"
+				th:each="participantDTO : ${participantDTOList}"
+				th:if="${participantDTO != null}">
+					<tr>
+						<td th:each="info : ${participantDTO.sharingroomInfoDTOList}">
+							<span
+							th:if="${info.planType == 'planA'}"
+							th:text="${info.informationDeparture}"
+							>
+							</span>
+							~
+							<span
+							th:if="${info.planType == 'planA'}"
+							th:text="${info.informationReturn}"
+							>
+							</span>
+						</td>
+						<td th:text="${participantDTO.sharingroomDTO.roomTitle}"></td>
+						<td th:each="info : ${participantDTO.sharingroomInfoDTOList}">
+							<span
+							th:if="${info.planType == 'planA'}"
+							th:text="${info.informationCountry}"
+							>
+							</span>
+						</td>
+						<td th:text="${participantDTO.sharingroomParticipantsDTOList.size()}"></td>
+					</tr>
 				</tbody>
 			</table>
 		</div>

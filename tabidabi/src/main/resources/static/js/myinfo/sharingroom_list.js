@@ -1,8 +1,47 @@
 document.addEventListener('DOMContentLoaded', () => {
+	// 대륙 선택 시 나라 업데이트 호출
     const continentSelect = document.getElementById('continentSelect');
     const countrySelect = document.getElementById('countrySelect');
 
-    function updateCountries() {
+    continentSelect.addEventListener('change', updateCountries);
+	
+	// 리더 & 참여자 명단
+    const leaderDiv = $('#leader-list');
+    const participantDiv = $('#participant-list');
+    
+    const leaderButton = $('#leader-button'); // jQuery를 사용하여 선택
+    const participantButton = $('#participant-button');
+    
+    // 초기 상태 설정
+    leaderDiv.show(); // show() 메서드로 표시
+    participantDiv.hide(); // hide() 메서드로 숨김
+    leaderButton.css('backgroundColor', '#B5FFAF'); // CSS 변경
+    participantButton.css('backgroundColor', '#dcdcdc');
+
+    // 동선 버튼 클릭 이벤트
+    leaderButton.click(function() {
+        // div 영역 변경
+        leaderDiv.show(); // show() 메서드로 표시
+        participantDiv.hide(); // hide() 메서드로 숨김
+
+        // 버튼 색깔 변경
+        leaderButton.css('backgroundColor', '#B5FFAF'); // 변경할 색상
+        participantButton.css('backgroundColor', '#dcdcdc'); // 변경할 색상
+    });
+	
+	// 댓글 버튼 클릭 이벤트
+    participantButton.click(function() {
+        // div 영역 변경
+        leaderDiv.hide(); // hide() 메서드로 숨김
+        participantDiv.show(); // show() 메서드로 표시
+
+        // 버튼 색깔 변경
+        leaderButton.css('backgroundColor', '#dcdcdc'); // 변경할 색상
+        participantButton.css('backgroundColor', '#B5FFAF'); // 변경할 색상
+    });
+});
+
+function updateCountries() {
         const continent = continentSelect.value;
 
         const countries = {
@@ -14,7 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
             oceania: ['호주', '뉴질랜드', '피지', '사모아', '타히티']
         };
 
-        countrySelect.innerHTML = '<option value="">나라 선택</option>'; // 초기화
+        countrySelect.innerHTML = '<option value="">나라</option>'; // 초기화
         if (countries[continent]) {
             countries[continent].forEach(country => {
                 const option = document.createElement('option');
@@ -24,44 +63,3 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
     }
-
-    // 대륙 선택 시 나라 업데이트 호출
-    continentSelect.addEventListener('change', updateCountries);
-});
-
-
-const isLoggedIn = true;
-
-function checkLogin(event, redirectUrl) {
-    if (!isLoggedIn) {
-        event.preventDefault();
-        window.location.href = '/member/login';
-    } else {
-        window.location.href = redirectUrl;
-    }
-}
-
-let currentRole = ''; // 현재 선택된 역할 저장 변수
-
-// 역할 선택 함수
-function selectRole(role) {
-	const leaderButton = document.getElementById('leader-button'); // 방장 버튼
-	const participantButton = document.getElementById('participant-button'); // 참가자 버튼
-
-	if (currentRole === role) {
-		currentRole = ''; // 선택 해제
-		leaderButton.classList.remove('active'); // 방장 버튼 비활성화
-		participantButton.classList.remove('active'); // 참가자 버튼 비활성화
-	} else {
-		currentRole = role; // 새 역할 설정
-		leaderButton.classList.remove('active'); // 방장 버튼 비활성화
-		participantButton.classList.remove('active'); // 참가자 버튼 비활성화
-
-		// 선택된 역할에 따라 버튼 활성화
-		if (role === 'leader') {
-			leaderButton.classList.add('active'); // 방장 버튼 활성화
-		} else if (role === 'participant') {
-			participantButton.classList.add('active'); // 참가자 버튼 활성화
-		}
-	}
-}

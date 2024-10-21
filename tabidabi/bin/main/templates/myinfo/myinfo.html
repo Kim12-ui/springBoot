@@ -54,8 +54,9 @@
     <form th:action="@{/myinfo/myinfo}" method="post" enctype="multipart/form-data">
         <div class="profile-image-container">
             <div class="profile-image" id="profile-image" onclick="document.getElementById('file-input').click();">
-                <input type="file" id="file-input" name="file" style="display: none;" onchange="loadFile(event)">
-                <img id="preview" src="" alt="Profile Image" style="display:none;">
+                <input type="file" id="file-input" name="file" accept="image/*" style="display: none;" onchange="loadFile(event)">
+                <img id="preview" src=""
+                alt="Profile Image" style="display:none;">
                 <div id="no-image">이미지가 없습니다</div>
             </div>
             <div class="profile-image-label">프로필 사진 바꾸기</div>

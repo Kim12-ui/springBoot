@@ -27,9 +27,11 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.dsa.tabidabi.domain.dto.MemberDTO;
 import com.dsa.tabidabi.domain.dto.community.CommunityDTO;
+import com.dsa.tabidabi.domain.dto.sharingroom.SharingroomListDTO;
 import com.dsa.tabidabi.security.AuthenticatedUser;
 import com.dsa.tabidabi.service.CommunityService2;
 import com.dsa.tabidabi.service.MemberService;
+import com.dsa.tabidabi.service.SharingroomService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -39,10 +41,10 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("myinfo")
 @RequiredArgsConstructor
 public class MyinfoController {
-
-
 	private final MemberService memberService;
 	private final CommunityService2 communityService2;
+	
+	private final SharingroomService sharingroomService;
 
 	private String saveFile(MultipartFile file) {
 		try {
@@ -111,15 +113,17 @@ public class MyinfoController {
 	}
 
 	@GetMapping("sharingroom_list") // GET 요청에 대한 핸들러 메서드
-	public String sharingroom_list(Model model) {
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication(); // 현재 인증 정보 가져오기
-
-		if (authentication != null && authentication.isAuthenticated()) {
-			String memberId = authentication.getName(); // 로그인된 사용자 ID 가져오기
-
-			MemberDTO member = memberService.findById(memberId); // 서비스에서 ID로 회원 정보를 조회
-			model.addAttribute("member", member); // 모델에 회원 정보 추가
-		}
+	public String sharingroom_list(Model model, 
+			@AuthenticationPrincipal AuthenticatedUser user) {
+		String memberId = user.getId();
+		
+		List<SharingroomListDTO> leaderDTOList = sharingroomService.findLeaderDTOList(memberId);
+		
+		List<SharingroomListDTO> participantDTOList = sharingroomService.findParticipantDTOList(memberId);
+		
+		model.addAttribute("user",user);
+		model.addAttribute("leaderDTOList",leaderDTOList);
+		model.addAttribute("participantDTOList",participantDTOList);
 
 		return "myinfo/sharingroom_list"; // 개인 게시글 목록 뷰 반환
 	}
@@ -141,14 +145,6 @@ public class MyinfoController {
         log.debug("Requested Community List for Member ID: {}", username); // 추가: 요청한 사용자 ID 로그
         return communityService2.getCommunitiesByMember(username);
     }
-
-
-
-
-
-
-
-
 	
 	@GetMapping("ourtrip")
 	public String ourtrip() {

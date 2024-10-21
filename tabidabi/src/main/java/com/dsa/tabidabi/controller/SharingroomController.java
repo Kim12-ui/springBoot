@@ -25,7 +25,7 @@ import com.dsa.tabidabi.domain.dto.sharingroom.SharingroomInformationDTO;
 import com.dsa.tabidabi.domain.dto.sharingroom.SharingroomInformationDetailsDTO;
 import com.dsa.tabidabi.domain.dto.sharingroom.SharingroomParticipantsDTO;
 import com.dsa.tabidabi.security.AuthenticatedUser;
-import com.dsa.tabidabi.service.StorageService;
+import com.dsa.tabidabi.service.SharingroomService;
 import com.dsa.tabidabi.service.sharingroom.SharingRoomService;
 
 import lombok.RequiredArgsConstructor;
