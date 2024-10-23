@@ -70,6 +70,8 @@ public class CommunityController {
 			@RequestParam("planType") String planType,
 			@RequestParam("storageId") Integer storageId
 			) {
+		System.out.println(planType);
+		System.out.println(storageId);
 		log.debug("전달된 플랜 타입 : {}, 전달된 storageId: {}", planType, storageId);
 		
 		// StorageInformationDetailsDTO 리스트 불러오기

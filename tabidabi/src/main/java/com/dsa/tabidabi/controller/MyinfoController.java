@@ -77,20 +77,13 @@ public class MyinfoController {
 	}
 
 	@GetMapping("myinfo")
-	public String myinfo(Model model) {
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
-		if (authentication != null && authentication.isAuthenticated()) {
-			String memberId = authentication.getName();
-
-			MemberDTO member = memberService.findById(memberId);
-			// 프로필 이미지 URL을 생성
-			if (member.getProfileImage() != null) {
-				String imageUrl = "/myinfo/profile/" + member.getProfileImage();
-				model.addAttribute("profileImageUrl", imageUrl);
-			}
-			model.addAttribute("member", member);
-		}
+	public String myinfo(Model model, @AuthenticationPrincipal AuthenticatedUser user) {
+		
+		String memberId = user.getId();
+		
+		MemberDTO member = memberService.findById(memberId);
+		
+		model.addAttribute("member", member);
 
 		return "myinfo/myinfo";
 	}

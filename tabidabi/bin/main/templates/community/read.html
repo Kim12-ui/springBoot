@@ -60,7 +60,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
         <!-- 게시판 작성자 -->
         <div class="user-info">
             <div class="profile">
-                <img th:src="@{/images/myinfo/기본프로필.jpeg}" alt="사용자 아바타">
+                <img th:src="@{'/representativeimage/'+${memberDTO.profileImage}}" alt="사용자 아바타">
             </div>
             <div class="user-details">
                 <p th:text="${entity.member.nickname}"></p>

@@ -18,10 +18,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.dsa.tabidabi.domain.dto.MemberDTO;
 import com.dsa.tabidabi.domain.dto.community.CommunityDTO;
 import com.dsa.tabidabi.domain.dto.community.CommunityListDTO;
 import com.dsa.tabidabi.security.AuthenticatedUser;
-
+import com.dsa.tabidabi.service.MemberService;
 import com.dsa.tabidabi.service.home.HomeService;
 
 import lombok.RequiredArgsConstructor;
@@ -44,6 +45,7 @@ public class HomeController {
 	int linkSize;		// 페이지 이동 링크 수, 페이지 번호 링크의 개수
 	
 	private final HomeService hs;
+	private final MemberService memberService;
 	
 	/**
 	 * 인기 패키지
@@ -78,6 +80,11 @@ public class HomeController {
 		log.debug("페이지 : {}",page);
 		
 		Page<CommunityListDTO> communityListDTOs = hs.getPopularSearchResult(continent,country,title,page,pageSize);
+		
+		for (CommunityListDTO dto : communityListDTOs) {
+			MemberDTO memberDTO = memberService.findById(dto.getCommunityDTO().getMemberId());
+			dto.setMemberDTO(memberDTO);
+		}
 		
 		Map<String, Object> response = new HashMap<>();
 	    response.put("communityListDTOs", communityListDTOs);

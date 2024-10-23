@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.dsa.tabidabi.domain.dto.MemberDTO;
 import com.dsa.tabidabi.domain.dto.community.CommunityDTO;
 import com.dsa.tabidabi.domain.dto.community.CommunityInfoDetailsDTO;
 import com.dsa.tabidabi.domain.dto.community.CommunityListDTO;
@@ -74,6 +75,11 @@ public class CommunityController2 {
 		log.debug("검색내용 : {}",title);
 		
 		Page<CommunityListDTO> list = communityService2.getSearchResult(continent,country,title,page,pageSize);
+		
+		for (CommunityListDTO dto : list) {
+			MemberDTO memberDTO = memberService.findById(dto.getCommunityDTO().getMemberId());
+			dto.setMemberDTO(memberDTO);
+		}
 		
 		Map<String, Object> response = new HashMap<>();
 	    response.put("list", list);
@@ -142,6 +148,8 @@ public class CommunityController2 {
 		  
 		  CommunityEntity entity = communityService2.findById(communityId);
 		  
+		  MemberDTO memberDTO = memberService.findById(entity.getMember().getMemberId());
+		  
 		  // 다음, 이전 게시물 ID 가져오기
 		  Integer nextId = communityService2.findNextCommunityId(communityId);
 		  Integer prevId = communityService2.findPreviousCommunityId(communityId);
@@ -176,6 +184,7 @@ public class CommunityController2 {
 	        model.addAttribute("likeResult",likeResult);
 	        model.addAttribute("prevId",prevId);
 	        model.addAttribute("nextId",nextId);
+	        model.addAttribute("memberDTO",memberDTO);
 	        } else {System.out.println("y");
 	        model.addAttribute("error", "해당 게시글을 찾을 수 없습니다.");
 	    }

@@ -63,6 +63,7 @@ public class SharingroomsEntity {
     @OneToMany(mappedBy = "participantRoom", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<SharingroomParticipantsEntity> SharingroomParticipantsEntityList;
     
+    // 공유방 정보 목록
     @OneToMany(mappedBy = "informationRoom", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<SharingroomInformationEntity> sharingroomInformationEntity;
 }

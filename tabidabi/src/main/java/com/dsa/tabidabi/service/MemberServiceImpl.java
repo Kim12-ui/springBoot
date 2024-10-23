@@ -7,6 +7,7 @@ import com.dsa.tabidabi.domain.dto.MemberDTO;
 import com.dsa.tabidabi.domain.entity.MemberEntity;
 import com.dsa.tabidabi.repository.MemberRepository;
 
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -56,13 +57,14 @@ public class MemberServiceImpl implements MemberService {
     public MemberDTO findById(String memberId) {
         // 회원 정보를 조회하고, 없을 경우 예외 발생
         MemberEntity entity = memberRepository.findById(memberId)
-                .orElseThrow(() -> new RuntimeException("회원 정보를 찾을 수 없습니다."));
+                .orElseThrow(() -> new EntityNotFoundException("회원 정보를 찾을 수 없습니다."));
         
         // 조회된 엔티티를 DTO로 변환하여 반환
         return MemberDTO.builder()
                 .memberId(entity.getMemberId()) // 회원 ID
                 .email(entity.getEmail()) // 이메일
                 .nickname(entity.getNickname()) // 회원 닉네임
+                .profileImage(entity.getProfileImage())
                 .build();
     }
 

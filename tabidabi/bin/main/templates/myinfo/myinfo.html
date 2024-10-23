@@ -55,8 +55,10 @@
         <div class="profile-image-container">
             <div class="profile-image" id="profile-image" onclick="document.getElementById('file-input').click();">
                 <input type="file" id="file-input" name="file" accept="image/*" style="display: none;" onchange="loadFile(event)">
-                <img id="preview" src=""
-                alt="Profile Image" style="display:none;">
+                <!-- <img id="preview" th:src="@{'http://localhost:4444/tabidabi/representativeimage/' + ${member.profileImage}}"
+     			alt="Profile Image" style="display:none;"> -->
+     			<img id="preview" th:src="@{'/representativeimage/'+${member.profileImage}}"
+     			alt="Profile Image" style="display:none;">
                 <div id="no-image">이미지가 없습니다</div>
             </div>
             <div class="profile-image-label">프로필 사진 바꾸기</div>

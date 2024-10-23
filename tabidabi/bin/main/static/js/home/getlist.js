@@ -56,13 +56,17 @@ function getList(page) {
 					const communityDTO = community.communityDTO;
 	                const infoDTO = community.communityInfoDTO; // 정보 DTO
 					const commentsDTO = community.communityCommentsDTO;
+					const memberDTO = community.memberDTO;
 					
 					const communityReadUrl = "community/read?communityId=";
 					let representativeImageUrl = "images/community/list/게시글기본이미지.png";
 					if (commentsDTO.representativeImage != null) {
 						representativeImageUrl = "http://localhost:4444/tabidabi/representativeimage/"+commentsDTO.representativeImage;
 					}
-					const profileUrl = "images/myinfo/기본프로필.jpeg";
+					let profileUrl = "/images/myinfo/기본프로필.jpeg";
+				   if (memberDTO.profileImage != null) {
+					profileUrl="http://localhost:4444/tabidabi/representativeimage/"+memberDTO.profileImage;
+				   }
 					let likeUrl = "images/community/list/like.png";
 					
 					// 좋아요 상태에 따라 이미지 변경
